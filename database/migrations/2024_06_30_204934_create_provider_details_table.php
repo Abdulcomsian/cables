@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('provider_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('provide_id');
-            $table->foreign('provider_id')->references('id')->on('broadband_providers');
+            $table->unsignedBigInteger('provider_id');
             $table->string('unique_product_key');
             $table->string('isp_subcat');
             $table->string('category');
@@ -34,6 +33,7 @@ return new class extends Migration
             $table->string('promo_and_info');
             $table->string('offer_ends');
             $table->string('thumbnail_retailer');
+            $table->foreign('provider_id')->references('id')->on('broadband_providers');
             $table->timestamps();
         });
     }
