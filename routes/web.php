@@ -23,4 +23,4 @@ Route::post('/import', [ProviderDetailController::class, 'import'])->name('excel
 Route::get('/broadband-providers', [ProviderController::class, 'ManageProviders']);
 Route::post('/submit-provider', [ProviderController::class, 'AddProvider'])->name('submit.provider');
 Route::get('/load-more-data', [ProviderController::class,'loadMoreData'])->name('load.more');
-Route::get('/filter', [ProviderController::class,'getFIlteredProvider'])->name('filtered.provider');
+Route::post('/filter', [ProviderController::class,'getFIlteredProvider'])->name('apply.filter');

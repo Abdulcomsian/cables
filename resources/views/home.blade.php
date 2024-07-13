@@ -175,10 +175,10 @@
     <!--Card Code on Mobile view End-->
   
     <!--Card Code on Desktop Start-->
-    <div class="row" id="items_container">
+    <div class="row" id="items_container" data-applied-filter="0">
     @foreach ($products as $product)
     
-    <div class="bg-white mx-4 hidden md:flex justify-between p-4 rounded-lg shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] mb-8">
+    <div class="bg-white mx-4 hidden md:flex ticket justify-between p-4 rounded-lg shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] mb-8">
       <!--First Div Start-->
       <div class="w-1/6 flex flex-col justify-center items-center">
         <div class="w-30 h-20">
@@ -186,8 +186,8 @@
             src="{{asset('assets/'.$product->thumbnail_retailer)}}" alt="sky"       class="w-full h-full" />
         </div>
   
-        <p>order by phone</p>
-        <p>0333 210 1135</p>
+        {{-- <p>order by phone</p>
+        <p>0333 210 1135</p> --}}
       </div>
       <!--First Div End-->
       <!--Second Div Start-->
@@ -202,7 +202,7 @@
             >
               <span
                 class="text-primary font-bold text-[1.3125rem] order-2 lg:order-1 lg:mr-auto"
-                >{{$product->download_speed}}</span
+                >{{$product->download_speed}}{{$product->download_speed_unit}}</span
               >
               <div class="w-5 h-5 order-1 lg:order-2 lg:ml-auto">
                 <img
@@ -225,7 +225,7 @@
             >
               <span
                 class="text-primary font-bold  text-[1.3125rem] order-2 lg:order-1 lg:mr-auto"
-                >{{$product->channels}}+</span
+                >{{$product->channels}}</span
               >
               <div class="w-5 h-5 order-1 lg:order-2 lg:ml-auto">
                 <img
@@ -275,7 +275,7 @@
             >
               <span
                 class="text-primary font-bold  text-[1.3125rem] order-1 lg:order-none"
-                >  {{$product->contract}}   </span
+                >  {{$product->contract_months}}   </span
               >
               <div class="w-5 h-5">
                 <img
@@ -329,7 +329,7 @@
         </div>
         <div class="flex items-end">
           <span class="text-primary font-bold text-3xl">£{{$product->stand_monthly}}</span>
-          <span class="text-primary font-medium text-lg">.00</span>
+          {{-- <span class="text-primary font-medium text-lg">.00</span> --}}
         </div>
         <div class="flex items-center">
           <span class="text-primary font-bold mr-2">per month</span>
@@ -375,222 +375,223 @@
   integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 <script>
   $(document).ready(function() {
-      var start = 5;
+  //     var start = 5;
 
-      $('#load_more_button').click(function() {
-          $.ajax({
-              url: "{{ route('load.more') }}",
-              method: "GET",
-              data: {
-                  start: start
-              },
-              dataType: "json",
-              beforeSend: function() {
-                  $('#load_more_button').html('Loading...');
-                  $('#load_more_button').attr('disabled', true);
-              },
-              success: function(data) {
+  //     $('#load_more_button').click(function() {
+  //         $.ajax({
+  //             url: "{{ route('load.more') }}",
+  //             method: "GET",
+  //             data: {
+  //                 start: start
+  //             },
+  //             dataType: "json",
+  //             beforeSend: function() {
+  //                 $('#load_more_button').html('Loading...');
+  //                 $('#load_more_button').attr('disabled', true);
+  //             },
+  //             success: function(data) {
 
-                  if (data.data.length > 0) {
-                      var html = '';
-                      for (var i = 0; i < data.data.length; i++) {
-                       console.log(data.data[i].title);
-                          html += ` <div class="bg-white mx-4 hidden md:flex justify-between p-4 rounded-lg shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] mb-8">
-      <!--First Div Start-->
-      <div class="w-1/6 flex flex-col justify-center items-center">
-        <div class="w-30 h-20">
-          <img
-            src="/assets/` + data.data[i].thumbnail_retailer+ `" alt="sky"       class="w-full h-full" />
-        </div>
+  //                 if (data.data.length > 0) {
+  //                     var html = '';
+  //                     for (var i = 0; i < data.data.length; i++) {
+  //                      console.log(data.data[i].title);
+  //                         html += ` <div class="bg-white mx-4 hidden md:flex justify-between p-4 rounded-lg shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] mb-8">
+  //     <!--First Div Start-->
+  //     <div class="w-1/6 flex flex-col justify-center items-center">
+  //       <div class="w-30 h-20">
+  //         <img
+  //           src="/assets/` + data.data[i].thumbnail_retailer+ `" alt="sky"       class="w-full h-full" />
+  //       </div>
   
-        <p>order by phone</p>
-        <p>0333 210 1135</p>
-      </div>
-      <!--First Div End-->
-      <!--Second Div Start-->
-      <div class="w-4/6 px-4">
-        <h1 class="w-full text-primary font-bold text-xl">
-          ` +data.data[i].title+ `
-        </h1>
-        <div class="flex justify-between py-5">
-          <div class="bg-lightBlue px-2 py-2 rounded w-full mr-2">
-            <div
-              class="flex flex-col lg:flex-row lg:justify-between items-center"
-            >
-              <span
-                class="text-primary font-bold text-[1.3125rem] order-2 lg:order-1 lg:mr-auto">` +data.data[i].download_speed+ `</span
-              >
-              <div class="w-5 h-5 order-1 lg:order-2 lg:ml-auto">
-                <img
-                  src="./images/info-icon.svg"
-                  alt=""
-                  class="w-full h-full"
-                />
-              </div>
-            </div>
-            <p
-              class="text-primary text-sm text-center lg:text-left lg:max-w-16 order-3"
-            >
-              average speed
-            </p>
-          </div>
+  //       <p>order by phone</p>
+  //       <p>0333 210 1135</p>
+  //     </div>
+  //     <!--First Div End-->
+  //     <!--Second Div Start-->
+  //     <div class="w-4/6 px-4">
+  //       <h1 class="w-full text-primary font-bold text-xl">
+  //         ` +data.data[i].title+ `
+  //       </h1>
+  //       <div class="flex justify-between py-5">
+  //         <div class="bg-lightBlue px-2 py-2 rounded w-full mr-2">
+  //           <div
+  //             class="flex flex-col lg:flex-row lg:justify-between items-center"
+  //           >
+  //             <span
+  //               class="text-primary font-bold text-[1.3125rem] order-2 lg:order-1 lg:mr-auto">` +data.data[i].download_speed+ `</span
+  //             >
+  //             <div class="w-5 h-5 order-1 lg:order-2 lg:ml-auto">
+  //               <img
+  //                 src="./images/info-icon.svg"
+  //                 alt=""
+  //                 class="w-full h-full"
+  //               />
+  //             </div>
+  //           </div>
+  //           <p
+  //             class="text-primary text-sm text-center lg:text-left lg:max-w-16 order-3"
+  //           >
+  //             average speed
+  //           </p>
+  //         </div>
   
-          <div class="bg-lightBlue px-2 py-2 rounded w-full mr-2">
-            <div
-              class="flex flex-col lg:flex-row lg:justify-between items-center"
-            >
-              <span
-                class="text-primary font-bold  text-[1.3125rem] order-2 lg:order-1 lg:mr-auto"
-                >  ` +data.data[i].channels+ `+</span
-              >
-              <div class="w-5 h-5 order-1 lg:order-2 lg:ml-auto">
-                <img
-                  src="./images/info-icon.svg"
-                  alt=""
-                  class="w-full h-full"
-                />
-              </div>
-            </div>
-            <p
-              class="text-primary text-sm text-center lg:text-left order-3 lg:max-w-16"
-            >
-              Tv channels
-            </p>
-          </div>
+  //         <div class="bg-lightBlue px-2 py-2 rounded w-full mr-2">
+  //           <div
+  //             class="flex flex-col lg:flex-row lg:justify-between items-center"
+  //           >
+  //             <span
+  //               class="text-primary font-bold  text-[1.3125rem] order-2 lg:order-1 lg:mr-auto"
+  //               >  ` +data.data[i].channels+ `+</span
+  //             >
+  //             <div class="w-5 h-5 order-1 lg:order-2 lg:ml-auto">
+  //               <img
+  //                 src="./images/info-icon.svg"
+  //                 alt=""
+  //                 class="w-full h-full"
+  //               />
+  //             </div>
+  //           </div>
+  //           <p
+  //             class="text-primary text-sm text-center lg:text-left order-3 lg:max-w-16"
+  //           >
+  //             Tv channels
+  //           </p>
+  //         </div>
   
-          <div class="bg-lightBlue px-2 py-2 rounded w-full mr-2">
-            <div
-              class="flex flex-col lg:flex-row lg:justify-between items-center text-primary font-semibold text-lg"
-            >
-              <span
-                class="text-primary font-bold  text-[1.3125rem] order-1 lg:order-none"
-                >@if ($product->set_up_cost=='0')
-                    {{'Zero'}}
-                @else 
-               ` +data.data[i].set_up_cost+ ` 
-                @endif</span
-              >
-              <div class="w-5 h-5">
-                <img
-                  src="./images/info-icon.svg"
-                  alt=""
-                  class="w-full h-full order-0 lg:order-none"
-                />
-              </div>
-            </div>
-            <p
-              class="text-primary text-sm text-center lg:max-w-16 lg:text-left"
-            >
-              one-off cost
-            </p>
-          </div>
+  //         <div class="bg-lightBlue px-2 py-2 rounded w-full mr-2">
+  //           <div
+  //             class="flex flex-col lg:flex-row lg:justify-between items-center text-primary font-semibold text-lg"
+  //           >
+  //             <span
+  //               class="text-primary font-bold  text-[1.3125rem] order-1 lg:order-none"
+  //               >@if ($product->set_up_cost=='0')
+  //                   {{'Zero'}}
+  //               @else 
+  //              ` +data.data[i].set_up_cost+ ` 
+  //               @endif</span
+  //             >
+  //             <div class="w-5 h-5">
+  //               <img
+  //                 src="./images/info-icon.svg"
+  //                 alt=""
+  //                 class="w-full h-full order-0 lg:order-none"
+  //               />
+  //             </div>
+  //           </div>
+  //           <p
+  //             class="text-primary text-sm text-center lg:max-w-16 lg:text-left"
+  //           >
+  //             one-off cost
+  //           </p>
+  //         </div>
   
-          <div class="bg-lightBlue px-2 py-2 rounded w-full mr-2">
-            <div
-              class="flex flex-col lg:flex-row lg:justify-between items-center text-primary font-semibold text-lg"
-            >
-              <span
-                class="text-primary font-bold  text-[1.3125rem] order-1 lg:order-none"
-                >  ` +data.data[i].contract+ `  </span
-              >
-              <div class="w-5 h-5">
-                <img
-                  src="./images/info-icon.svg"
-                  alt=""
-                  class="w-full h-full order-0 lg:order-none"
-                />
-              </div>
-            </div>
-            <p
-              class="text-primary text-sm text-center lg:max-w-16 lg:text-left"
-            >
-              months contract
-            </p>
-          </div>
+  //         <div class="bg-lightBlue px-2 py-2 rounded w-full mr-2">
+  //           <div
+  //             class="flex flex-col lg:flex-row lg:justify-between items-center text-primary font-semibold text-lg"
+  //           >
+  //             <span
+  //               class="text-primary font-bold  text-[1.3125rem] order-1 lg:order-none"
+  //               >  ` +data.data[i].contract+ `  </span
+  //             >
+  //             <div class="w-5 h-5">
+  //               <img
+  //                 src="./images/info-icon.svg"
+  //                 alt=""
+  //                 class="w-full h-full order-0 lg:order-none"
+  //               />
+  //             </div>
+  //           </div>
+  //           <p
+  //             class="text-primary text-sm text-center lg:max-w-16 lg:text-left"
+  //           >
+  //             months contract
+  //           </p>
+  //         </div>
   
-          <div class="bg-lightBlue px-2 py-2 rounded w-full">
-            <div
-              class="flex flex-col lg:flex-row lg:justify-between items-center lg:items-start text-primary"
-            >
-              <p
-                class="text-primary text-sm text-center lg:max-w-16 order-1 lg:order-none lg:text-left"
-              >
-                pay as you go calls
-              </p>
-              <div class="w-5 h-5 order-0 lg:order-none">
-                <img
-                  src="./images/info-icon.svg"
-                  alt=""
-                  class="w-full h-full"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <ul class="w-full flex flex-wrap text-base font-medium">
-          <li class="li-with-dot">New customers only</li>
-          <li class="li-with-dot ml-[0.4rem]">No dish needed</li>
-          <li class="li-with-dot ml-[0.4rem]">Stream live TV</li>
-        </ul>
-      </div>
-      <!--Second Div End-->
-      <!--Third Div Start-->
-      <div   class="relative w-1/6 flex flex-col justify-center items-center text-center"   >
-        <div class="absolute top-0 right-0 w-5 h-5">
-          <img
-            src="./images/regular-heart.svg"
-            alt="Heart Icon"
-            class="w-full h-full"
-          />
-        </div>
-        <div class="flex items-end">
-          <span class="text-primary font-bold text-3xl">£ ` +data.data[i].stand_monthly+ `</span>
-          <span class="text-primary font-medium text-lg">.00</span>
-        </div>
-        <div class="flex items-center">
-          <span class="text-primary font-bold mr-2">per month</span>
-          <div class="w-5 h-5">
-            <img
-              src="./images/info-icon.svg"
-              alt="Info Icon"
-              class="w-full h-full"
-            />
-          </div>
-        </div>
-        <span class="text-primary text-xs mb-2"
-          >(prices may change during contract)</span
-        >
-        <button
-          class="bg-pink hover:bg-primary text-white rounded-full mb-2 px-4 lg:px-6 py-2 font-bold text-lg"
-        >
-          Get Deal
-        </button>
-        <button
-          class="text-[#FF006D] hover:text-primary underline font-normal"
-        >
-          More Info
-        </button>
-      </div>
-      <!--Third Div End-->
-    </div>`;
-                      }
+  //         <div class="bg-lightBlue px-2 py-2 rounded w-full">
+  //           <div
+  //             class="flex flex-col lg:flex-row lg:justify-between items-center lg:items-start text-primary"
+  //           >
+  //             <p
+  //               class="text-primary text-sm text-center lg:max-w-16 order-1 lg:order-none lg:text-left"
+  //             >
+  //               pay as you go calls
+  //             </p>
+  //             <div class="w-5 h-5 order-0 lg:order-none">
+  //               <img
+  //                 src="./images/info-icon.svg"
+  //                 alt=""
+  //                 class="w-full h-full"
+  //               />
+  //             </div>
+  //           </div>
+  //         </div>
+  //       </div>
+  //       <ul class="w-full flex flex-wrap text-base font-medium">
+  //         <li class="li-with-dot">New customers only</li>
+  //         <li class="li-with-dot ml-[0.4rem]">No dish needed</li>
+  //         <li class="li-with-dot ml-[0.4rem]">Stream live TV</li>
+  //       </ul>
+  //     </div>
+  //     <!--Second Div End-->
+  //     <!--Third Div Start-->
+  //     <div   class="relative w-1/6 flex flex-col justify-center items-center text-center"   >
+  //       <div class="absolute top-0 right-0 w-5 h-5">
+  //         <img
+  //           src="./images/regular-heart.svg"
+  //           alt="Heart Icon"
+  //           class="w-full h-full"
+  //         />
+  //       </div>
+  //       <div class="flex items-end">
+  //         <span class="text-primary font-bold text-3xl">£ ` +data.data[i].stand_monthly+ `</span>
+  //         <span class="text-primary font-medium text-lg">.00</span>
+  //       </div>
+  //       <div class="flex items-center">
+  //         <span class="text-primary font-bold mr-2">per month</span>
+  //         <div class="w-5 h-5">
+  //           <img
+  //             src="./images/info-icon.svg"
+  //             alt="Info Icon"
+  //             class="w-full h-full"
+  //           />
+  //         </div>
+  //       </div>
+  //       <span class="text-primary text-xs mb-2"
+  //         >(prices may change during contract)</span
+  //       >
+  //       <button
+  //         class="bg-pink hover:bg-primary text-white rounded-full mb-2 px-4 lg:px-6 py-2 font-bold text-lg"
+  //       >
+  //         Get Deal
+  //       </button>
+  //       <button
+  //         class="text-[#FF006D] hover:text-primary underline font-normal"
+  //       >
+  //         More Info
+  //       </button>
+  //     </div>
+  //     <!--Third Div End-->
+  //   </div>`;
+  //                     }
 
-                      //console.log(html);
-                      //append data  without fade in effect
-                      //$('#items_container').append(html);
-                      document.querySelector("#items_container").insertAdjacentHTML("beforeend" , html)
-                      //append data with fade in effect
-                      // $('#items_container').append($(html).hide().fadeIn(1000));
-                      $('#load_more_button').html('Load More');
-                      $('#load_more_button').attr('disabled', false);
-                      start = data.next;
-                  } else {
-                      $('#load_more_button').html('No More Data Available');
-                      $('#load_more_button').attr('disabled', true);
-                  }
-              }
-          });
-      });
-  });
+  //                     //console.log(html);
+  //                     //append data  without fade in effect
+  //                     //$('#items_container').append(html);
+  //                     document.querySelector("#items_container").insertAdjacentHTML("beforeend" , html)
+  //                     //append data with fade in effect
+  //                     // $('#items_container').append($(html).hide().fadeIn(1000));
+  //                     $('#load_more_button').html('Load More');
+  //                     $('#load_more_button').attr('disabled', false);
+  //                     start = data.next;
+  //                 } else {
+  //                     $('#load_more_button').html('No More Data Available');
+  //                     $('#load_more_button').attr('disabled', true);
+  //                 }
+  //             }
+  //         });
+  //     });
+  // });
+  })
 </script>
   @endsection
