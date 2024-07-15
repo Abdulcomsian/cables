@@ -32,10 +32,17 @@
             fontFamily: {
               sans: "sans-serif",
             },
+            screens: {
+              // Corrected this line
+              xsm: "320px",
+              ysm: "375px",
+              zsm: "425px",
+            },
           },
         },
       };
     </script>
+
     <style>
       ::-webkit-scrollbar {
         display: none;

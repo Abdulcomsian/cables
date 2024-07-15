@@ -179,7 +179,7 @@
   <!--Offers Filters End-->
 
   <!--Providers Filters Start-->
-  <div class="mb-4">
+  {{-- <div class="mb-4">
     <h2 class="font-bold text-xl text-primary mb-3">TV channels</h2>
     <div class="grid grid-cols-3 gap-2">
       <label
@@ -225,14 +225,14 @@
       <label
         class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" class="hidden image-checkbox submitform"  data-type="channel"  />
+        <input type="checkbox" class="hidden image-checkbox submitform"  data-type="channels"  />
         <div class="w-16">
           <img src="./images/sky.webp" alt="" class="w-full" />
         </div>
       </label>
 
     </div>
-  </div>
+  </div> --}}
   <!--Providers Filters End-->
 
   <!--Contract length Filters Start-->
@@ -302,7 +302,10 @@
         No phone line
       </label>
     </div>
+   
+
   </div>
+  {{-- <input id="sort" name="sort" type="text" value="idasc"> --}}
 </form>
   <!--Phone & line Filters End-->
 </div>
@@ -313,7 +316,11 @@ integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="ano
 <script>
 
 $(document).ready(()=>{
-
+    // $("#deals").change(function () {
+    //       //  alert($("#deals").val());
+    //         document.getElementById("sort").value=document.getElementById("deals").value;
+    //     });
+  
   document.querySelectorAll(".submitform").forEach(function(item){
     item.addEventListener("click" , function(e){
         e.stopPropagation();
@@ -323,7 +330,7 @@ $(document).ready(()=>{
       let package = [];
       let cost = [];
       let offers = [];
-      let channels = [];
+      let contract = [];
       let phone = [];
       checkedFilters = document.querySelectorAll("input[type='checkbox']:checked")
       // let type = item.dataset.type;
@@ -345,8 +352,8 @@ $(document).ready(()=>{
           case 'offers':
            offers.push(item.value); 
           break;
-          case 'channels':
-          channels.push(item.value); 
+          case 'contract':
+          contract.push(item.value); 
           break;
           default:
           phone.push(item.value); 
@@ -358,7 +365,7 @@ $(document).ready(()=>{
     $.ajax({
           type : 'POST',
           url : '{{route("apply.filter")}}',
-          data : { provider , speed , package , cost , offers , channels , phone , '_token' : '{{csrf_token()}}' , loadedTicket : loadedTickets},
+          data : { provider , speed , package , cost , offers , contract , phone , '_token' : '{{csrf_token()}}' , loadedTicket : loadedTickets},
           success : function(res){
             if(!filterApplied || document.querySelectorAll("input[type='checkbox']:checked").length== 1){
               document.querySelector("#items_container").innerHTML =res.html;
@@ -368,11 +375,20 @@ $(document).ready(()=>{
               document.querySelector("#items_container").setAttribute('data-applied-filter' , 1);
             }
               
+            if (res.html=='') {
+              console.log('test');
+              $('#load_more_button').html('No More Data Available');
+              $('#load_more_button').attr('disabled', true);
+            }
+            else{
+              $('#load_more_button').html('Show me more deals');
+              $('#load_more_button').attr('disabled', false);
 
+            }
           }
         })
     })
-  
+   
   })
 
   document.querySelector("#load_more_button").addEventListener("click" , function(e){
@@ -386,7 +402,7 @@ $(document).ready(()=>{
       let package = [];
       let cost = [];
       let offers = [];
-      let channels = [];
+      let contract = [];
       let phone = [];
       checkedFilters = document.querySelectorAll("input[type='checkbox']:checked")
       checkedFilters.forEach( item => {
@@ -406,8 +422,8 @@ $(document).ready(()=>{
             case 'offers':
             offers.push(item.value); 
             break;
-            case 'channels':
-            channels.push(item.value); 
+            case 'contract':
+            contract.push(item.value); 
             break;
             default:
             phone.push(item.value); 
@@ -421,7 +437,7 @@ $(document).ready(()=>{
     $.ajax({
           type : 'POST',
           url : '{{route("apply.filter")}}',
-          data : { provider , speed , package , cost , offers , channels , phone , '_token' : '{{csrf_token()}}' , loadedTicket : loadedTickets},
+          data : { provider , speed , package , cost , offers , contract , phone , '_token' : '{{csrf_token()}}' , loadedTicket : loadedTickets},
           success : function(res){
             
               document.querySelector("#items_container").insertAdjacentHTML("beforeend" , res.html);
@@ -429,11 +445,17 @@ $(document).ready(()=>{
             
     
           }
+         
         })
   }
   
 })
+ 
+// document.getElementbyID(#deals).change(function () {
+//             alert("test");
+//         });
 
+//document.getElementbyID(#deals)
 
 // $(document).on("click" , "#load_more_button" , function(){
 //   applyFilter()

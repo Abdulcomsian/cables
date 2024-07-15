@@ -4,7 +4,7 @@
 <div class="w-full lg:w-9/12">
     <div class="flex justify-between items-center mb-4 mx-4">
       <h2 class="w-full font-bold text-2xl text-primary hidden md:block">
-        60 deals available
+        {{-- {{$productCount}} --}} Available deals  
       </h2>
       <div class="w-full flex justify-between items-center">
         <div
@@ -31,9 +31,9 @@
             class="border border-primary text-primary bg-white md:bg-transparent text-sm rounded focus:outline-none block w-full p-2.5"
           >
             <option selected>Most Popular Deals</option>
-            <option >Best Value Deal</option>
-            <option >Price (low to high)</option>
-            <option >Download speed (low to high)</option>
+            <option value="Bestvalue_asc" >Best Value Deal</option>
+            <option value="price_asc" >Price (low to high)</option>
+            <option value="download_asc" >Download speed (low to high)</option>
           </select>
         </form>
   
@@ -44,319 +44,188 @@
         />
       </div>
     </div>
-    <!--Card Code on Mobile view Start-->
-    <div  class="bg-white mx-4 flex flex-col md:flex-row justify-between p-4 rounded-lg shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] mb-8 black md:hidden"
-    >
-      <!--First div showing Heading and Heart-->
-      <div class="flex justify-between items-start md:items-center mb-4">
-        <h1 class="text-primary font-bold text-lg font-sans mr-4">
-          Sky Stream + Entertainment + Netflix + Superfast
-        </h1>
-        <div class="w-7 h-7">
-          <img
-            src="./images/regular-heart.svg"
-            alt=""
-            class="w-full h-full"
-          />
-        </div>
-      </div>
-      <!--First div End-->
-  
-      <!--Second div showing company logo and price Start-->
-      <div class="grid grid-cols-2 sm:grid-cols-3 mb-4">
-        <div class="flex items-center justify-center">
-          <div class="w-20 sm:w-28">
-            <img
-              src="./images//sky-8.webp"
-              alt="sky"
-              class="w-full object-cover"
-            />
-          </div>
-        </div>
-  
-        <div class="pl-5 border-l border-gray-300">
-          <div class="flex items-end">
-            <span class="text-primary font-bold text-2xl">£39</span>
-            <span class="text-primary font-medium text-sm">.00</span>
-          </div>
-  
-          <div class="flex items-center">
-            <span class="text-primary font-bold mr-2">per month</span>
-            <div class="w-5 h-5">
-              <img
-                src="./images/info-icon.svg"
-                alt=""
-                class="w-full h-full"
-              />
-            </div>
-          </div>
-          <span class="text-primary text-xs mb-2"
-            >(prices may change during contract)</span
-          >
-        </div>
-      </div>
-  
-      <!--Second Div end-->
-      <!--Ul List Start-->
-      <p class="w-full flex flex-wrap break-words text-[0.9375rem] mb-4 font-medium">
-        <span class="li-with-dot">New customers only</span>
-        <span class="li-with-dot ml-[0.4rem]">No dish needed</span>
-        <span class="li-with-dot ml-[0.4rem]">Stream live TV</span>
-      </p>
-      <!--Ul List End-->
-      <!--Speed Cards Start-->
-      <div class="grid grid-cols-3 gap-2 mb-4">
-        <div class="bg-lightBlue p-2 rounded-lg w-full">
-          <div
-            class="flex justify-between "
-          >
-            <span class="text-primary font-bold text-[1.3125rem]">65MB</span>
-            <div class="w-5 h-5">
-              <img
-                src="./images/info-icon.svg"
-                alt=""
-                class="w-full h-full"
-              />
-            </div>
-          </div>
-          <p class="text-primary text-sm font-sans">average speed</p>
-        </div>
-        <div class="bg-lightBlue p-2 rounded-lg w-full">
-          <div
-            class="flex justify-between text-primary font-semibold text-lg"
-          >
-             <span class="text-primary font-bold text-[1.3125rem]">Zero</span>
-            <div class="w-5 h-5">
-              <img
-                src="./images/info-icon.svg"
-                alt=""
-                class="w-full h-full"
-              />
-            </div>
-          </div>
-         <p class="text-primary text-sm font-sans">one-off cost</p>
-        </div>
-        <div class="bg-lightBlue p-2 rounded-lg w-full">
-          <div
-            class="flex justify-between text-primary font-semibold text-lg"
-          >
-             <span class="text-primary font-bold text-[1.3125rem]">24</span>
-            <div class="w-5 h-5">
-              <img
-                src="./images/info-icon.svg"
-                alt=""
-                class="w-full h-full"
-              />
-            </div>
-          </div>
-         <p class="text-primary text-sm font-sans">months contract</p>
-        </div>
-      </div>
-      <!--Speed Cards End-->
-      <!--Buttons Start-->
-      <div class="flex justify-between gap-2 mb-4">
-        <button
-          class="w-full border-2 border-pink rounded-full py-2 text-pink font-semibold text-lg"
-        >
-          More Info
-        </button>
-        <button
-          class="w-full bg-pink rounded-full py-2  text-white font-semibold text-lg"
-        >
-          Get Deal
-        </button>
-      </div>
-      <p class="flex items-center justify-center text-base text-primary">
-        <span class="mr-[3px]">or call </span>
-        <span class="font-bold">0333 210 1143</span>
-      </p>
-      <!--Buttons End-->
-    </div>
-    <!--Card Code on Mobile view End-->
+   
   
     <!--Card Code on Desktop Start-->
     <div class="row" id="items_container" data-applied-filter="0">
-    @foreach ($products as $product)
+@foreach ($products as $product)
     
-    <div class="bg-white mx-4 hidden md:flex ticket justify-between p-4 rounded-lg shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] mb-8">
-      <!--First Div Start-->
-      <div class="w-1/6 flex flex-col justify-center items-center">
-        <div class="w-30 h-20">
-          <img
-            src="{{asset('assets/'.$product->thumbnail_retailer)}}" alt="sky"       class="w-full h-full" />
+  <div   class="relative xsm:min-h-[138vw] ticket ysm:min-h-[117vw] zsm:min-h-[104vw] sm:min-h-[64vw] md:min-h-[30vw] lg:min-h-[17vw] xl:min-h-[16vw] 2xl:min-h-[8vw] bg-white mx-4 border rounded-lg shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] mb-8"  >
+    <div class="hidden sm:flex justify-end absolute top-2 right-2">
+      <img src="./images/regular-heart.svg" alt="" class="w-5 h-5" />
+    </div>
+  <div class="relative flex flex-col md:flex-row justify-between p-4">
+      <!-- First Div Start -->
+      <div        class="absolute md:static top-20 left-0 sm:left-10 md:w-1/6 flex flex-col justify-center items-center"      >
+        <div class="w-28 h-16">
+          <img src="{{asset('assets/'.$product->thumbnail_retailer)}}" alt="sky" class="w-full h-full" />
+        </div>
+        {{-- <p class="hidden md:block mt-2 text-center">order by phone</p>
+        <p class="hidden md:block text-center">0333 210 1135</p> --}}
+      </div>
+      <!-- First Div End -->
+  
+      <!-- Second Div Start -->
+  <div class="md:w-4/6 px-2 md:px-4">
+        <div class="flex justify-between">
+          <div>
+            <div class="mb-4 md:mb-0">
+              <h1
+                class="absolute md:static left-4 -top-8 my-10 md:my-0 text-primary font-bold text-lg md:text-xl"
+              >
+              {{$product->title}}
+              </h1>
+            </div>
+  
+            {{-- <div class="mt-3 flex items-center gap-2">
+              <div
+                class="absolute md:static top-48 left-1 ysm:left-2 sm:left-14 bg-[#C9EEF3] px-2 py-1 xl:px-3 md:py-1.5 rounded-full flex items-center"
+              >
+                <div class="text-primary text-sm">£24 Bill Credit</div>
+                <div class="w-5 h-5 md:ml-1">
+                  <img src="./images/info-icon.svg" alt="" class="" />
+                </div>
+              </div>
+              <div
+                class="absolute md:static top-48 left-32 ysm:left-[135px] sm:left-48 bg-[#C9EEF3] px-1 py-1 ysm:px-2 md:px-3 md:py-1.5 rounded-full flex items-center"
+              >
+                <div class="text-primary text-sm">No 2024 price Rise</div>
+                <div class="w-5 h-5 md:ml-1">
+                  <img src="./images/info-icon.svg" alt="" class="" />
+                </div>
+              </div>
+            </div> --}}
+          </div>
+          {{-- <div
+            class="absolute md:static top-20 xsm:right-4 ysm:right-6 zsm:right-12 sm:right-28 bg-[#001E70] text-white w-16 h-18 zsm:w-20 zsm:h-20 rounded-xl flex flex-col items-center justify-center p-2"
+          >
+            <span class="text-[22px]">£90</span>
+            <span class="text-[12px] text-center">GIFT CARD</span>
+          </div> --}}
         </div>
   
-        {{-- <p>order by phone</p>
-        <p>0333 210 1135</p> --}}
-      </div>
-      <!--First Div End-->
-      <!--Second Div Start-->
-      <div class="w-4/6 px-4">
-        <h1 class="w-full text-primary font-bold text-xl">
-          {{$product->title}}
-        </h1>
-        <div class="flex justify-between py-5">
-          <div class="bg-lightBlue px-2 py-2 rounded w-full mr-2">
+        <div
+          class="zsm:pl-8 sm:pl-14 md:pl-0 absolute md:static top-48 left-0 flex gap-2 sm:gap-4 xl:gap-6 mt-10 md:mt-0 md:py-3"
+        >
+          <div class="bg-lightBlue">
             <div
-              class="flex flex-col lg:flex-row lg:justify-between items-center"
+              class="flex flex-col sm:flex-row sm:gap-7 xl:gap-10 items-center min-w-0"
             >
               <span
-                class="text-primary font-bold text-[1.3125rem] order-2 lg:order-1 lg:mr-auto"
+                class="text-primary font-bold text-[1.3125rem] min-w-0 order-2 sm:order-none"
                 >{{$product->download_speed}}{{$product->download_speed_unit}}</span
               >
-              <div class="w-5 h-5 order-1 lg:order-2 lg:ml-auto">
-                <img
-                  src="./images/info-icon.svg"
-                  alt=""
-                  class="w-full h-full"
-                />
-              </div>
+              <img
+                src="./images/info-icon.svg"
+                alt=""
+                class="w-5 h-5 order-1 sm:order-none"
+              />
             </div>
-            <p
-              class="text-primary text-sm text-center lg:text-left lg:max-w-16 order-3"
-            >
+            <p class="text-primary text-sm ml-2 text-center sm:text-start">
               average speed
             </p>
           </div>
   
-          <div class="bg-lightBlue px-2 py-2 rounded w-full mr-2">
+          <div class="bg-lightBlue rounded">
             <div
-              class="flex flex-col lg:flex-row lg:justify-between items-center"
+              class="flex flex-col sm:flex-row sm:gap-7 xl:gap-10 items-center min-w-0"
             >
               <span
-                class="text-primary font-bold  text-[1.3125rem] order-2 lg:order-1 lg:mr-auto"
+                class="text-primary font-bold text-[1.3125rem] min-w-0 order-2 sm:order-none"
                 >{{$product->channels}}</span
               >
-              <div class="w-5 h-5 order-1 lg:order-2 lg:ml-auto">
-                <img
-                  src="./images/info-icon.svg"
-                  alt=""
-                  class="w-full h-full"
-                />
-              </div>
+              <img
+                src="./images/info-icon.svg"
+                alt=""
+                class="w-5 h-5 order-1 sm:order-none"
+              />
             </div>
-            <p
-              class="text-primary text-sm text-center lg:text-left order-3 lg:max-w-16"
-            >
+            <p class="text-primary text-sm ml-2 text-center sm:text-start">
               Tv channels
             </p>
           </div>
   
-          <div class="bg-lightBlue px-2 py-2 rounded w-full mr-2">
+          <div class="bg-lightBlue rounded">
             <div
-              class="flex flex-col lg:flex-row lg:justify-between items-center text-primary font-semibold text-lg"
+              class="flex flex-col sm:flex-row sm:gap-7 xl:gap-10 items-center min-w-0"
             >
               <span
-                class="text-primary font-bold  text-[1.3125rem] order-1 lg:order-none"
+                class="text-primary font-bold text-[1.3125rem] min-w-0 order-2 sm:order-none"
                 >@if ($product->set_up_cost=='0')
-                    {{'Zero'}}
-                @else 
-                {{$product->set_up_cost}}   
-                @endif</span
+                {{'Zero'}}
+            @else 
+            {{$product->set_up_cost}}   
+            @endif</span
               >
-              <div class="w-5 h-5">
-                <img
-                  src="./images/info-icon.svg"
-                  alt=""
-                  class="w-full h-full order-0 lg:order-none"
-                />
-              </div>
+              <img
+                src="./images/info-icon.svg"
+                alt=""
+                class="w-5 h-5 order-1 sm:order-none"
+              />
             </div>
-            <p
-              class="text-primary text-sm text-center lg:max-w-16 lg:text-left"
-            >
+            <p class="text-primary text-sm ml-2 text-center sm:text-start">
               one-off cost
             </p>
           </div>
-  
-          <div class="bg-lightBlue px-2 py-2 rounded w-full mr-2">
+          <div class="hidden sm:block bg-lightBlue rounded">
             <div
-              class="flex flex-col lg:flex-row lg:justify-between items-center text-primary font-semibold text-lg"
+              class="flex flex-col justify-center sm:flex-row sm:gap-2 xl:gap-10 items-center min-w-0"
             >
               <span
-                class="text-primary font-bold  text-[1.3125rem] order-1 lg:order-none"
-                >  {{$product->contract_months}}   </span
+                class="text-primary font-bold text-[1.3125rem] min-w-0 order-2 sm:order-none"
+                >{{$product->contract_months}}</span
               >
-              <div class="w-5 h-5">
-                <img
-                  src="./images/info-icon.svg"
-                  alt=""
-                  class="w-full h-full order-0 lg:order-none"
-                />
-              </div>
+              <img
+                src="./images/info-icon.svg"
+                alt=""
+                class="w-5 h-5 order-1 sm:order-none"
+              />
             </div>
-            <p
-              class="text-primary text-sm text-center lg:max-w-16 lg:text-left"
-            >
-              months contract
+            <p class="text-primary text-sm ml-2 text-center sm:text-start">
+              month contacts
             </p>
           </div>
+          <div
+            class="hidden sm:block sm:w-20 sm:mr-10 sm:mr-0 bg-lightBlue rounded w-full md:w-auto"
+          >
+            <p class="text-primary text-sm ml-2">No phone lines</p>
+          </div>
+        </div>
+      </div>
+      <!-- Second Div End -->
   
-          <div class="bg-lightBlue px-2 py-2 rounded w-full">
-            <div
-              class="flex flex-col lg:flex-row lg:justify-between items-center lg:items-start text-primary"
-            >
-              <p
-                class="text-primary text-sm text-center lg:max-w-16 order-1 lg:order-none lg:text-left"
-              >
-                pay as you go calls
-              </p>
-              <div class="w-5 h-5 order-0 lg:order-none">
-                <img
-                  src="./images/info-icon.svg"
-                  alt=""
-                  class="w-full h-full"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <ul class="w-full flex flex-wrap text-base font-medium">
-          <li class="li-with-dot">New customers only</li>
-          <li class="li-with-dot ml-[0.4rem]">No dish needed</li>
-          <li class="li-with-dot ml-[0.4rem]">Stream live TV</li>
-        </ul>
-      </div>
-      <!--Second Div End-->
-      <!--Third Div Start-->
-      <div   class="relative w-1/6 flex flex-col justify-center items-center text-center"   >
-        <div class="absolute top-0 right-0 w-5 h-5">
-          <img
-            src="./images/regular-heart.svg"
-            alt="Heart Icon"
-            class="w-full h-full"
-          />
-        </div>
-        <div class="flex items-end">
+      <!-- Third Div Start -->
+      <div  class="relative md:w-1/6 flex flex-col justify-center items-center text-center"     >
+        <div         class="absolute md:static xsm:left-24 ysm:left-32 sm:left-44 top-10 w-20 sm:w-40 md:w-full flex flex-col items-center"       >
           <span class="text-primary font-bold text-3xl">£{{$product->stand_monthly}}</span>
-          {{-- <span class="text-primary font-medium text-lg">.00</span> --}}
+          <span class="text-primary font-bold md:mr-2">per month</span>
+          <span class="md:w-full text-primary text-xs md:mb-2"
+            >(prices may change during contract)</span
+          >
         </div>
-        <div class="flex items-center">
-          <span class="text-primary font-bold mr-2">per month</span>
-          <div class="w-5 h-5">
-            <img
-              src="./images/info-icon.svg"
-              alt="Info Icon"
-              class="w-full h-full"
-            />
-          </div>
+       
+        <div  class="flex gap-4 sm:gap-0 md:block absolute md:static top-80 w-full"    >
+          <button
+            class="w-full bg-pink hover:bg-primary text-white rounded-full sm:mb-2 px-4 xl:px-6 py-2 font-bold text-lg"
+          >
+            Get Deal
+          </button>
+          <button
+            class="w-full text-[#FF006D] hover:text-primary sm:underline font-normal py-2 sm:py-0 border sm:border-none border-pink rounded-full"
+          >
+            More Info
+          </button>
+          <!-- Third Div End -->
         </div>
-        <span class="text-primary text-xs mb-2"
-          >(prices may change during contract)</span
-        >
-        <button
-          class="bg-pink hover:bg-primary text-white rounded-full mb-2 px-4 lg:px-6 py-2 font-bold text-lg"
-        >
-          Get Deal
-        </button>
-        <button
-          class="text-[#FF006D] hover:text-primary underline font-normal"
-        >
-          More Info
-        </button>
       </div>
-      <!--Third Div End-->
     </div>
+    {{-- <div class="hidden sm:block -mt-3 pl-[152px] xl:pl-[184px] pb-3">
+      <p>New Customer only</p>
+    </div> --}}
+    <div      class="absolute left-14 top-[25.2rem] block sm:hidden text-[18px] text-[#000038]"    >
+      <span>or call</span> <span class="font-bold">0333 2104567</span>
+    </div>
+  </div>
     @endforeach
     </div>
     <!--Card Code on Desktop End-->

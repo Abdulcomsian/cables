@@ -13,11 +13,13 @@ class ProviderController extends Controller
 {
     public function index()
     {
-        $products=Product::where('category_id','3')->groupBy('provider_id')->paginate(5);
-        //dd($products)
+        //$products=Product::where('category_id','3')->groupBy('provider_id')->paginate(5);
+        $products=Product::where('category_id','3')->paginate(5);
+        $productCount=Product::where('category_id','3')->count();
+        //dd($productCount);
         //$totalrecords=Product::where('category_id','3')->groupBy('provider_id');
         //$totladeals = $totalrecords->count();
-        return view('home', compact('products'));
+        return view('home', compact('products','productCount'));
     } 
 
     public function mutateSpeedUnits($speeds)
@@ -152,9 +154,11 @@ class ProviderController extends Controller
      $query->when(isset($phone) && count($phone), function ($query) use ($phone) {
       $query->whereIn('calls' , $phone);
      });
+     
+    $ordery="'id', 'ASC'";
 
     $products = $query->skip($request->loadedTicket)->take(5)->get();
-
+    $productCount=$query->skip($request->loadedTicket)->count();
      $html = view('search-filters' , ['products' => $products])->render();
      
 
