@@ -229,7 +229,7 @@ class ProviderController extends Controller
 
      
     //$ordery="'id', 'ASC'";
-      //dd($query->toSql());
+    // dd($query->toSql());
 
 
     $products = $query->skip($request->loadedTicket)->take(5)->get();

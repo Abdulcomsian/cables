@@ -431,7 +431,11 @@ $(document).ready(()=>{
       let contract = [];
       let phone = [];
       let sort = [];
-      checkedFilters = document.querySelectorAll("input[type='checkbox']:checked")
+      //checkedFilters = document.querySelectorAll("input[type='checkbox']:checked")
+      let checkedCheckboxes = document.querySelectorAll("input[type='checkbox']:checked");
+      let selectedOption = document.querySelector("select option:checked");
+      let checkedFilters = [...checkedCheckboxes, selectedOption];
+
       checkedFilters.forEach( item => {
       switch( item.dataset.type){
             case 'provider':
