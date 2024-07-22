@@ -156,8 +156,9 @@
       <p class="text-primary text-base mb-4">Can't find what you're looking for?</p>
       <div>
         <button
-          class="rounded-full border border-primary px-8 py-2 font-bold text-base text-primary mr-2"
-        >
+        id="filter-button"
+        class="rounded-full border border-primary xsm:px-4 ysm:px-6 py-3 font-bold text-base text-primary mr-2 md:hidden"
+      >
           Filter my results
         </button> 
         <button

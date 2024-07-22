@@ -1,13 +1,14 @@
-<!--Filters Start-->
 
-<div class="w-3/12 px-4 hidden lg:block">
+<!--Filters Start-->
+<div id="filter-panel" class="fixed md:relative top-0 left-0 h-full md:h-auto w-full md:w-3/12 bg-white px-4 hidden md:block transition-transform transform -translate-x-full md:translate-x-0 z-50">
   <div class="flex justify-between">
     <h2 class="font-bold text-xl text-[#000038]">Filter results</h2>
-    <button
-      class="px-2 py-1 font-bold text-white bg-gray-400 text-base rounded"
-    >
+    <button id="close-button" class="px-2 py-1 font-bold text-white bg-gray-400 text-base rounded md:hidden">
+      Close
+  </button>
+  <button id="reset-button" class="px-2 py-1 font-bold text-white bg-gray-400 text-base rounded">
       Reset
-    </button>
+  </button>
   </div>
  <form action="" id="">
   <!--Speed Filters Start-->
@@ -34,13 +35,13 @@
       <label
         class="checkbox-label text-sm bg-white border border-gray-400 w-full py-1 text-center rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox"  name="bb-mbps-500" id="bb-mbps-500" data-type="speed" data-name="speed[]" value="500mb-1gb" class="hidden simple-checkbox submitform"  />
+        <input type="checkbox"  name="bb-mbps-500" id="bb-mbps-500" data-type="speed" data-name="speed[]" value="500mb-999mb-1gb" class="hidden simple-checkbox submitform"  />
         500-1GB
       </label>
       <label
         class="checkbox-label text-sm bg-white border border-gray-400 w-full py-1 text-center rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox"  name="bb-mbps-1000" id="bb-mbps-1000" data-type="speed" data-name="speed[]" value="1gb"  class="hidden simple-checkbox submitform" />
+        <input type="checkbox"  name="bb-mbps-1000" id="bb-mbps-1000" data-type="speed" data-name="speed[]" value="1gb+"  class="hidden simple-checkbox submitform" />
         1GB+
       </label>
     </div>
@@ -89,12 +90,23 @@
           <img src="/assets//images/Hyperoptic_logo_thumbnail.png" alt="" class="w-full" />
         </div>
       </label>
-      <label
-        class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
-      >
+      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
         <input type="checkbox"  name="provider-now-broadband" data-type="provider"  id="provider-now-broadband"  data-name="provider[]" value="6" class="hidden image-checkbox submitform" />
         <div class="w-16">
           <img src="/assets//images/NOW_Broadband_logo_thumbnail.png" alt="" class="w-full" />
+        </div>
+      </label>
+
+      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+        <input type="checkbox"  name="provider-ee" data-type="provider"  id="provider-ee"  data-name="provider[]" value="4" class="hidden image-checkbox submitform" />
+        <div class="w-16">
+          <img src="/assets//images/EE_logo_thumbnail.png" alt="" class="w-full" />
+        </div>
+      </label>
+      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+        <input type="checkbox"  name="provider-plusnet" data-type="provider"  id="provider-plusnet"  data-name="provider[]" value="7" class="hidden image-checkbox submitform" />
+        <div class="w-16">
+          <img src="/assets//images/Plusnet_logo_thumbnail.png" alt="" class="w-full" />
         </div>
       </label>
     </div>
@@ -122,6 +134,12 @@
       >
         <input type="checkbox" name="pkg-bb" id="pkg-bb" data-type="package"  data-name="package[]" value="1"  class="hidden simple-checkbox submitform" />
         Broadband only
+      </label>
+      <label
+        class="checkbox-label text-sm bg-white border text-left px-4 border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+      >
+        <input type="checkbox" name="pkg-bb" id="pkg-bb" data-type="package"  data-name="package[]" value="4"  class="hidden simple-checkbox submitform" />
+        TV only
       </label>
     </div>
   </div>
@@ -316,27 +334,35 @@ integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="ano
 <script>
 
 $(document).ready(()=>{
-    // $("#deals").change(function () {
-    //       //  alert($("#deals").val());
-    //         document.getElementById("sort").value=document.getElementById("deals").value;
-    //     });
+
+  //   $(document).on("change", "#deals", function(e){
+  //   let optValue = $(this).find(":selected").val();
+  //   console.log(optValue);
+  //   let sort_val = optValue;
+    
+  // });
   
   document.querySelectorAll(".submitform").forEach(function(item){
     item.addEventListener("click" , function(e){
         e.stopPropagation();
         e.stopImmediatePropagation();
-        let provider = [];
+      let provider = [];
       let speed = [];
       let package = [];
       let cost = [];
       let offers = [];
       let contract = [];
       let phone = [];
-      checkedFilters = document.querySelectorAll("input[type='checkbox']:checked")
+      let sort = [];
+      // checkedFilters = document.querySelectorAll("input[type='checkbox']:checked")
+      let checkedCheckboxes = document.querySelectorAll("input[type='checkbox']:checked");
+      let selectedOption = document.querySelector("select option:checked");
+      let checkedFilters = [...checkedCheckboxes, selectedOption];
+
       // let type = item.dataset.type;
      
       checkedFilters.forEach( item => {
-    switch( item.dataset.type){
+    switch(item.dataset.type){
           case 'provider':
            provider.push(item.value);
           break;
@@ -355,29 +381,29 @@ $(document).ready(()=>{
           case 'contract':
           contract.push(item.value); 
           break;
+          case 'phone':
+          phone.push(item.value);
+          break;
           default:
-          phone.push(item.value); 
+          sort.push(item.value); 
         }
 
     })
+    
     filterApplied = document.querySelector("#items_container").dataset.appliedFilter;
-    loadedTickets = parseInt(filterApplied) ? document.querySelectorAll(".ticket").length : 0 
+    // loadedTickets = parseInt(filterApplied) ? document.querySelectorAll(".ticket").length : 0 
+    loadedTickets =  0 
     $.ajax({
           type : 'POST',
           url : '{{route("apply.filter")}}',
-          data : { provider , speed , package , cost , offers , contract , phone , '_token' : '{{csrf_token()}}' , loadedTicket : loadedTickets},
+          data : { provider , speed , package , cost , offers , contract , phone ,sort, '_token' : '{{csrf_token()}}' , loadedTicket : loadedTickets},
           success : function(res){
-            if(!filterApplied || document.querySelectorAll("input[type='checkbox']:checked").length== 1){
-              document.querySelector("#items_container").innerHTML =res.html;
-              document.querySelector("#items_container").setAttribute('data-applied-filter' , 1);
-            }else{
-              document.querySelector("#items_container").insertAdjacentHTML("afterbegin" , res.html);
-              document.querySelector("#items_container").setAttribute('data-applied-filter' , 1);
-            }
-              
+            document.querySelector("#tot_count").innerHTML =res.total_count;
+            document.querySelector("#items_container").innerHTML =res.html;
+            
             if (res.html=='') {
-              console.log('test');
-              $('#load_more_button').html('No More Data Available');
+              console.log('test', res);
+              $('#load_more_button').html('No more deals');
               $('#load_more_button').attr('disabled', true);
             }
             else{
@@ -404,6 +430,7 @@ $(document).ready(()=>{
       let offers = [];
       let contract = [];
       let phone = [];
+      let sort = [];
       checkedFilters = document.querySelectorAll("input[type='checkbox']:checked")
       checkedFilters.forEach( item => {
       switch( item.dataset.type){
@@ -425,24 +452,38 @@ $(document).ready(()=>{
             case 'contract':
             contract.push(item.value); 
             break;
+            case 'phone':
+            phone.push(item.value);
+            break;
             default:
-            phone.push(item.value); 
+            sort.push(item.value); 
           }
 
       })
 
-    filterApplied = document.querySelector("#items_container").dataset.appliedFilter;
-    console.log(filterApplied);
-    loadedTickets = parseInt(filterApplied) ?  document.querySelectorAll(".ticket").length : 0 
+    // filterApplied = document.querySelector("#items_container").dataset.appliedFilter;
+    
+    loadedTickets = document.querySelectorAll(".ticket").length; 
+    //console.log(loadedTickets);
     $.ajax({
           type : 'POST',
           url : '{{route("apply.filter")}}',
-          data : { provider , speed , package , cost , offers , contract , phone , '_token' : '{{csrf_token()}}' , loadedTicket : loadedTickets},
+          data : { provider , speed , package , cost , offers , contract , phone ,sort, '_token' : '{{csrf_token()}}' , loadedTicket : loadedTickets},
           success : function(res){
-            
+            //console.log(res.html);
               document.querySelector("#items_container").insertAdjacentHTML("beforeend" , res.html);
               document.querySelector("#items_container").setAttribute('data-applied-filter' , 1);
             
+              if (res.html=='') {
+              console.log('test', res);
+              $('#load_more_button').html('No more deals');
+              $('#load_more_button').attr('disabled', true);
+            }
+            else{
+              $('#load_more_button').html('Show me more deals');
+              $('#load_more_button').attr('disabled', false);
+
+            }
     
           }
          
@@ -451,16 +492,50 @@ $(document).ready(()=>{
   
 })
  
-// document.getElementbyID(#deals).change(function () {
-//             alert("test");
-//         });
-
-//document.getElementbyID(#deals)
-
-// $(document).on("click" , "#load_more_button" , function(){
-//   applyFilter()
-// })
 
 
+$('#reset-button').on('click',function(){
+
+  
+   let provider = [];
+   let speed = [];
+  let package = [];
+  let cost = [];
+ let offers = [];
+  let contract = [];
+  let phone = [];
+  let sort = [];
+  filterApplied = document.querySelector("#items_container").dataset.appliedFilter;
+  //loadedTickets = parseInt(filterApplied) ? document.querySelectorAll(".ticket").length : 0 
+  loadedTickets =  0 
+    $.ajax({
+          type : 'POST',
+          url : '{{route("apply.filter")}}',
+          data : { provider , speed , package , cost , offers , contract , phone ,sort, '_token' : '{{csrf_token()}}' , loadedTicket : loadedTickets},
+          success : function(res){
+            document.querySelector("#tot_count").innerHTML =res.total_count;
+            document.querySelector("#tot_count").innerHTML =res.total_count;
+            
+              document.querySelector("#items_container").innerHTML =res.html;
+            
+              
+           
+          }
+        })
+    
+
+        
+          $(".submitform").prop("checked", false);
+          document.querySelectorAll(".checkbox-label").forEach(el =>
+          { 
+            el.classList.remove("bg-primary"); 
+            el.classList.remove("text-white");
+            el.classList.remove("bg-lightGray");
+            el.classList.remove("border-primary");
+          })
+
+         
+   x
+  });
 
 </script>

@@ -14,11 +14,9 @@ class ProviderController extends Controller
     public function index()
     {
         //$products=Product::where('category_id','3')->groupBy('provider_id')->paginate(5);
-        $products=Product::where('category_id','3')->paginate(5);
-        $productCount=Product::where('category_id','3')->count();
-        //dd($productCount);
-        //$totalrecords=Product::where('category_id','3')->groupBy('provider_id');
-        //$totladeals = $totalrecords->count();
+        $products=Product::paginate(5);
+        $productCount=Product::count();
+       
         return view('home', compact('products','productCount'));
     } 
 
@@ -92,49 +90,106 @@ class ProviderController extends Controller
     public function getFIlteredProvider(Request $request)
     {
 
+      // dd($request->all());
       $provider = $request->provider;
       $speed = $request->speed;
       $cost = $request->cost;
       $package = $request->package;
       $contract= $request->contract;
       $phone= $request->phone;
+      $sortValue = $request->sort;
       $query = Product::query();
       
-      $query->when(isset($provider) && count($provider), function ($query) use ($provider) {
-          $query->whereIn('provider_id' , $provider);
-      });
+    
 
       $query->when(isset($speed) && count($speed) , function($query1) use ($speed) {
 
-          [$minMb , $maxMb , $minGb , $maxGb , $flag] = $this->mutateSpeedUnits($speed);
-          
-          $query1->when($minMb , function($query2) use($minMb) {
-            $query2->where('download_speed' , '>=' , $minMb)->where('download_speed_unit' , 'mb');
-          });
+          foreach($speed as $thisSpeed)
+          {
+              $flag = false;
+              $mb = $gb = [];
+              if(str_contains($thisSpeed , "+")){ $flag = true; }
+              $speed = str_replace("+" , "" , $thisSpeed);
+      
+              $speedList = explode("-" , $thisSpeed);
+              foreach($speedList as $thisSpeed)
+              {
+                preg_match('/(\d+)(\D*)/', $thisSpeed, $matches);
+                $matches[2] == "mb" ? $mb[] = $matches[1] : $gb[] = $matches[1];
+              }
 
-          $query1->when($maxMb , function($query2) use($maxMb) {
-            $query2->where('download_speed' , '<=' , $maxMb)->where('download_speed_unit' , 'mb');;
-          });
+              $minMb = count($mb) ? MIN(array_unique($mb)) : null;
+              $maxMb = count($mb) && count($mb) > 1 ? MAX(array_unique($mb)) : null;
+              
+              $minGb = count($gb) ?  MIN(array_unique($gb)) : null;
+              $maxGb = count($gb) && count($gb) > 1 ?  MAX(array_unique($gb)) : null;
+              
 
-          if(!$flag){
-            $query1->when($minGb , function($query2) use($minGb) {
-              $query2->where('download_speed' , '>=' , $minGb)->where('download_speed_unit' , 'gb');
-            });
+              // $query1->when($minMb , function($query2) use ($minMb , $maxMb){
+              //     $query2->when(!isset($maxMb), function($query3) use ($minMb){
+              //       $query3->orWhere('download_speed' , $minMb)->where('download_speed_unit' , 'mb');
+              //     });
+
+              //     $query2->when(isset($maxMb), function($query3) use ($minMb , $maxMb){
+              //       $query3->orWhere( function($query4) use ($minMb , $maxMb){
+              //         $query4->whereBetween( 'download_speed' , [$minMb , $maxMb])->where('download_speed_unit' , 'mb');
+              //       });
+              //     });
+
+              // });
+
+
+              $query1->when($minMb , function($subquery) use ($minMb , $maxMb){
+
+                $subquery->orWhere(function($query2) use ($minMb , $maxMb) {
+                  $query2->when(!isset($maxMb), function($query3) use ($minMb){
+                    $query3->orWhere('download_speed' , $minMb);
+                  });
   
-            $query1->when($maxGb , function($query2) use($maxGb) {
-              $query2->where('download_speed' , '<=' , $maxGb)->where('download_speed_unit' , 'gb');
+                  $query2->when(isset($maxMb), function($query3) use ($minMb , $maxMb){
+                    $query3->orWhere( function($query4) use ($minMb , $maxMb){
+                      $query4->whereBetween( 'download_speed' , [$minMb , $maxMb]);
+                    });
+                  });
+
+                  $query2->where('download_speed_unit' , 'mb');
+                });
+
+
             });
 
-          }  else {
 
-            $query1->when($maxGb , function($query2) use($minGb) {
-              $query2->where('download_speed' , '>=' , $minGb)->where('download_speed_unit' , 'gb');
+
+              $query1->when($minGb , function($query2) use ($minGb , $maxGb , $flag){
+          
+                $query2->when(!isset($maxGb), function($query3) use ($minGb){
+                  $query3->orWhere('download_speed' , $minGb)->where('download_speed_unit' , 'gb');
+                });
+
+                $query2->when(isset($maxGb), function($query3) use ($minGb , $maxGb){
+                  $query3->orWhere( function($query4) use ($minGb , $maxGb){
+                    $query4->whereBetween( 'download_speed' , [$minGb , $maxGb])->where('download_speed_unit' , 'gb');
+                  });
+                });
+
+                $query2->when($flag , function($query3) use ($minGb){
+                  $query3->orWhere('download_speed' , '>=' , $minGb)->where('download_speed_unit' , 'gb');
+                });
+
             });
+
+            
+
 
           }
 
+
+
       });
 
+      $query->when(isset($provider) && count($provider), function ($query1) use ($provider) {
+        $query1->whereIn('provider_id' , $provider);
+      });
 
       $query->when(isset($cost) && count($cost) , function($query1) use ($cost) {
           [$minCost , $maxCost] = $this->mutateCost($cost);
@@ -143,289 +198,52 @@ class ProviderController extends Controller
       });
 
 
-      $query->when(isset($package) && count($package), function ($query) use ($package) {
-        $query->whereIn('category_id' , $package);
+      $query->when(isset($package) && count($package), function ($query1) use ($package) {
+        $query1->whereIn('category_id' , $package);
     });
 
-    $query->when(isset($contract) && count($contract), function ($query) use ($contract) {
-      $query->whereIn('contract_months' , $contract);
+    $query->when(isset($contract) && count($contract), function ($query1) use ($contract) {
+      $query1->whereIn('contract_months' , $contract);
      });
 
-     $query->when(isset($phone) && count($phone), function ($query) use ($phone) {
-      $query->whereIn('calls' , $phone);
+     $query->when(isset($phone) && count($phone), function ($query1) use ($phone) {
+      $query1->whereIn('calls' , $phone);
      });
+
+     $query->when(isset($sortValue), function($query1) use ($sortValue){
+      foreach($sortValue as $sorty){
+        if($sorty == "download_asc"){
+          $query1->orderByRaw("
+          CASE 
+              WHEN download_speed_unit = 'GB' THEN download_speed * 1024 
+              ELSE download_speed 
+          END ASC
+      ");
+        }
+
+        if($sorty == "price_asc"){
+          $query1->orderBy("stand_monthly", "asc");
+        }
+      }
+     });
+
      
-    $ordery="'id', 'ASC'";
+    //$ordery="'id', 'ASC'";
+      //dd($query->toSql());
+
 
     $products = $query->skip($request->loadedTicket)->take(5)->get();
+    // $products = $yquery->take(5)->get();
     $productCount=$query->skip($request->loadedTicket)->count();
-     $html = view('search-filters' , ['products' => $products])->render();
+    $html = view('search-filters' , ['products' => $products])->render();
      
 
 
-     return response()->json(['status' => true , 'html' => $html]);
+    return response()->json(['status' => true , 'html' => $html, 'total_count'=>$productCount]);
 
      // dd($providerList);
             
-            // $query->when(isset($speed) && !is_null($speed) , function($query) use ($request){
-            //     $query->whereHas('product' , function($query1) use($request){
-            //         $query1->whereIn('id' , $speed);
-    
-            //         $query1->when(isset($request->category) && !is_null($request->category) , function($query2) use ($request){
-            //             $query2->whereHas('category' , function($query3) use($request){
-            //                 $query3->whereIn('id' , $request->category);
-            //             });
-            //         });
-    
-            //     });
-            // });
 
-
-    // $speedArray = $request->speed;
-    // $providerArray = $request->provider;
-    // $packageArray = $request->package;
-    // $monthlycostArray = $request->monthlycost;
-    // $query = Product::query();
-
-    // if (!empty($speedArray)) {
-    //     $query->where(function ($query) use ($speedArray) {
-    //         foreach ($speedArray as $index => $speed) {
-    //             $query->when(isset($speed) && !is_null($speed), function ($query) use ($speed, $index) {
-    //                 if ($speed == "1-60") {
-    //                     $query->orWhereRaw("CAST(SUBSTRING_INDEX(`download_speed`, 'mb', 1) AS UNSIGNED) BETWEEN ? AND ?", [1, 60]);
-    //                 }
-    //                 if ($speed == "60-100") {
-    //                     $query->orWhereRaw("CAST(SUBSTRING_INDEX(`download_speed`, 'mb', 1) AS UNSIGNED) BETWEEN ? AND ?", [60, 100]);
-    //                 }
-    //                 if ($speed == "100-500") {
-    //                     $query->orWhereRaw("CAST(SUBSTRING_INDEX(`download_speed`, 'mb', 1) AS UNSIGNED) BETWEEN ? AND ?", [100, 500]);
-    //                 }
-    //                 if ($speed == "500-1gb") {
-    //                     $query->orWhereRaw("CAST(SUBSTRING_INDEX(`download_speed`, 'mb', 1) AS UNSIGNED) BETWEEN ? AND ?", [500, 1000]);
-    //                 }
-    //                 if ($speed == "1gb") {
-    //                     $query->orWhereRaw("CAST(SUBSTRING_INDEX(`download_speed`, 'mb', 1) AS UNSIGNED) BETWEEN ? AND ?", [1000, 10000]);
-    //                 }
-    //             });
-    //         }
-    //     });
-    // }
-
-    // if (!empty($monthlycostArray)) {
-    //     $query->whereIn('provider_id', $monthlycostArray);
-    // }
-    // if (!empty($packageArray)) {
-    //   $query->whereIn('category_id', $packageArray);
-    //  }
-
-  //    if (!empty($monthlycostArray)) {
-  //     $query->where(function ($query) use ($monthlycostArray) {
-  //         foreach ($monthlycostArray as $index => $monthlycost) {
-  //             $query->when(isset($monthlycost) && !is_null($monthlycost), function ($query) use ($monthlycost, $index) {
-  //                 if ($monthlycost == "1-25") {
-  //                     $query->orWhereRaw("CAST(SUBSTRING_INDEX(`stand_monthly`, 'mb', 1) AS UNSIGNED) BETWEEN ? AND ?", [1, 25]);
-  //                 }
-  //                 if ($monthlycost == "25-50") {
-  //                     $query->orWhereRaw("CAST(SUBSTRING_INDEX(`stand_monthly`, 'mb', 1) AS UNSIGNED) BETWEEN ? AND ?", [25, 50]);
-  //                 }
-  //                 if ($monthlycost == "50-75") {
-  //                     $query->orWhereRaw("CAST(SUBSTRING_INDEX(`stand_monthly`, 'mb', 1) AS UNSIGNED) BETWEEN ? AND ?", [50, 75]);
-  //                 }
-  //                 if ($monthlycost == "75plus") {
-  //                     $query->orWhereRaw("CAST(SUBSTRING_INDEX(`stand_monthly`, 'mb', 1) AS UNSIGNED) BETWEEN ? AND ?", [76, 100]);
-  //                 }
-                  
-  //             });
-  //         }
-  //     });
-  // }
-
-
-  //previous code to show search results
-    // $data = $query->get();
-    //    $html = [];
-    //     foreach($data as $product){
-    //         $html[] = '
-            
-    // <div class="bg-white mx-4 hidden md:flex justify-between p-4 rounded-lg shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] mb-8">
-    //   <!--First Div Start-->
-    //   <div class="w-1/6 flex flex-col justify-center items-center">
-    //     <div class="w-30 h-20">
-    //       <img
-    //         src="/assets'.$product->thumbnail_retailer.'" alt="sky"       class="w-full h-full" />
-    //     </div>
-  
-    //     <p>order by phone</p>
-    //     <p>0333 210 1135</p>
-    //   </div>
-    //   <!--First Div End-->
-    //   <!--Second Div Start-->
-    //   <div class="w-4/6 px-4">
-    //     <h1 class="w-full text-primary font-bold text-xl">
-    //      '.$product->title.'
-    //     </h1>
-    //     <div class="flex justify-between py-5">
-    //       <div class="bg-lightBlue px-2 py-2 rounded w-full mr-2">
-    //         <div
-    //           class="flex flex-col lg:flex-row lg:justify-between items-center"
-    //         >
-    //           <span
-    //             class="text-primary font-bold text-[1.3125rem] order-2 lg:order-1 lg:mr-auto"
-    //             >'.$product->download_speed.'</span
-    //           >
-    //           <div class="w-5 h-5 order-1 lg:order-2 lg:ml-auto">
-    //             <img
-    //               src="./images/info-icon.svg"
-    //               alt=""
-    //               class="w-full h-full"
-    //             />
-    //           </div>
-    //         </div>
-    //         <p
-    //           class="text-primary text-sm text-center lg:text-left lg:max-w-16 order-3"
-    //         >
-    //           average speed
-    //         </p>
-    //       </div>
-  
-    //       <div class="bg-lightBlue px-2 py-2 rounded w-full mr-2">
-    //         <div
-    //           class="flex flex-col lg:flex-row lg:justify-between items-center"
-    //         >
-    //           <span
-    //             class="text-primary font-bold  text-[1.3125rem] order-2 lg:order-1 lg:mr-auto"
-    //             >'.$product->channels.'+</span
-    //           >
-    //           <div class="w-5 h-5 order-1 lg:order-2 lg:ml-auto">
-    //             <img
-    //               src="./images/info-icon.svg"
-    //               alt=""
-    //               class="w-full h-full"
-    //             />
-    //           </div>
-    //         </div>
-    //         <p
-    //           class="text-primary text-sm text-center lg:text-left order-3 lg:max-w-16"
-    //         >
-    //           Tv channels
-    //         </p>
-    //       </div>
-  
-    //       <div class="bg-lightBlue px-2 py-2 rounded w-full mr-2">
-    //         <div
-    //           class="flex flex-col lg:flex-row lg:justify-between items-center text-primary font-semibold text-lg"
-    //         >
-    //           <span
-    //             class="text-primary font-bold  text-[1.3125rem] order-1 lg:order-none"
-    //             ></span
-    //           >
-    //           <div class="w-5 h-5">
-    //             <img
-    //               src="./images/info-icon.svg"
-    //               alt=""
-    //               class="w-full h-full order-0 lg:order-none"
-    //             />
-    //           </div>
-    //         </div>
-    //         <p
-    //           class="text-primary text-sm text-center lg:max-w-16 lg:text-left"
-    //         >
-    //           one-off cost
-    //         </p>
-    //       </div>
-  
-    //       <div class="bg-lightBlue px-2 py-2 rounded w-full mr-2">
-    //         <div
-    //           class="flex flex-col lg:flex-row lg:justify-between items-center text-primary font-semibold text-lg"
-    //         >
-    //           <span
-    //             class="text-primary font-bold  text-[1.3125rem] order-1 lg:order-none"
-    //             >  '.$product->contract.'   </span
-    //           >
-    //           <div class="w-5 h-5">
-    //             <img
-    //               src="./images/info-icon.svg"
-    //               alt=""
-    //               class="w-full h-full order-0 lg:order-none"
-    //             />
-    //           </div>
-    //         </div>
-    //         <p
-    //           class="text-primary text-sm text-center lg:max-w-16 lg:text-left"
-    //         >
-    //           months contract
-    //         </p>
-    //       </div>
-  
-    //       <div class="bg-lightBlue px-2 py-2 rounded w-full">
-    //         <div
-    //           class="flex flex-col lg:flex-row lg:justify-between items-center lg:items-start text-primary"
-    //         >
-    //           <p
-    //             class="text-primary text-sm text-center lg:max-w-16 order-1 lg:order-none lg:text-left"
-    //           >
-    //             pay as you go calls
-    //           </p>
-    //           <div class="w-5 h-5 order-0 lg:order-none">
-    //             <img
-    //               src="./images/info-icon.svg"
-    //               alt=""
-    //               class="w-full h-full"
-    //             />
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </div>
-    //     <ul class="w-full flex flex-wrap text-base font-medium">
-    //       <li class="li-with-dot">New customers only</li>
-    //       <li class="li-with-dot ml-[0.4rem]">No dish needed</li>
-    //       <li class="li-with-dot ml-[0.4rem]">Stream live TV</li>
-    //     </ul>
-    //   </div>
-    //   <!--Second Div End-->
-    //   <!--Third Div Start-->
-    //   <div   class="relative w-1/6 flex flex-col justify-center items-center text-center"   >
-    //     <div class="absolute top-0 right-0 w-5 h-5">
-    //       <img
-    //         src="./images/regular-heart.svg"
-    //         alt="Heart Icon"
-    //         class="w-full h-full"
-    //       />
-    //     </div>
-    //     <div class="flex items-end">
-    //       <span class="text-primary font-bold text-3xl">£'.$product->stand_monthly.'</span>
-    //       <span class="text-primary font-medium text-lg">.00</span>
-    //     </div>
-    //     <div class="flex items-center">
-    //       <span class="text-primary font-bold mr-2">per month</span>
-    //       <div class="w-5 h-5">
-    //         <img
-    //           src="./images/info-icon.svg"
-    //           alt="Info Icon"
-    //           class="w-full h-full"
-    //         />
-    //       </div>
-    //     </div>
-    //     <span class="text-primary text-xs mb-2"
-    //       >(prices may change during contract)</span
-    //     >
-    //     <button
-    //       class="bg-pink hover:bg-primary text-white rounded-full mb-2 px-4 lg:px-6 py-2 font-bold text-lg"
-    //     >
-    //       Get Deal
-    //     </button>
-    //     <button
-    //       class="text-[#FF006D] hover:text-primary underline font-normal"
-    //     >
-    //       More Info
-    //     </button>
-    //   </div>
-    // </div>
-    //         ';
-    //     }
-
-
-    //     return $html;
     }
 
     public function ManageProviders(){
@@ -434,26 +252,3 @@ class ProviderController extends Controller
 
     }
 }
-// foreach($providerArray as $provider){
-        //     $query->when(isset($provider) && !is_null($provider), function ($query) use ($provider) {
-        //             $query->whereIn('provider_id' , $provider);
-               
-               
-        //     });
-
-            
-        // }
-            
-            // $query->when(isset($speed) && !is_null($speed) , function($query) use ($request){
-            //     $query->whereHas('product' , function($query1) use($request){
-            //         $query1->whereIn('id' , $speed);
-    
-            //         $query1->when(isset($request->category) && !is_null($request->category) , function($query2) use ($request){
-            //             $query2->whereHas('category' , function($query3) use($request){
-            //                 $query3->whereIn('id' , $request->category);
-            //             });
-            //         });
-    
-            //     });
-            // });
-       
