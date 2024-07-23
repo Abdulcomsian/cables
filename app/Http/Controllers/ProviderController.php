@@ -102,86 +102,77 @@ class ProviderController extends Controller
       
     
 
-      $query->when(isset($speed) && count($speed) , function($query1) use ($speed) {
-
-          foreach($speed as $thisSpeed)
-          {
-              $flag = false;
-              $mb = $gb = [];
-              if(str_contains($thisSpeed , "+")){ $flag = true; }
-              $speed = str_replace("+" , "" , $thisSpeed);
-      
-              $speedList = explode("-" , $thisSpeed);
-              foreach($speedList as $thisSpeed)
-              {
-                preg_match('/(\d+)(\D*)/', $thisSpeed, $matches);
-                $matches[2] == "mb" ? $mb[] = $matches[1] : $gb[] = $matches[1];
-              }
-
-              $minMb = count($mb) ? MIN(array_unique($mb)) : null;
-              $maxMb = count($mb) && count($mb) > 1 ? MAX(array_unique($mb)) : null;
-              
-              $minGb = count($gb) ?  MIN(array_unique($gb)) : null;
-              $maxGb = count($gb) && count($gb) > 1 ?  MAX(array_unique($gb)) : null;
-              
-
-              // $query1->when($minMb , function($query2) use ($minMb , $maxMb){
-              //     $query2->when(!isset($maxMb), function($query3) use ($minMb){
-              //       $query3->orWhere('download_speed' , $minMb)->where('download_speed_unit' , 'mb');
-              //     });
-
-              //     $query2->when(isset($maxMb), function($query3) use ($minMb , $maxMb){
-              //       $query3->orWhere( function($query4) use ($minMb , $maxMb){
-              //         $query4->whereBetween( 'download_speed' , [$minMb , $maxMb])->where('download_speed_unit' , 'mb');
-              //       });
-              //     });
-
-              // });
-
-
-              $query1->when($minMb , function($subquery) use ($minMb , $maxMb){
-
-                $subquery->orWhere(function($query2) use ($minMb , $maxMb) {
-                  $query2->when(!isset($maxMb), function($query3) use ($minMb){
-                    $query3->orWhere('download_speed' , $minMb);
+      $query->when(isset($speed) && count($speed) , function($query) use ($speed) {
+          $query->where( function($query1) use ($speed) {
+            foreach($speed as $thisSpeed)
+            { //here
+                $flag = false;
+                $mb = $gb = [];
+                if(str_contains($thisSpeed , "+")){ $flag = true; }
+                $speed = str_replace("+" , "" , $thisSpeed);
+        
+                $speedList = explode("-" , $thisSpeed);
+                foreach($speedList as $thisSpeed)
+                {
+                  preg_match('/(\d+)(\D*)/', $thisSpeed, $matches);
+                  $matches[2] == "mb" ? $mb[] = $matches[1] : $gb[] = $matches[1];
+                }
+  
+                $minMb = count($mb) ? MIN(array_unique($mb)) : null;
+                $maxMb = count($mb) && count($mb) > 1 ? MAX(array_unique($mb)) : null;
+                
+                $minGb = count($gb) ?  MIN(array_unique($gb)) : null;
+                $maxGb = count($gb) && count($gb) > 1 ?  MAX(array_unique($gb)) : null;
+                
+  
+  
+                $query1->when($minMb , function($subquery) use ($minMb , $maxMb){
+  
+                  $subquery->orWhere(function($query2)  use ($minMb , $maxMb){
+                      $query2->when(!isset($maxMb), function($query3) use ($minMb){
+                          $query3->where('download_speed' , $minMb);
+                       });
+  
+                       $query2->when(isset($maxMb) , function($query3) use($minMb , $maxMb){
+                          $query3->whereBetween( 'download_speed' , [$minMb , $maxMb]);
+                       });
+  
+  
+                       $query2->where('download_speed_unit' , 'mb');
+                      
                   });
   
-                  $query2->when(isset($maxMb), function($query3) use ($minMb , $maxMb){
-                    $query3->orWhere( function($query4) use ($minMb , $maxMb){
-                      $query4->whereBetween( 'download_speed' , [$minMb , $maxMb]);
-                    });
+              });
+  
+  
+  
+                $query1->when($minGb , function($subquery) use ($minGb , $maxGb , $flag){
+                  $subquery->orWhere( function($query2) use ($minGb , $maxGb , $flag){
+                    
+                    $query2->when(!isset($maxGb) && !$flag, function($query3) use ($minGb){
+                          $query3->where('download_speed' , $minGb);
+                        });
+  
+                        $query2->when(isset($maxGb) && !$flag, function($query3) use ($minGb , $maxGb){
+                          $query3->whereBetween( 'download_speed' , [$minGb , $maxGb]);
+                        });
+  
+                        $query2->when($flag , function($query3) use ($minGb){
+                          $query3->where('download_speed' , '>=' , $minGb);
+                        });
+  
+                        $query2->where('download_speed_unit' , 'gb');
+  
                   });
+  
+              });
+  
+              
+  
+  
+            }//here end
 
-                  $query2->where('download_speed_unit' , 'mb');
-                });
-
-
-            });
-
-
-
-              $query1->when($minGb , function($query2) use ($minGb , $maxGb , $flag){
-          
-                $query2->when(!isset($maxGb), function($query3) use ($minGb){
-                  $query3->orWhere('download_speed' , $minGb)->where('download_speed_unit' , 'gb');
-                });
-
-                $query2->when(isset($maxGb), function($query3) use ($minGb , $maxGb){
-                  $query3->orWhere( function($query4) use ($minGb , $maxGb){
-                    $query4->whereBetween( 'download_speed' , [$minGb , $maxGb])->where('download_speed_unit' , 'gb');
-                  });
-                });
-
-                $query2->when($flag , function($query3) use ($minGb){
-                  $query3->orWhere('download_speed' , '>=' , $minGb)->where('download_speed_unit' , 'gb');
-                });
-
-            });
-
-            
-
-
-          }
+          });
 
 
 
@@ -199,16 +190,16 @@ class ProviderController extends Controller
 
 
       $query->when(isset($package) && count($package), function ($query1) use ($package) {
-        $query1->whereIn('category_id' , $package);
-    });
+          $query1->whereIn('category_id' , $package);
+      });
 
-    $query->when(isset($contract) && count($contract), function ($query1) use ($contract) {
-      $query1->whereIn('contract_months' , $contract);
-     });
+      $query->when(isset($contract) && count($contract), function ($query1) use ($contract) {
+        $query1->whereIn('contract_months' , $contract);
+      });
 
-     $query->when(isset($phone) && count($phone), function ($query1) use ($phone) {
-      $query1->whereIn('calls' , $phone);
-     });
+      $query->when(isset($phone) && count($phone), function ($query1) use ($phone) {
+        $query1->whereIn('calls' , $phone);
+      });
 
      $query->when(isset($sortValue), function($query1) use ($sortValue){
       foreach($sortValue as $sorty){
@@ -228,10 +219,7 @@ class ProviderController extends Controller
      });
 
      
-    //$ordery="'id', 'ASC'";
-    // dd($query->toSql());
-
-
+   //dd($query->toSql());
     $products = $query->skip($request->loadedTicket)->take(5)->get();
     // $products = $yquery->take(5)->get();
     $productCount=$query->skip($request->loadedTicket)->count();

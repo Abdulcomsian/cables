@@ -146,7 +146,7 @@
         <!-- Third Div Start -->
         <div class="relative md:w-1/6 flex flex-col justify-center items-center text-center"       >
           <div class="absolute md:static xsm:left-32 ysm:left-44 zsm:left-48 sm:left-44 xsm:top-20 ysm:top-14 w-20 sm:w-40 md:w-full flex flex-col items-center"         >
-            <span class="text-primary font-bold text-3xl">£39.00</span>
+            <span class="text-primary font-bold text-3xl">£{{$product->stand_monthly}}</span>
             <span class="text-primary font-bold md:mr-2">per month</span>
             <span class="md:w-full text-primary text-xs md:mb-2"
               >(prices may change during contract)</span
