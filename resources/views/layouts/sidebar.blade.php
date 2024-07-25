@@ -141,6 +141,12 @@
         <input type="checkbox" name="pkg-bb" id="pkg-bb" data-type="package"  data-name="package[]" value="4"  class="hidden simple-checkbox submitform" />
         TV only
       </label>
+      <label
+      class="checkbox-label text-sm bg-white border text-left px-4 border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+    >
+      <input type="checkbox" name="pkg-bb" id="pkg-bb" data-type="package"  data-name="package[]" value="3"  class="hidden simple-checkbox submitform" />
+      Packages
+    </label>
     </div>
   </div>
   <!--Package Filters End-->
@@ -310,7 +316,7 @@
       <label
         class="checkbox-label text-sm bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" name="phone" class="hidden simple-checkbox submitform" value='international'   data-type="phone" data-name="phone[]" />
+        <input type="checkbox" name="phone" class="hidden simple-checkbox submitform" value='Pay as you go'   data-type="phone" data-name="phone[]" />
         Pay as you go calls
       </label>
       <label
@@ -329,6 +335,25 @@
 </div>
 
 <!--Filters  End-->
+  {{-- for info modal --}}
+
+  <div id="modal-overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+
+{{---- Modal toggle ----}}
+<!-- Main modal -->
+<div id="default-modal1" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-2xl max-h-full">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700 " id="packagedetial">
+ 
+     
+    </div>
+  </div>
+</div>
+
+
+
+
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"
 integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 <script>
@@ -505,7 +530,7 @@ $('#reset-button').on('click',function(){
    let speed = [];
   let package = [];
   let cost = [];
- let offers = [];
+  let offers = [];
   let contract = [];
   let phone = [];
   let sort = [];
@@ -539,7 +564,67 @@ $('#reset-button').on('click',function(){
           })
 
          
-   x
+  
   });
 
+  // function handleIconClick(event) {
+  //   const recordId = event.target.getAttribute("data-record-id");
+  //   console.log("Record ID:", recordId); // For debugging
+  // }
+
+  function toggleModal() {
+    const modal = document.getElementById("default-modal1");
+    const overlay = document.getElementById("modal-overlay");
+    modal.classList.toggle("hidden");
+    modal.classList.toggle("flex");
+    overlay.classList.toggle("hidden");
+  }
+  
+
+$(document).on("click" , ".view-more-info" , function(){
+  const recordId = event.target.getAttribute("data-record-id");
+    console.log("Record ID:", recordId); // For debugging
+    $.ajax({
+          type : 'POST',
+          url : '{{route("apply.moreinfo")}}',
+          data : { 
+            'id': recordId,
+            '_token' : '{{csrf_token()}}' 
+          },
+          success : function(res){
+            console.log(res.moreinfodata);
+            console.log(document.querySelector("#packagedetial"));
+            document.querySelector("#packagedetial").innerHTML = res.moreinfodata;
+         toggleModal()
+        }
+    })
+})
+
+$(document).on("click" , "#close-modal-btn" , function(){
+  toggleModal()
+})
+
+
+        //for more info
+// document.addEventListener("DOMContentLoaded", function () {
+//   const modal = document.getElementById("default-modal1");
+//   const overlay = document.getElementById("modal-overlay");
+//   const infoIcons = document.querySelectorAll(".view-more-info");
+//   const closeModalBtn = document.getElementById("close-modal-btn");
+  
+
+//   function toggleModal() {
+//     modal.classList.toggle("hidden");
+//     modal.classList.toggle("flex");
+//     overlay.classList.toggle("hidden");
+//   }
+
+//   infoIcons.forEach(icon => {
+//     icon.addEventListener("click", toggleModal);
+//   });
+//   closeModalBtn.addEventListener("click", toggleModal);
+//   overlay.addEventListener("click", toggleModal);
+// });
+
 </script>
+

@@ -24,3 +24,4 @@ Route::get('/broadband-providers', [ProviderController::class, 'ManageProviders'
 Route::post('/submit-provider', [ProviderController::class, 'AddProvider'])->name('submit.provider');
 Route::get('/load-more-data', [ProviderController::class,'loadMoreData'])->name('load.more');
 Route::post('/filter', [ProviderController::class,'getFIlteredProvider'])->name('apply.filter');
+Route::post('/moreinfo', [ProviderController::class,'getMoreInfo'])->name('apply.moreinfo');

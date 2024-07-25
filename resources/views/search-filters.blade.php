@@ -137,7 +137,7 @@
             <div
               class="hidden sm:block sm:w-20 sm:mr-10 sm:mr-0 bg-lightBlue rounded w-full md:w-auto"
             >
-              <p class="text-primary text-sm ml-2">No phone lines</p>
+              <p class="text-primary text-sm ml-2">{{$product->calls}}</p>
             </div>
           </div>
         </div>
@@ -148,6 +148,13 @@
           <div class="absolute md:static xsm:left-32 ysm:left-44 zsm:left-48 sm:left-44 xsm:top-20 ysm:top-14 w-20 sm:w-40 md:w-full flex flex-col items-center"         >
             <span class="text-primary font-bold text-3xl">£{{$product->stand_monthly}}</span>
             <span class="text-primary font-bold md:mr-2">per month</span>
+            <span>
+              <img
+                src="./images/info-icon.svg"
+                alt=""
+                class="w-5 h-5 order-1 view-more-info sm:order-none" data-record-id="{{$product->id}}"
+              />
+            </span>
             <span class="md:w-full text-primary text-xs md:mb-2"
               >(prices may change during contract)</span
             >
@@ -162,7 +169,7 @@
               Get Deal
             </button>
             <button
-              class="w-full text-[#FF006D] hover:text-primary sm:underline font-normal py-2 sm:py-0 border sm:border-none border-pink rounded-full"
+              class="w-full text-[#FF006D] hover:text-primary sm:underline font-normal py-2 sm:py-0 border sm:border-none border-pink rounded-full view-more-info" data-record-id="{{$product->id}}"
             >
               More Info
             </button>

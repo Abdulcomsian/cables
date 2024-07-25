@@ -14,7 +14,7 @@ class ProviderController extends Controller
     public function index()
     {
         //$products=Product::where('category_id','3')->groupBy('provider_id')->paginate(5);
-        $products=Product::paginate(5);
+        $products=Product::orderBy("stand_monthly", "asc")->paginate(5);
         $productCount=Product::count();
        
         return view('home', compact('products','productCount'));
@@ -234,6 +234,14 @@ class ProviderController extends Controller
 
     }
 
+    public function getMoreInfo(Request $request){
+      //dd($request->all());
+      $productdetial=Product::where('id',$request->id)->first();
+    // dd($productdetial);
+      $moreinfodata = view('viewmore-data' , ['productdetail' => $productdetial])->render();
+      return response()->json(['status' => true , 'moreinfodata' => $moreinfodata]);
+
+    }
     public function ManageProviders(){
       
         return view('manage-providers');

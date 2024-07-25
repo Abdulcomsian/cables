@@ -111,6 +111,9 @@ document.getElementById('filter-button').addEventListener('click', function() {
     
 
 </script>
+<script src="node_modules/@material-tailwind/html/scripts/tabs.js"></script>
+ <!-- from cdn -->
+<script src="https://unpkg.com/@material-tailwind/html@latest/scripts/tabs.js"></script>
 <!-- End body tag here -->
 </body>
 </html>
