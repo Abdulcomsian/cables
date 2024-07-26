@@ -284,7 +284,7 @@
       <label
         class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" name="contract" class="hidden simple-checkbox submitform" value="19" data-type="contract" data-name="contract[]"  />
+        <input type="checkbox" name="contract" class="hidden simple-checkbox submitform" value="24" data-type="contract" data-name="contract[]"  />
         18+ month
       </label>
     </div>
