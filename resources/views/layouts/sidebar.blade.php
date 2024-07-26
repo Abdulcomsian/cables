@@ -533,7 +533,7 @@ $('#reset-button').on('click',function(){
   let offers = [];
   let contract = [];
   let phone = [];
-  let sort = [];
+  let sort = ['price_asc'];
   filterApplied = document.querySelector("#items_container").dataset.appliedFilter;
   //loadedTickets = parseInt(filterApplied) ? document.querySelectorAll(".ticket").length : 0 
   loadedTickets =  0 
