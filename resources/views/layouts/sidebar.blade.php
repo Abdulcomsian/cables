@@ -304,7 +304,7 @@
       <label
         class="checkbox-label text-sm bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" name="phone"  class="hidden simple-checkbox submitform" value='weekend' data-type="phone" data-name="phone[]" />
+        <input type="checkbox" name="phone"  class="hidden simple-checkbox submitform" value='Evenings & Weekends' data-type="phone" data-name="phone[]" />
         Evening & weekend calls
       </label>
       <label
@@ -344,7 +344,7 @@
 <div id="default-modal1" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
   <div class="relative p-4 w-full max-w-2xl max-h-full">
     <!-- Modal content -->
-    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700 " id="packagedetial">
+    <div class="relative bg-white rounded-lg shadow bg-white" id="packagedetial">
  
      
     </div>
