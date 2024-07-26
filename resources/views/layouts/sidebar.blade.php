@@ -504,7 +504,7 @@ $(document).ready(()=>{
               document.querySelector("#items_container").setAttribute('data-applied-filter' , 1);
             
               if (res.html=='') {
-              console.log('test', res);
+              //console.log('test', res);
               $('#load_more_button').html('No more deals');
               $('#load_more_button').attr('disabled', true);
             }
@@ -583,7 +583,7 @@ $('#reset-button').on('click',function(){
 
 $(document).on("click" , ".view-more-info" , function(){
   const recordId = event.target.getAttribute("data-record-id");
-    console.log("Record ID:", recordId); // For debugging
+    //console.log("Record ID:", recordId); // For debugging
     $.ajax({
           type : 'POST',
           url : '{{route("apply.moreinfo")}}',
@@ -605,26 +605,6 @@ $(document).on("click" , "#close-modal-btn" , function(){
 })
 
 
-        //for more info
-// document.addEventListener("DOMContentLoaded", function () {
-//   const modal = document.getElementById("default-modal1");
-//   const overlay = document.getElementById("modal-overlay");
-//   const infoIcons = document.querySelectorAll(".view-more-info");
-//   const closeModalBtn = document.getElementById("close-modal-btn");
-  
-
-//   function toggleModal() {
-//     modal.classList.toggle("hidden");
-//     modal.classList.toggle("flex");
-//     overlay.classList.toggle("hidden");
-//   }
-
-//   infoIcons.forEach(icon => {
-//     icon.addEventListener("click", toggleModal);
-//   });
-//   closeModalBtn.addEventListener("click", toggleModal);
-//   overlay.addEventListener("click", toggleModal);
-// });
 
 </script>
 

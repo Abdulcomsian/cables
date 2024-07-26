@@ -67,8 +67,13 @@
     height: 40px;
     animation: spin 1s linear infinite; /* Spinner animation */
 }
-
-
+#filter-panel {
+	    z-index: 9;
+    }
+    div#packagedetial {
+    height: 530px;
+    overflow-y: auto;
+  }
     .inner-shadow:hover {
       box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
     }

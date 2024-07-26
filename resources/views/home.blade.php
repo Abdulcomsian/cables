@@ -31,7 +31,9 @@
             {{-- <option value="Mostpopular_asc" selected>Most Popular Deals</option>
             <option value="Bestvalue_asc" >Best Value Deal</option> --}}
             <option value="price_asc" >Price (low to high)</option>
+            <option value="price_desc" >Price (hight to low)</option>
             <option value="download_asc" >Download speed (low to high)</option>
+            <option value="download_desc" >Download speed (high to low)</option>
           </select>
         </form>
   
@@ -73,25 +75,28 @@
               {{$product->title}}
               </h1>
             </div>
-  
-            {{-- <div class="mt-3 flex items-center gap-2">
+            @if ($product->promo_and_info!='')
+                
+           
+            <div class="mt-3 flex items-center gap-2">
               <div
                 class="absolute md:static top-48 left-1 ysm:left-2 sm:left-14 bg-[#C9EEF3] px-2 py-1 xl:px-3 md:py-1.5 rounded-full flex items-center"
               >
-                <div class="text-primary text-sm">£24 Bill Credit</div>
+                <div class="text-primary text-sm">{{$product->promo_and_info}}</div>
                 <div class="w-5 h-5 md:ml-1">
                   <img src="./images/info-icon.svg" alt="" class="" />
                 </div>
               </div>
-              <div
+              {{-- <div
                 class="absolute md:static top-48 left-32 ysm:left-[135px] sm:left-48 bg-[#C9EEF3] px-1 py-1 ysm:px-2 md:px-3 md:py-1.5 rounded-full flex items-center"
               >
                 <div class="text-primary text-sm">No 2024 price Rise</div>
                 <div class="w-5 h-5 md:ml-1">
                   <img src="./images/info-icon.svg" alt="" class="" />
                 </div>
-              </div>
-            </div> --}}
+              </div> --}}
+            </div>
+            @endif
           </div>
           {{-- <div
             class="absolute md:static top-20 xsm:right-4 ysm:right-6 zsm:right-12 sm:right-28 bg-[#001E70] text-white w-16 h-18 zsm:w-20 zsm:h-20 rounded-xl flex flex-col items-center justify-center p-2"
@@ -192,9 +197,9 @@
       <!-- Third Div Start -->
       <div        class="relative md:w-1/6 flex flex-col justify-center items-center text-center"       >
         <div              class="absolute md:static xsm:left-32 ysm:left-44 zsm:left-48 sm:left-44 xsm:top-20 ysm:top-14 w-20 sm:w-40 md:w-full flex flex-col items-center"         >
-          <span class="text-primary font-bold text-3xl">£{{$product->stand_monthly}}</span>
+          <span class="text-primary font-bold text-3xl">£{{$product->promo_monthly}}</span>
           <span class="text-primary font-bold md:mr-2">per month</span>
-          <span>
+          <span class="cursor-pointer">
             <img
               src="./images/info-icon.svg"
               alt=""

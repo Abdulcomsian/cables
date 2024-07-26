@@ -14,7 +14,7 @@ class ProviderController extends Controller
     public function index()
     {
         //$products=Product::where('category_id','3')->groupBy('provider_id')->paginate(5);
-        $products=Product::orderBy("stand_monthly", "asc")->paginate(5);
+        $products=Product::orderBy("promo_monthly", "asc")->paginate(5);
         $productCount=Product::count();
        
         return view('home', compact('products','productCount'));
@@ -184,8 +184,8 @@ class ProviderController extends Controller
 
       $query->when(isset($cost) && count($cost) , function($query1) use ($cost) {
           [$minCost , $maxCost] = $this->mutateCost($cost);
-          $query1->where('stand_monthly' , '>=' , $minCost);
-          $query1->where('stand_monthly' , '<=' , $maxCost);
+          $query1->where('promo_monthly' , '>=' , $minCost);
+          $query1->where('promo_monthly' , '<=' , $maxCost);
       });
 
 
@@ -211,9 +211,20 @@ class ProviderController extends Controller
           END ASC
       ");
         }
+        if($sorty == "download_desc"){
+          $query1->orderByRaw("
+          CASE 
+              WHEN download_speed_unit = 'GB' THEN download_speed * 1024 
+              ELSE download_speed 
+          END DESC
+      ");
+        }
 
         if($sorty == "price_asc"){
-          $query1->orderBy("stand_monthly", "asc");
+          $query1->orderBy("promo_monthly", "asc");
+        }
+        if($sorty == "price_desc"){
+          $query1->orderBy("promo_monthly", "desc");
         }
       }
      });
