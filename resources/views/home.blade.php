@@ -31,7 +31,7 @@
             {{-- <option value="Mostpopular_asc" selected>Most Popular Deals</option>
             <option value="Bestvalue_asc" >Best Value Deal</option> --}}
             <option value="price_asc" >Price (low to high)</option>
-            <option value="price_desc" >Price (hight to low)</option>
+            <option value="price_desc" >Price (high to low)</option>
             <option value="download_asc" >Download speed (low to high)</option>
             <option value="download_desc" >Download speed (high to low)</option>
           </select>
@@ -182,7 +182,7 @@
               />
             </div>
             <p class="text-primary text-sm ml-2 text-center sm:text-start">
-              month contacts
+              month contract
             </p>
           </div>
           <div

@@ -132,7 +132,7 @@
                 />
               </div>
               <p class="text-primary text-sm ml-2 text-center sm:text-start">
-                month contacts
+                month contract
               </p>
             </div>
             <div
