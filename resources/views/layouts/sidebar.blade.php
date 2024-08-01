@@ -1,13 +1,14 @@
-<!--Filters Start-->
 
-<div class="w-3/12 px-4 hidden lg:block">
+<!--Filters Start-->
+<div id="filter-panel" class="fixed md:relative top-0 left-0 h-full md:h-auto w-full md:w-3/12 bg-white px-4 hidden md:block transition-transform transform -translate-x-full md:translate-x-0 z-50">
   <div class="flex justify-between">
     <h2 class="font-bold text-xl text-[#000038]">Filter results</h2>
-    <button
-      class="px-2 py-1 font-bold text-white bg-gray-400 text-base rounded"
-    >
+    <button id="close-button" class="px-2 py-1 font-bold text-white bg-gray-400 text-base rounded md:hidden">
+      Close
+  </button>
+  <button id="reset-button" class="px-2 py-1 font-bold text-white bg-gray-400 text-base rounded">
       Reset
-    </button>
+  </button>
   </div>
  <form action="" id="">
   <!--Speed Filters Start-->
@@ -16,31 +17,31 @@
     <div class="grid grid-cols-2 gap-2">
       <label
         class="checkbox-label text-sm bg-white border border-gray-400 w-full py-1 text-center rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer">
-        <input type="checkbox" id="bb-mbps-1" data-name="speed[]" value="1-60"  class="submitform hidden simple-checkbox" />
+        <input type="checkbox" id="bb-mbps-1" data-type="speed" data-name="speed[]" value="1mb-60mb"  class="submitform hidden simple-checkbox" />
         1-60MB
       </label>
       <label
         class="checkbox-label text-sm bg-white border border-gray-400 w-full py-1 text-center rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox"  name="bb-mbps-60" id="bb-mbps-60" data-name="speed[]" value="60-100" class="hidden simple-checkbox submitform" />
+        <input type="checkbox"  name="bb-mbps-60" id="bb-mbps-60" data-type="speed" data-name="speed[]" value="60mb-100mb" class="hidden simple-checkbox submitform" />
         60-100MB
       </label>
       <label
         class="checkbox-label text-sm bg-white border border-gray-400 w-full py-1 text-center rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" name="bb-mbps-100" id="bb-mbps-100" data-name="speed[]" value="100-500" class="hidden simple-checkbox submitform" />
+        <input type="checkbox" name="bb-mbps-100" id="bb-mbps-100" data-type="speed" data-name="speed[]" value="100mb-500mb" class="hidden simple-checkbox submitform" />
         100-500MB
       </label>
       <label
         class="checkbox-label text-sm bg-white border border-gray-400 w-full py-1 text-center rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox"  name="bb-mbps-500" id="bb-mbps-500" data-name="speed[]" value="500-1gb" class="hidden simple-checkbox submitform"  />
+        <input type="checkbox"  name="bb-mbps-500" id="bb-mbps-500" data-type="speed" data-name="speed[]" value="500mb-999mb-1gb" class="hidden simple-checkbox submitform"  />
         500-1GB
       </label>
       <label
         class="checkbox-label text-sm bg-white border border-gray-400 w-full py-1 text-center rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox"  name="bb-mbps-1000" id="bb-mbps-1000" data-name="speed[]" value="1gb+"  class="hidden simple-checkbox submitform" />
+        <input type="checkbox"  name="bb-mbps-1000" id="bb-mbps-1000" data-type="speed" data-name="speed[]" value="1gb+"  class="hidden simple-checkbox submitform" />
         1GB+
       </label>
     </div>
@@ -54,13 +55,13 @@
     <div class="grid grid-cols-3 gap-2">
       <label      class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox"  name="provider-sky" id="provider-sky"  data-name="provider[]" value="2" class="hidden image-checkbox submitform" />
+        <input type="checkbox"  name="provider-sky" data-type="provider" id="provider-sky"  data-name="provider[]" value="2" class="hidden image-checkbox submitform" />
         <div class="w-16">
           <img src="/assets//images/Sky_logo_thunbnail.png" alt="" class="w-full" />
         </div>
       </label>
       <label    class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
-        <input type="checkbox" name="provider-virgin" id="provider-virgin"  data-name="provider[]" value="1"  class="hidden image-checkbox submitform" />
+        <input type="checkbox" name="provider-virgin" data-type="provider"  id="provider-virgin"  data-name="provider[]" value="1"  class="hidden image-checkbox submitform" />
         <div class="w-16">
           <img src="/assets//images/Virgin_Media_logo_thunbnail.png" alt="" class="w-full" />
         </div>
@@ -68,7 +69,7 @@
       <label
         class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" name="provider-bt" id="provider-bt"  data-name="provider[]" value="3" class="hidden image-checkbox submitform" />
+        <input type="checkbox" name="provider-bt" data-type="provider"  id="provider-bt"  data-name="provider[]" value="3" class="hidden image-checkbox submitform" />
         <div class="w-16">
           <img src="/assets//images/BT_logo_thunbnail.png" alt="" class="w-full" />
         </div>
@@ -76,7 +77,7 @@
       <label
         class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" name="provider-talktalk" id="provider-talktalk"  data-name="provider[]" value="8" class="hidden image-checkbox submitform" />
+        <input type="checkbox" name="provider-talktalk" data-type="provider"  id="provider-talktalk"  data-name="provider[]" value="8" class="hidden image-checkbox submitform" />
         <div class="w-16">
           <img src="/assets//images/TalkTalk_logo_thumbnail.png" alt="" class="w-full" />
         </div>
@@ -84,17 +85,28 @@
       <label
         class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" name="provider-plusnet" id="provider-plusnet"  data-name="provider[]" value="7" class="hidden image-checkbox submitform" />
+        <input type="checkbox" name="provider-plusnet" data-type="provider"  id="provider-plusnet"  data-name="provider[]" value="5" class="hidden image-checkbox submitform" />
         <div class="w-16">
-          <img src="/assets//images/Plusnet_logo_thumbnail.png" alt="" class="w-full" />
+          <img src="/assets//images/Hyperoptic_logo_thumbnail.png" alt="" class="w-full" />
         </div>
       </label>
-      <label
-        class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
-      >
-        <input type="checkbox"  name="provider-now-broadband" id="provider-now-broadband"  data-name="provider[]" value="6" class="hidden image-checkbox submitform" />
+      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+        <input type="checkbox"  name="provider-now-broadband" data-type="provider"  id="provider-now-broadband"  data-name="provider[]" value="6" class="hidden image-checkbox submitform" />
         <div class="w-16">
           <img src="/assets//images/NOW_Broadband_logo_thumbnail.png" alt="" class="w-full" />
+        </div>
+      </label>
+
+      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+        <input type="checkbox"  name="provider-ee" data-type="provider"  id="provider-ee"  data-name="provider[]" value="4" class="hidden image-checkbox submitform" />
+        <div class="w-16">
+          <img src="/assets//images/EE_logo_thumbnail.png" alt="" class="w-full" />
+        </div>
+      </label>
+      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+        <input type="checkbox"  name="provider-plusnet" data-type="provider"  id="provider-plusnet"  data-name="provider[]" value="7" class="hidden image-checkbox submitform" />
+        <div class="w-16">
+          <img src="/assets//images/Plusnet_logo_thumbnail.png" alt="" class="w-full" />
         </div>
       </label>
     </div>
@@ -108,21 +120,33 @@
       <label
         class="checkbox-label text-sm bg-white border text-left px-4 border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" name="pkg-bbtv" id="pkg-bbtv" data-name="package[]" value="2"  class="hidden simple-checkbox submitform " />
+        <input type="checkbox" name="pkg-bbtv" id="pkg-bbtv" data-type="package"  data-name="package[]" value="2"  class="hidden simple-checkbox submitform " />
         Broadband + TV
       </label>
       <label
         class="checkbox-label text-sm bg-white border text-left px-4 border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox"   name="pkg-bbcalls" id="pkg-bbcalls" data-name="package[]" value="5"  class="hidden simple-checkbox submitform" />
+        <input type="checkbox"   name="pkg-bbcalls" id="pkg-bbcalls" data-type="package"  data-name="package[]" value="5"  class="hidden simple-checkbox submitform" />
         Broadband + calls
       </label>
       <label
         class="checkbox-label text-sm bg-white border text-left px-4 border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" name="pkg-bb" id="pkg-bb" data-name="package[]" value="1"  class="hidden simple-checkbox submitform" />
+        <input type="checkbox" name="pkg-bb" id="pkg-bb" data-type="package"  data-name="package[]" value="1"  class="hidden simple-checkbox submitform" />
         Broadband only
       </label>
+      <label
+        class="checkbox-label text-sm bg-white border text-left px-4 border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+      >
+        <input type="checkbox" name="pkg-bb" id="pkg-bb" data-type="package"  data-name="package[]" value="4"  class="hidden simple-checkbox submitform" />
+        TV only
+      </label>
+      <label
+      class="checkbox-label text-sm bg-white border text-left px-4 border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+    >
+      <input type="checkbox" name="pkg-bb" id="pkg-bb" data-type="package"  data-name="package[]" value="3"  class="hidden simple-checkbox submitform" />
+      Packages
+    </label>
     </div>
   </div>
   <!--Package Filters End-->
@@ -133,25 +157,25 @@
       <label
         class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox"  name="monthly-s" id="monthly-s"  data-name="monthlycost[]" value="0-25" class="hidden simple-checkbox submitform" />
+        <input type="checkbox"  name="monthly-s" id="monthly-s" data-type="cost"   data-name="monthlycost[]" value="0-25" class="hidden simple-checkbox submitform" />
         $0-$25
       </label>
       <label
         class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" name="monthly-m" id="monthly-m"  data-name="monthlycost[]" value="25-50" class="hidden simple-checkbox submitform" />
+        <input type="checkbox" name="monthly-m" id="monthly-m" data-type="cost"    data-name="monthlycost[]" value="25-50" class="hidden simple-checkbox submitform" />
         $25-$50
       </label>
       <label
         class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" name="monthly-l" id="monthly-l" data-name="monthlycost[]" value="50-75" class="hidden simple-checkbox submitform" />
+        <input type="checkbox" name="monthly-l" id="monthly-l" data-type="cost"   data-name="monthlycost[]" value="50-75" class="hidden simple-checkbox submitform" />
         $50-$75
       </label>
       <label
         class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" name="monthly-xl" id="monthly-xl" data-name="monthlycost[]" value="75plus"   class="hidden simple-checkbox submitform" />
+        <input type="checkbox" name="monthly-xl" id="monthly-xl" data-type="cost"   data-name="monthlycost[]" value="75plus"   class="hidden simple-checkbox submitform" />
         $75+
       </label>
     </div>
@@ -165,13 +189,13 @@
       <label
         class="checkbox-label text-sm bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" name="no_upfront_cost" id="no_upfront_cost" value="no_upfront_cost" class="hidden simple-checkbox submitform" />
+        <input type="checkbox" name="no_upfront_cost" id="no_upfront_cost" data-type="offers"   value="no_upfront_cost" class="hidden simple-checkbox submitform" />
         Deals with no upfront cost
       </label>
       <label
         class="checkbox-label text-sm bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" name="off" id="off"  value="off" class="hidden simple-checkbox submitform" />
+        <input type="checkbox" name="off" id="off"  value="off" data-type="offers"  class="hidden simple-checkbox submitform" />
         Deals with rewards and offers
       </label>
     </div>
@@ -179,13 +203,13 @@
   <!--Offers Filters End-->
 
   <!--Providers Filters Start-->
-  <div class="mb-4">
+  {{-- <div class="mb-4">
     <h2 class="font-bold text-xl text-primary mb-3">TV channels</h2>
     <div class="grid grid-cols-3 gap-2">
       <label
         class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" class="hidden image-checkbox submitform" />
+        <input type="checkbox" class="hidden image-checkbox submitform"  data-type="channels" />
         <div class="w-16">
           <img src="./images/sky.webp" alt="" class="w-full" />
         </div>
@@ -193,7 +217,7 @@
       <label
         class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" class="hidden image-checkbox submitform" />
+        <input type="checkbox" class="hidden image-checkbox submitform"   data-type="channels" />
         <div class="w-16">
           <img src="./images/sky.webp" alt="" class="w-full" />
         </div>
@@ -201,7 +225,7 @@
       <label
         class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" class="hidden image-checkbox submitform" />
+        <input type="checkbox" class="hidden image-checkbox submitform"  data-type="channels"  />
         <div class="w-16">
           <img src="./images/sky.webp" alt="" class="w-full" />
         </div>
@@ -209,7 +233,7 @@
       <label
         class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" class="hidden image-checkbox submitform" />
+        <input type="checkbox" class="hidden image-checkbox submitform"  data-type="channels"  />
         <div class="w-16">
           <img src="./images/sky.webp" alt="" class="w-full" />
         </div>
@@ -217,7 +241,7 @@
       <label
         class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" class="hidden image-checkbox submitform" />
+        <input type="checkbox" class="hidden image-checkbox submitform"  data-type="channels"  />
         <div class="w-16">
           <img src="./images/sky.webp" alt="" class="w-full" />
         </div>
@@ -225,14 +249,14 @@
       <label
         class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" class="hidden image-checkbox submitform" />
+        <input type="checkbox" class="hidden image-checkbox submitform"  data-type="channels"  />
         <div class="w-16">
           <img src="./images/sky.webp" alt="" class="w-full" />
         </div>
       </label>
 
     </div>
-  </div>
+  </div> --}}
   <!--Providers Filters End-->
 
   <!--Contract length Filters Start-->
@@ -242,25 +266,25 @@
       <label
         class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" class="hidden simple-checkbox submitform" />
+        <input type="checkbox" name="contract" class="hidden simple-checkbox submitform" value="1" data-type="contract"  data-name="contract[]"  />
         1 month
       </label>
       <label
         class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" class="hidden simple-checkbox submitform" />
+        <input type="checkbox" name="contract"  class="hidden simple-checkbox submitform" value="12" data-type="contract" data-name="contract[]"  />
         12 month
       </label>
       <label
         class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" class="hidden simple-checkbox submitform" />
+        <input type="checkbox" name="contract"  class="hidden simple-checkbox submitform" value="18" data-type="contract"  data-name="contract[]" />
         18 month
       </label>
       <label
         class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" class="hidden simple-checkbox submitform" />
+        <input type="checkbox" name="contract" class="hidden simple-checkbox submitform" value="24" data-type="contract" data-name="contract[]"  />
         18+ month
       </label>
     </div>
@@ -274,145 +298,313 @@
       <label
         class="checkbox-label text-sm bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" class="hidden simple-checkbox submitform" />
+        <input type="checkbox" name="phone" class="hidden simple-checkbox submitform" value='anytime'  data-type="phone" data-name="phone[]" />
         Anytime calls
       </label>
       <label
         class="checkbox-label text-sm bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" class="hidden simple-checkbox submitform" />
+        <input type="checkbox" name="phone"  class="hidden simple-checkbox submitform" value='Evenings & Weekends' data-type="phone" data-name="phone[]" />
         Evening & weekend calls
       </label>
       <label
         class="checkbox-label text-sm bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" class="hidden simple-checkbox submitform" />
+        <input type="checkbox" name="phone" class="hidden simple-checkbox submitform" value='weekend'  data-type="phone"  data-name="phone[]"/>
         Weekend calls
       </label>
       <label
         class="checkbox-label text-sm bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" class="hidden simple-checkbox submitform" />
+        <input type="checkbox" name="phone" class="hidden simple-checkbox submitform" value='Pay as you go'   data-type="phone" data-name="phone[]" />
         Pay as you go calls
       </label>
       <label
         class="checkbox-label text-sm bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" class="hidden simple-checkbox submitform" />
+        <input type="checkbox" name="phone" class="hidden simple-checkbox submitform"  value='No' data-type="phone" data-name="phone[]" />
         No phone line
       </label>
     </div>
+   
+
   </div>
+  {{-- <input id="sort" name="sort" type="text" value="idasc"> --}}
 </form>
   <!--Phone & line Filters End-->
 </div>
 
 <!--Filters  End-->
+  {{-- for info modal --}}
+
+  <div id="modal-overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+
+{{---- Modal toggle ----}}
+<!-- Main modal -->
+<div id="default-modal1" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative p-4 w-full max-w-2xl max-h-full">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow bg-white" id="packagedetial">
+ 
+     
+    </div>
+  </div>
+</div>
+
+
+
+
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"
 integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 <script>
- $(document).ready(function() { 
 
-//   $(document).on("click", ".submitform", function(e){
-//     let selectedCheckboxes = [];
-    
-//     $(".submitform:checked").each(function(){
-//         let name = $(this).data('name');
-//         let value = $(this).val();
-//         selectedCheckboxes.push(name + "=" + value);
-//     });
-    
-//     let params = selectedCheckboxes.join("&");
-    
-//     $.ajax({
-//         url: "{{url('/filter?')}}" + params,
-//         type: "GET",
-//         success: function(res){
-//             console.log("success");
-//         },
-//         error: function(errRes){
-//             console.log("error");
-//         }
-//     });
-// });
+$(document).ready(()=>{
 
+  //   $(document).on("change", "#deals", function(e){
+  //   let optValue = $(this).find(":selected").val();
+  //   console.log(optValue);
+  //   let sort_val = optValue;
+    
+  // });
+  
+  document.querySelectorAll(".submitform").forEach(function(item){
+    item.addEventListener("click" , function(e){
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+      let provider = [];
+      let speed = [];
+      let package = [];
+      let cost = [];
+      let offers = [];
+      let contract = [];
+      let phone = [];
+      let sort = [];
+      // checkedFilters = document.querySelectorAll("input[type='checkbox']:checked")
+      let checkedCheckboxes = document.querySelectorAll("input[type='checkbox']:checked");
+      let selectedOption = document.querySelector("select option:checked");
+      let checkedFilters = [...checkedCheckboxes, selectedOption];
 
-$(document).on("click", ".submitform", function(e){
-    let selectedCheckboxes = [];
-    // let name = [];
-    $(".submitform:checked").each(function(){
-        let name = $(this).data('name');
-        let value = $(this).val();
-        selectedCheckboxes.push(name + "=" + value);
-    });
-    
-    let params = selectedCheckboxes.map(function(value) {
-        return name + value;
-    }).join("&");
-    
-    $.ajax({
-        url: "{{url('/filter?')}}" + params,
-        type: "GET",
-        success: function(res){
-          $("#items_container").html(res);
-        },
-        error: function(errRes){
-            console.log("error");
+      // let type = item.dataset.type;
+     
+      checkedFilters.forEach( item => {
+    switch(item.dataset.type){
+          case 'provider':
+           provider.push(item.value);
+          break;
+          case 'speed':
+           speed.push(item.value);
+          break;
+          case 'package':
+           package.push(item.value);
+          break;
+          case 'cost':
+           cost.push(item.value); 
+          break;
+          case 'offers':
+           offers.push(item.value); 
+          break;
+          case 'contract':
+          contract.push(item.value); 
+          break;
+          case 'phone':
+          phone.push(item.value);
+          break;
+          default:
+          sort.push(item.value); 
         }
-    });
-});
+
+    })
+    
+    filterApplied = document.querySelector("#items_container").dataset.appliedFilter;
+    // loadedTickets = parseInt(filterApplied) ? document.querySelectorAll(".ticket").length : 0 
+    loadedTickets =  0 
+    $.ajax({
+          type : 'POST',
+          url : '{{route("apply.filter")}}',
+          data : { provider , speed , package , cost , offers , contract , phone ,sort, '_token' : '{{csrf_token()}}' , loadedTicket : loadedTickets},
+          success : function(res){
+            document.querySelector("#tot_count").innerHTML =res.total_count;
+            document.querySelector("#items_container").innerHTML =res.html;
+            
+            if (res.html=='') {
+              console.log('test', res);
+              $('#load_more_button').html('No more deals');
+              $('#load_more_button').attr('disabled', true);
+            }
+            else{
+              $('#load_more_button').html('Show me more deals');
+              $('#load_more_button').attr('disabled', false);
+
+            }
+          }
+        })
+    })
+   
+  })
+
+  document.querySelector("#load_more_button").addEventListener("click" , function(e){
+    applyFilter()
+  })
+
+  function applyFilter()
+  {
+      let provider = [];
+      let speed = [];
+      let package = [];
+      let cost = [];
+      let offers = [];
+      let contract = [];
+      let phone = [];
+      let sort = [];
+      //checkedFilters = document.querySelectorAll("input[type='checkbox']:checked")
+      let checkedCheckboxes = document.querySelectorAll("input[type='checkbox']:checked");
+      let selectedOption = document.querySelector("select option:checked");
+      let checkedFilters = [...checkedCheckboxes, selectedOption];
+
+      checkedFilters.forEach( item => {
+      switch( item.dataset.type){
+            case 'provider':
+            provider.push(item.value);
+            break;
+            case 'speed':
+            speed.push(item.value);
+            break;
+            case 'package':
+            package.push(item.value);
+            break;
+            case 'cost':
+            cost.push(item.value); 
+            break;
+            case 'offers':
+            offers.push(item.value); 
+            break;
+            case 'contract':
+            contract.push(item.value); 
+            break;
+            case 'phone':
+            phone.push(item.value);
+            break;
+            default:
+            sort.push(item.value); 
+          }
+
+      })
+
+    // filterApplied = document.querySelector("#items_container").dataset.appliedFilter;
+    
+    loadedTickets = document.querySelectorAll(".ticket").length; 
+    //console.log(loadedTickets);
+    $.ajax({
+          type : 'POST',
+          url : '{{route("apply.filter")}}',
+          data : { provider , speed , package , cost , offers , contract , phone ,sort, '_token' : '{{csrf_token()}}' , loadedTicket : loadedTickets},
+          success : function(res){
+            //console.log(res.html);
+              document.querySelector("#items_container").insertAdjacentHTML("beforeend" , res.html);
+              document.querySelector("#items_container").setAttribute('data-applied-filter' , 1);
+            
+              if (res.html=='') {
+              //console.log('test', res);
+              $('#load_more_button').html('No more deals');
+              $('#load_more_button').attr('disabled', true);
+            }
+            else{
+              $('#load_more_button').html('Show me more deals');
+              $('#load_more_button').attr('disabled', false);
+
+            }
+    
+          }
+         
+        })
+  }
+  
+})
+ 
 
 
+$('#reset-button').on('click',function(){
 
+  
+   let provider = [];
+   let speed = [];
+  let package = [];
+  let cost = [];
+  let offers = [];
+  let contract = [];
+  let phone = [];
+  let sort = ['price_asc'];
+  filterApplied = document.querySelector("#items_container").dataset.appliedFilter;
+  //loadedTickets = parseInt(filterApplied) ? document.querySelectorAll(".ticket").length : 0 
+  loadedTickets =  0 
+    $.ajax({
+          type : 'POST',
+          url : '{{route("apply.filter")}}',
+          data : { provider , speed , package , cost , offers , contract , phone ,sort, '_token' : '{{csrf_token()}}' , loadedTicket : loadedTickets},
+          success : function(res){
+            document.querySelector("#tot_count").innerHTML =res.total_count;
+            document.querySelector("#tot_count").innerHTML =res.total_count;
+            
+              document.querySelector("#items_container").innerHTML =res.html;
+            
+              
+           
+          }
+        })
+    
+
+        
+          $(".submitform").prop("checked", false);
+          document.querySelectorAll(".checkbox-label").forEach(el =>
+          { 
+            el.classList.remove("bg-primary"); 
+            el.classList.remove("text-white");
+            el.classList.remove("bg-lightGray");
+            el.classList.remove("border-primary");
+          })
+
+         
+  
   });
 
+  // function handleIconClick(event) {
+  //   const recordId = event.target.getAttribute("data-record-id");
+  //   console.log("Record ID:", recordId); // For debugging
+  // }
 
-  // jQuery(document).ready(function() {
-      
-  //   jQuery(document).on("click", ".submitform", function(event){
-  //         event.preventDefault();
-  //         var form = $(this);
-  //         var formData = $(this).serialize();
-  //         var formId = $(this).attr('id');
-  //         //var submitBtn = form.find('button[type="submit"]');
+  function toggleModal() {
+    const modal = document.getElementById("default-modal1");
+    const overlay = document.getElementById("modal-overlay");
+    modal.classList.toggle("hidden");
+    modal.classList.toggle("flex");
+    overlay.classList.toggle("hidden");
+  }
+  
 
-  //         // Disable the submit button
-  //         //alert(formData);
-  //         //submitBtn.prop('disabled', true);
-  //         // Check if the form is valid
-  //         if (form[0].checkValidity() === false) {
-  //             event.stopPropagation();
-  //             form.addClass('was-validated');
-  //             submitBtn.prop('disabled', false);
-  //             return;
-  //         }
-  //        // alert(formData);
-  //         jQuery.ajax({
-  //             type: 'POST',
-  //             url: 'https://prod-64.eastus.logic.azure.com:443/workflows/fbfb410800b54e7ea96f16c96efc1fd5/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=CLjokW1cFjXOvLaldKqnxLucopVjUSRsqIdyuQIF6Wc', // your PHP script that handles the form submission
-  //             data: formData,
-  //             success: function(response) {
-  //                 // handle the server-side response here
-  //                 var modalId = modalIds[formId];
-  //                 if (modalId) {
-  //                     jQuery(modalId).addClass("out");
-  //                 }
-  //                 $("#close_modal2").trigger("click");
-  //                 $("body").removeClass("modal-active");
-  //                 jQuery("#modal-container5").removeAttr("class").addClass("two");
-  //                 // Enable the submit button
-  //                 submitBtn.prop('disabled', false);
-  //                 // reset the form
-  //                 form.removeClass('was-validated').trigger('reset');
-  //               alert("ok");
-  //               },
-  //             error: function(xhr, textStatus, errorThrown) {
-  //                 console.log(errorThrown);
-  //                 // handle any errors here
-  //                 alert("ok2");
-  //             }
-  //         });
-  //     });
-  // });
-    
+$(document).on("click" , ".view-more-info" , function(){
+  const recordId = event.target.getAttribute("data-record-id");
+    //console.log("Record ID:", recordId); // For debugging
+    $.ajax({
+          type : 'POST',
+          url : '{{route("apply.moreinfo")}}',
+          data : { 
+            'id': recordId,
+            '_token' : '{{csrf_token()}}' 
+          },
+          success : function(res){
+            console.log(res.moreinfodata);
+            console.log(document.querySelector("#packagedetial"));
+            document.querySelector("#packagedetial").innerHTML = res.moreinfodata;
+         toggleModal()
+        }
+    })
+})
+
+$(document).on("click" , "#close-modal-btn" , function(){
+  toggleModal()
+})
+
+
+
 </script>
+

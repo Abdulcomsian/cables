@@ -53,7 +53,67 @@ style="
   });
 </script>
 <!-- Scripts End here -->
+<script>
 
+document.getElementById('filter-button').addEventListener('click', function() {
+      var filterPanel = document.getElementById('filter-panel');
+      filterPanel.classList.toggle('hidden');
+      filterPanel.classList.toggle('translate-x-0');
+      filterPanel.classList.toggle('-translate-x-full');
+    });
+
+    document.getElementById('close-button').addEventListener('click', function() {
+      var filterPanel = document.getElementById('filter-panel');
+      filterPanel.classList.add('hidden');
+      filterPanel.classList.add('-translate-x-full');
+      filterPanel.classList.remove('translate-x-0');
+    });
+
+
+
+
+
+    // document.addEventListener('DOMContentLoaded', () => {
+    //         const resetButton = document.getElementById('reset-button');
+    //         const loadingOverlay = document.getElementById('loading-overlay');
+
+    //         const showLoading = () => {
+    //             loadingOverlay.style.display = 'block';
+    //             setTimeout(() => {
+    //                 loadingOverlay.style.display = 'none';
+    //             }, 2000); // Adjust this timeout as needed
+    //         };
+
+    //         resetButton.addEventListener('click', showLoading);
+
+    //         // Apply loading overlay to input clicks (example)
+    //         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    //         checkboxes.forEach(checkbox => {
+    //             checkbox.addEventListener('click', showLoading);
+    //         });
+
+    //         // Optional: Close button functionality
+    //         const closeButton = document.getElementById('close-button');
+    //         closeButton.addEventListener('click', () => {
+    //             // Implement close button functionality as needed
+    //             // For example: hide the filter panel
+    //             document.getElementById('filter-panel').classList.add('hidden');
+    //         });
+    //     });
+
+
+
+               
+           
+   
+
+    
+    
+
+</script>
+<script src="node_modules/@material-tailwind/html/scripts/tabs.js"></script>
+ <!-- from cdn -->
+<script src="https://unpkg.com/@material-tailwind/html@latest/scripts/tabs.js"></script>
 <!-- End body tag here -->
 </body>
 </html>

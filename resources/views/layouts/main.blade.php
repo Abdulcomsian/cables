@@ -32,11 +32,67 @@
             fontFamily: {
               sans: "sans-serif",
             },
+            screens: {
+              // Corrected this line
+              xsm: "320px",
+              ysm: "375px",
+              zsm: "425px",
+            },
           },
         },
       };
     </script>
+
     <style>
+      .loading-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Black overlay with opacity */
+    color: white;
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3); /* White border */
+    border-top: 4px solid #fff; /* White top border */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite; /* Spinner animation */
+}
+#filter-panel {
+	    z-index: 9;
+    }
+    div#packagedetial {
+    height: 530px;
+    overflow-y: auto;
+  }
+    .inner-shadow:hover {
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    @media (min-width: 768px) {
+      #filter-panel {
+        transform: translateX(0) !important;
+      }
+    }
+
+
+      .inner-shadow:hover {
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    @media (min-width: 768px) {
+      #filter-panel {
+        transform: translateX(0) !important;
+      }
+    }
+
       ::-webkit-scrollbar {
         display: none;
       }
@@ -59,6 +115,9 @@
       .li-with-dot:last-child::after {
         content: ""; /* No content for the last child */
       }
+      .p-4 {
+    padding: 0.5rem;
+    }   			
     </style>
   </head>
     {{-- @section('body') --}}
