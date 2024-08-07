@@ -74,6 +74,12 @@
     height: 530px;
     overflow-y: auto;
   }
+
+  .label-disable{
+    opacity: 0.4;
+    cursor: pointer;
+    pointer-events: none;
+  }
     .inner-shadow:hover {
       box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
     }
@@ -116,8 +122,14 @@
         content: ""; /* No content for the last child */
       }
       .p-4 {
-    padding: 0.5rem;
-    }   			
+        padding: 0.5rem;
+      }   		
+
+      img.w-full.h-full {
+          width: auto;
+      }
+      
+      	
     </style>
   </head>
     {{-- @section('body') --}}

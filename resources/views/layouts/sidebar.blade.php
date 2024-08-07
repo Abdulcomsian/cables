@@ -158,25 +158,25 @@
         class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
         <input type="checkbox"  name="monthly-s" id="monthly-s" data-type="cost"   data-name="monthlycost[]" value="0-25" class="hidden simple-checkbox submitform" />
-        $0-$25
+        £0-£25
       </label>
       <label
         class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
         <input type="checkbox" name="monthly-m" id="monthly-m" data-type="cost"    data-name="monthlycost[]" value="25-50" class="hidden simple-checkbox submitform" />
-        $25-$50
+        £25-£50
       </label>
       <label
         class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
         <input type="checkbox" name="monthly-l" id="monthly-l" data-type="cost"   data-name="monthlycost[]" value="50-75" class="hidden simple-checkbox submitform" />
-        $50-$75
+        £50-£75
       </label>
       <label
         class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" name="monthly-xl" id="monthly-xl" data-type="cost"   data-name="monthlycost[]" value="75plus"   class="hidden simple-checkbox submitform" />
-        $75+
+        <input type="checkbox" name="monthly-xl" id="monthly-xl" data-type="cost"   data-name="monthlycost[]" value="75+"   class="hidden simple-checkbox submitform" />
+        £75+
       </label>
     </div>
   </div>
@@ -187,13 +187,13 @@
     <h2 class="font-bold text-xl text-filter mb-3">Offers</h2>
     <div class="grid grid-cols-1 gap-2">
       <label
-        class="checkbox-label text-sm bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        class="checkbox-label text-sm label-disable  bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
         <input type="checkbox" name="no_upfront_cost" id="no_upfront_cost" data-type="offers"   value="no_upfront_cost" class="hidden simple-checkbox submitform" />
         Deals with no upfront cost
       </label>
       <label
-        class="checkbox-label text-sm bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        class="checkbox-label text-sm label-disable  bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
         <input type="checkbox" name="off" id="off"  value="off" data-type="offers"  class="hidden simple-checkbox submitform" />
         Deals with rewards and offers
@@ -264,7 +264,7 @@
     <h2 class="font-bold text-xl text-filter mb-3">Contract length</h2>
     <div class="grid grid-cols-2 gap-2">
       <label
-        class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        class="checkbox-label label-disable  text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
         <input type="checkbox" name="contract" class="hidden simple-checkbox submitform" value="1" data-type="contract"  data-name="contract[]"  />
         1 month
@@ -366,10 +366,11 @@ $(document).ready(()=>{
   //   let sort_val = optValue;
     
   // });
+
   
-  document.querySelectorAll(".submitform").forEach(function(item){
-    item.addEventListener("click" , function(e){
-        e.stopPropagation();
+
+  $(document).on("click" , ".submitform" , function(e){
+    e.stopPropagation();
         e.stopImmediatePropagation();
       let provider = [];
       let speed = [];
@@ -425,9 +426,13 @@ $(document).ready(()=>{
           success : function(res){
             document.querySelector("#tot_count").innerHTML =res.total_count;
             document.querySelector("#items_container").innerHTML =res.html;
-            
+            applyFilteredContract(res.filteredContract);
+            applyFilteredPackage(res.filteredPacakage);
+            applyFilteredCost(res.filteredCost);
+            applyFilteredProvider(res.filteredProvider);
+            applyFilteredPhone(res.filteredPhone);
+            applyFilteredSpeed(res.filteredSpeed);
             if (res.html=='') {
-              console.log('test', res);
               $('#load_more_button').html('No more deals');
               $('#load_more_button').attr('disabled', true);
             }
@@ -438,171 +443,91 @@ $(document).ready(()=>{
             }
           }
         })
-    })
+  })
+  
+  // document.querySelectorAll(".submitform").forEach(function(item){
+  //   item.addEventListener("click" , function(e){
+  //     alert("here");
+  //       e.stopPropagation();
+  //       e.stopImmediatePropagation();
+  //     let provider = [];
+  //     let speed = [];
+  //     let package = [];
+  //     let cost = [];
+  //     let offers = [];
+  //     let contract = [];
+  //     let phone = [];
+  //     let sort = [];
+  //     // checkedFilters = document.querySelectorAll("input[type='checkbox']:checked")
+  //     let checkedCheckboxes = document.querySelectorAll("input[type='checkbox']:checked");
+  //     let selectedOption = document.querySelector("select option:checked");
+  //     let checkedFilters = [...checkedCheckboxes, selectedOption];
+
+  //     // let type = item.dataset.type;
+     
+  //     checkedFilters.forEach( item => {
+  //   switch(item.dataset.type){
+  //         case 'provider':
+  //          provider.push(item.value);
+  //         break;
+  //         case 'speed':
+  //          speed.push(item.value);
+  //         break;
+  //         case 'package':
+  //          package.push(item.value);
+  //         break;
+  //         case 'cost':
+  //          cost.push(item.value); 
+  //         break;
+  //         case 'offers':
+  //          offers.push(item.value); 
+  //         break;
+  //         case 'contract':
+  //         contract.push(item.value); 
+  //         break;
+  //         case 'phone':
+  //         phone.push(item.value);
+  //         break;
+  //         default:
+  //         sort.push(item.value); 
+  //       }
+
+  //   })
+    
+  //   filterApplied = document.querySelector("#items_container").dataset.appliedFilter;
+  //   // loadedTickets = parseInt(filterApplied) ? document.querySelectorAll(".ticket").length : 0 
+  //   loadedTickets =  0 
+  //   $.ajax({
+  //         type : 'POST',
+  //         url : '{{route("apply.filter")}}',
+  //         data : { provider , speed , package , cost , offers , contract , phone ,sort, '_token' : '{{csrf_token()}}' , loadedTicket : loadedTickets},
+  //         success : function(res){
+  //           document.querySelector("#tot_count").innerHTML =res.total_count;
+  //           document.querySelector("#items_container").innerHTML =res.html;
+  //           applyfilteredContract(res.filteredContract);
+  //           applyfilteredPackage(res.filteredPacakage);
+  //           applyfilteredCost(res.filteredCost);
+  //           applyfilteredProvider(res.filteredProvider);
+  //           applyfilteredPhone(res.filteredPhone);
+  //           applyfilteredSpeed(res.filteredSpeed);
+  //           if (res.html=='') {
+  //             $('#load_more_button').html('No more deals');
+  //             $('#load_more_button').attr('disabled', true);
+  //           }
+  //           else{
+  //             $('#load_more_button').html('Show me more deals');
+  //             $('#load_more_button').attr('disabled', false);
+
+  //           }
+  //         }
+  //       })
+  //   })
    
-  })
-
-  document.querySelector("#load_more_button").addEventListener("click" , function(e){
-    applyFilter()
-  })
-
-  function applyFilter()
-  {
-      let provider = [];
-      let speed = [];
-      let package = [];
-      let cost = [];
-      let offers = [];
-      let contract = [];
-      let phone = [];
-      let sort = [];
-      //checkedFilters = document.querySelectorAll("input[type='checkbox']:checked")
-      let checkedCheckboxes = document.querySelectorAll("input[type='checkbox']:checked");
-      let selectedOption = document.querySelector("select option:checked");
-      let checkedFilters = [...checkedCheckboxes, selectedOption];
-
-      checkedFilters.forEach( item => {
-      switch( item.dataset.type){
-            case 'provider':
-            provider.push(item.value);
-            break;
-            case 'speed':
-            speed.push(item.value);
-            break;
-            case 'package':
-            package.push(item.value);
-            break;
-            case 'cost':
-            cost.push(item.value); 
-            break;
-            case 'offers':
-            offers.push(item.value); 
-            break;
-            case 'contract':
-            contract.push(item.value); 
-            break;
-            case 'phone':
-            phone.push(item.value);
-            break;
-            default:
-            sort.push(item.value); 
-          }
-
-      })
-
-    // filterApplied = document.querySelector("#items_container").dataset.appliedFilter;
-    
-    loadedTickets = document.querySelectorAll(".ticket").length; 
-    //console.log(loadedTickets);
-    $.ajax({
-          type : 'POST',
-          url : '{{route("apply.filter")}}',
-          data : { provider , speed , package , cost , offers , contract , phone ,sort, '_token' : '{{csrf_token()}}' , loadedTicket : loadedTickets},
-          success : function(res){
-            //console.log(res.html);
-              document.querySelector("#items_container").insertAdjacentHTML("beforeend" , res.html);
-              document.querySelector("#items_container").setAttribute('data-applied-filter' , 1);
-            
-              if (res.html=='') {
-              //console.log('test', res);
-              $('#load_more_button').html('No more deals');
-              $('#load_more_button').attr('disabled', true);
-            }
-            else{
-              $('#load_more_button').html('Show me more deals');
-              $('#load_more_button').attr('disabled', false);
-
-            }
-    
-          }
-         
-        })
-  }
-  
-})
- 
-
-
-$('#reset-button').on('click',function(){
+  // })
 
   
-   let provider = [];
-   let speed = [];
-  let package = [];
-  let cost = [];
-  let offers = [];
-  let contract = [];
-  let phone = [];
-  let sort = ['price_asc'];
-  filterApplied = document.querySelector("#items_container").dataset.appliedFilter;
-  //loadedTickets = parseInt(filterApplied) ? document.querySelectorAll(".ticket").length : 0 
-  loadedTickets =  0 
-    $.ajax({
-          type : 'POST',
-          url : '{{route("apply.filter")}}',
-          data : { provider , speed , package , cost , offers , contract , phone ,sort, '_token' : '{{csrf_token()}}' , loadedTicket : loadedTickets},
-          success : function(res){
-            document.querySelector("#tot_count").innerHTML =res.total_count;
-            document.querySelector("#tot_count").innerHTML =res.total_count;
-            
-              document.querySelector("#items_container").innerHTML =res.html;
-            
-              
-           
-          }
-        })
-    
 
-        
-          $(".submitform").prop("checked", false);
-          document.querySelectorAll(".checkbox-label").forEach(el =>
-          { 
-            el.classList.remove("bg-primary"); 
-            el.classList.remove("text-white");
-            el.classList.remove("bg-lightGray");
-            el.classList.remove("border-primary");
-          })
 
-         
-  
-  });
-
-  // function handleIconClick(event) {
-  //   const recordId = event.target.getAttribute("data-record-id");
-  //   console.log("Record ID:", recordId); // For debugging
-  // }
-
-  function toggleModal() {
-    const modal = document.getElementById("default-modal1");
-    const overlay = document.getElementById("modal-overlay");
-    modal.classList.toggle("hidden");
-    modal.classList.toggle("flex");
-    overlay.classList.toggle("hidden");
-  }
-  
-
-$(document).on("click" , ".view-more-info" , function(){
-  const recordId = event.target.getAttribute("data-record-id");
-    //console.log("Record ID:", recordId); // For debugging
-    $.ajax({
-          type : 'POST',
-          url : '{{route("apply.moreinfo")}}',
-          data : { 
-            'id': recordId,
-            '_token' : '{{csrf_token()}}' 
-          },
-          success : function(res){
-            console.log(res.moreinfodata);
-            console.log(document.querySelector("#packagedetial"));
-            document.querySelector("#packagedetial").innerHTML = res.moreinfodata;
-         toggleModal()
-        }
-    })
-})
-
-$(document).on("click" , "#close-modal-btn" , function(){
-  toggleModal()
-})
 
 
 
