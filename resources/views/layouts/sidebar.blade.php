@@ -446,86 +446,6 @@ $(document).ready(()=>{
           }
         })
   })
-  
-  // document.querySelectorAll(".submitform").forEach(function(item){
-  //   item.addEventListener("click" , function(e){
-  //     alert("here");
-  //       e.stopPropagation();
-  //       e.stopImmediatePropagation();
-  //     let provider = [];
-  //     let speed = [];
-  //     let package = [];
-  //     let cost = [];
-  //     let offers = [];
-  //     let contract = [];
-  //     let phone = [];
-  //     let sort = [];
-  //     // checkedFilters = document.querySelectorAll("input[type='checkbox']:checked")
-  //     let checkedCheckboxes = document.querySelectorAll("input[type='checkbox']:checked");
-  //     let selectedOption = document.querySelector("select option:checked");
-  //     let checkedFilters = [...checkedCheckboxes, selectedOption];
-
-  //     // let type = item.dataset.type;
-     
-  //     checkedFilters.forEach( item => {
-  //   switch(item.dataset.type){
-  //         case 'provider':
-  //          provider.push(item.value);
-  //         break;
-  //         case 'speed':
-  //          speed.push(item.value);
-  //         break;
-  //         case 'package':
-  //          package.push(item.value);
-  //         break;
-  //         case 'cost':
-  //          cost.push(item.value); 
-  //         break;
-  //         case 'offers':
-  //          offers.push(item.value); 
-  //         break;
-  //         case 'contract':
-  //         contract.push(item.value); 
-  //         break;
-  //         case 'phone':
-  //         phone.push(item.value);
-  //         break;
-  //         default:
-  //         sort.push(item.value); 
-  //       }
-
-  //   })
-    
-  //   filterApplied = document.querySelector("#items_container").dataset.appliedFilter;
-  //   // loadedTickets = parseInt(filterApplied) ? document.querySelectorAll(".ticket").length : 0 
-  //   loadedTickets =  0 
-  //   $.ajax({
-  //         type : 'POST',
-  //         url : '{{route("apply.filter")}}',
-  //         data : { provider , speed , package , cost , offers , contract , phone ,sort, '_token' : '{{csrf_token()}}' , loadedTicket : loadedTickets},
-  //         success : function(res){
-  //           document.querySelector("#tot_count").innerHTML =res.total_count;
-  //           document.querySelector("#items_container").innerHTML =res.html;
-  //           applyfilteredContract(res.filteredContract);
-  //           applyfilteredPackage(res.filteredPacakage);
-  //           applyfilteredCost(res.filteredCost);
-  //           applyfilteredProvider(res.filteredProvider);
-  //           applyfilteredPhone(res.filteredPhone);
-  //           applyfilteredSpeed(res.filteredSpeed);
-  //           if (res.html=='') {
-  //             $('#load_more_button').html('No more deals');
-  //             $('#load_more_button').attr('disabled', true);
-  //           }
-  //           else{
-  //             $('#load_more_button').html('Show me more deals');
-  //             $('#load_more_button').attr('disabled', false);
-
-  //           }
-  //         }
-  //       })
-  //   })
-   
-  // })
 
   function applyFilteredContract(contracts){
     let contractsChexbox = document.querySelectorAll("input[name='contract']");
@@ -541,9 +461,11 @@ $(document).ready(()=>{
             }
             return true;
           })
-          !haveElement ? contract.closest(".checkbox-label").classList.add('label-disable') : contract.closest(".checkbox-label").classList.remove('label-disable'); 
+          toggleChexbox( !haveElement  , contract );
+          // !haveElement ? contract.closest(".checkbox-label").classList.add('label-disable') : contract.closest(".checkbox-label").classList.remove('label-disable'); 
         } else {
-          !contracts.includes(value) ? contract.closest(".checkbox-label").classList.add('label-disable') : contract.closest(".checkbox-label").classList.remove('label-disable');
+          toggleChexbox( !contracts  , contract );
+          // !contracts.includes(value) ? contract.closest(".checkbox-label").classList.add('label-disable') : contract.closest(".checkbox-label").classList.remove('label-disable');
         }
 
       })
@@ -555,7 +477,8 @@ function applyFilteredPackage(packages){
   if(packages.length > 0){
       packagesChexbox.forEach( package => {
         let value = package.value;
-        !packages.includes(parseInt(value)) ? package.closest(".checkbox-label").classList.add('label-disable') : package.closest(".checkbox-label").classList.remove('label-disable');
+        toggleChexbox( !packages.includes(parseInt(value)) , package );
+        // !packages.includes(parseInt(value)) ? package.closest(".checkbox-label").classList.add('label-disable') : package.closest(".checkbox-label").classList.remove('label-disable');
       })
    } 
 }
@@ -585,7 +508,8 @@ function applyFilteredCost(costs){
             }
             return true;
           })
-          !haveElement ? cost.closest(".checkbox-label").classList.add('label-disable') : cost.closest(".checkbox-label").classList.remove('label-disable');
+          toggleChexbox( !haveElement , cost );
+          // !haveElement ? cost.closest(".checkbox-label").classList.add('label-disable') : cost.closest(".checkbox-label").classList.remove('label-disable');
         }
 
       })
@@ -597,7 +521,8 @@ function applyFilteredProvider(providers){
   if(providers.length > 0){
       providersChexbox.forEach( provider => {
         let value = provider.value;
-        !providers.includes(parseInt(value)) ? provider.closest(".checkbox-label").classList.add('label-disable') : provider.closest(".checkbox-label").classList.remove('label-disable');
+        toggleChexbox( !providers.includes(parseInt(value)) , provider )
+        // !providers.includes(parseInt(value)) ? provider.closest(".checkbox-label").classList.add('label-disable') : provider.closest(".checkbox-label").classList.remove('label-disable');
       })
    } 
 }
@@ -607,61 +532,12 @@ function applyFilteredPhone(phones){
   if(phones.length > 0){
       phonesChexbox.forEach( phone => {
         let value = phone.value;
-        !phones.includes(value) ? phone.closest(".checkbox-label").classList.add('label-disable') : phone.closest(".checkbox-label").classList.remove('label-disable');
+        toggleChexbox( !phones.includes(value) , phone )
+        // !phones.includes(value) ? phone.closest(".checkbox-label").classList.add('label-disable') : phone.closest(".checkbox-label").classList.remove('label-disable');
       })
     } 
 }
 
-// function applyFilteredSpeed( speeds ){
-//   let speedChexbox = document.querySelectorAll("input[data-name='speed[]']");
-//   speeds.forEach( speed => {
-//      let unit = speed.download_speed_unit;
-//      let downloadSpeed = speed.download_speed;
-//      haveElement = false;
-//      Array.from(speedChexbox).every( chexbox => {
-//       let value = chexbox.value;
-//       speedList = value.split("-");
-      
-//         if(value.includes("+")){
-//           let lowerSpeed = parseInt(speedList[0].replace(/[a-zA-Z]/g, ""));
-//           if(downloadSpeed >= lowerSpeed && downloadSpeed <= upperSpeed){
-//                       haveElement = true;
-//                       return false;
-//           }
-//         } else {
-//             let speedList =  value.split("-");
-//             if(speedList.length == 2) {
-//                 let lowerSpeed = parseInt(speedList[0].replace(/[a-zA-Z]/g, ""));
-//                 let upperSpeed = parseInt(speedList[1].replace(/[a-zA-Z]/g, ""));
-//                 if(downloadSpeed >= lowerSpeed && downloadSpeed <= upperSpeed){
-//                       haveElement = true;
-//                       return false;
-//                 }
-//             } else {
-//                 let lowerSpeed = parseInt(speedList[0].replace(/[a-zA-Z]/g, ""));
-//                 let upperSpeed = parseInt(speedList[1].replace(/[a-zA-Z]/g, ""));
-//                 let extremeSpeed = parseInt(speedList[2].replace(/[a-zA-Z]/g, ""));
-//                 if(unit.toLowerCase() == 'mb'){
-//                     if(downloadSpeed >= lowerSpeed && downloadSpeed <= upperSpeed){
-//                       haveElement = true;
-//                       return false;
-//                     }
-//                 } else {
-//                   if(extremeSpeed == downloadSpeed){
-//                     haveElement = true;
-//                     return false;
-//                   }
-//                 }
-//             }
-//         }
-//         return true;
-//       });
-//       !haveElement ? chexbox.closest(".checkbox-label").classList.add('label-disable') : chexbox.closest(".checkbox-label").classList.remove('label-disable');
-
-
-//   })
-
-// }
 
 function applyFilteredSpeed( speeds ){
   let speedChexbox = document.querySelectorAll("input[data-name='speed[]']");
@@ -708,9 +584,20 @@ function applyFilteredSpeed( speeds ){
 
 
       })
-      
-      !haveElement ? chexbox.closest(".checkbox-label").classList.add('label-disable') : chexbox.closest(".checkbox-label").classList.remove('label-disable');
+      toggleChexbox( !haveElement , chexbox )
+      // !haveElement ? chexbox.closest(".checkbox-label").classList.add('label-disable') : chexbox.closest(".checkbox-label").classList.remove('label-disable');
       });
+}
+
+
+function toggleChexbox( condition , chexbox ) {
+    if( condition ) {
+      let label = chexbox.closest(".checkbox-label");
+      label.setAttribute('class' , 'checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer label-disable');
+      chexbox.checked = false;
+    } else {
+      chexbox.closest(".checkbox-label").classList.remove('label-disable');
+    }
 }
 
   document.querySelector("#load_more_button").addEventListener("click" , function(e){
