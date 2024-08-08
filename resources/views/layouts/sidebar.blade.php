@@ -187,13 +187,13 @@
     <h2 class="font-bold text-xl text-filter mb-3">Offers</h2>
     <div class="grid grid-cols-1 gap-2">
       <label
-        class="checkbox-label text-sm label-disable  bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        class="checkbox-label text-sm label-disable  pre-disabled  bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
         <input type="checkbox" name="no_upfront_cost" id="no_upfront_cost" data-type="offers"   value="no_upfront_cost" class="hidden simple-checkbox submitform" />
         Deals with no upfront cost
       </label>
       <label
-        class="checkbox-label text-sm label-disable  bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        class="checkbox-label text-sm label-disable  pre-disabled  bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
         <input type="checkbox" name="off" id="off"  value="off" data-type="offers"  class="hidden simple-checkbox submitform" />
         Deals with rewards and offers
@@ -264,7 +264,7 @@
     <h2 class="font-bold text-xl text-filter mb-3">Contract length</h2>
     <div class="grid grid-cols-2 gap-2">
       <label
-        class="checkbox-label label-disable  text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        class="checkbox-label label-disable  pre-disabled  text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
         <input type="checkbox" name="contract" class="hidden simple-checkbox submitform" value="1" data-type="contract"  data-name="contract[]"  />
         1 month
@@ -284,7 +284,7 @@
       <label
         class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" name="contract" class="hidden simple-checkbox submitform" value="24" data-type="contract" data-name="contract[]"  />
+        <input type="checkbox" name="contract" class="hidden simple-checkbox submitform" value="18+" data-type="contract" data-name="contract[]"  />
         18+ month
       </label>
     </div>
@@ -452,10 +452,12 @@ $(document).ready(()=>{
     if(contracts.length > 0){
       contractsChexbox.forEach( contract => {
         let value = contract.value;
+        haveElement = false;
+        console.log(value);
+        console.log(value.includes("+"))
         if(value.includes("+")){
-          haveElement = false;
           contracts.every( eachContract => {
-            if( eachContract >= value ){
+            if( eachContract >= parseInt(value.replace("+" , "")) ){
               haveElement = true;
               return false;
             }
@@ -464,7 +466,7 @@ $(document).ready(()=>{
           toggleChexbox( !haveElement  , contract );
           // !haveElement ? contract.closest(".checkbox-label").classList.add('label-disable') : contract.closest(".checkbox-label").classList.remove('label-disable'); 
         } else {
-          toggleChexbox( !contracts  , contract );
+          toggleChexbox( !contracts.includes(value)  , contract );
           // !contracts.includes(value) ? contract.closest(".checkbox-label").classList.add('label-disable') : contract.closest(".checkbox-label").classList.remove('label-disable');
         }
 
@@ -488,10 +490,11 @@ function applyFilteredCost(costs){
   if(costs.length > 0){
     costsChexbox.forEach( cost => {
         let value = cost.value;
+        
         if(value.includes("+")){
           let haveElement = false;
           costs.every( eachCost => {
-            if( eachCost >= value ){
+            if( eachCost >= parseInt(value.replace("+" , ""))){
               haveElement = true;
               return false;
             }
@@ -703,22 +706,20 @@ $('#reset-button').on('click',function(){
             document.querySelector("#tot_count").innerHTML =res.total_count;
             document.querySelector("#tot_count").innerHTML =res.total_count;
             document.querySelector("#items_container").innerHTML =res.html;
-            
-              
-           
+            resetFilter();
           }
         })
     
 
         
-          $(".submitform").prop("checked", false);
-          document.querySelectorAll(".checkbox-label").forEach(el =>
-          { 
-            el.classList.remove("bg-primary"); 
-            el.classList.remove("text-white");
-            el.classList.remove("bg-lightGray");
-            el.classList.remove("border-primary");
-          })
+          // $(".submitform").prop("checked", false);
+          // document.querySelectorAll(".checkbox-label").forEach(el =>
+          // { 
+          //   el.classList.remove("bg-primary"); 
+          //   el.classList.remove("text-white");
+          //   el.classList.remove("bg-lightGray");
+          //   el.classList.remove("border-primary");
+          // })
 
          
   
@@ -749,8 +750,6 @@ $(document).on("click" , ".view-more-info" , function(){
             '_token' : '{{csrf_token()}}' 
           },
           success : function(res){
-            console.log(res.moreinfodata);
-            console.log(document.querySelector("#packagedetial"));
             document.querySelector("#packagedetial").innerHTML = res.moreinfodata;
          toggleModal()
         }
@@ -760,6 +759,21 @@ $(document).on("click" , ".view-more-info" , function(){
 $(document).on("click" , "#close-modal-btn" , function(){
   toggleModal()
 })
+
+function resetFilter(){
+ let disableBtn =  document.querySelectorAll(".label-disable:not(.pre-disabled)");
+ disableBtn.forEach( btn => {
+    btn.setAttribute("class","checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer")
+    btn.querySelector('input').checked = false;
+  })
+  
+let activeChecbox = document.querySelectorAll(".submitform:checked")
+activeChecbox.forEach( checkbox  => {
+  checkbox.closest(".checkbox-label").setAttribute("class","checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer")
+    checkbox.checked = false;
+  })
+
+}
 
 
 
