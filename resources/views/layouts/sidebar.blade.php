@@ -387,7 +387,7 @@ $(document).ready(()=>{
 
       // let type = item.dataset.type;
      
-      checkedFilters.forEach( item => {
+    checkedFilters.forEach( item => {
     switch(item.dataset.type){
           case 'provider':
            provider.push(item.value);
@@ -426,12 +426,14 @@ $(document).ready(()=>{
           success : function(res){
             document.querySelector("#tot_count").innerHTML =res.total_count;
             document.querySelector("#items_container").innerHTML =res.html;
+
             applyFilteredContract(res.filteredContract);
-            applyFilteredPackage(res.filteredPacakage);
+            applyFilteredPackage(res.filteredPackage);
             applyFilteredCost(res.filteredCost);
             applyFilteredProvider(res.filteredProvider);
             applyFilteredPhone(res.filteredPhone);
             applyFilteredSpeed(res.filteredSpeed);
+           
             if (res.html=='') {
               $('#load_more_button').html('No more deals');
               $('#load_more_button').attr('disabled', true);
@@ -525,7 +527,353 @@ $(document).ready(()=>{
    
   // })
 
+  function applyFilteredContract(contracts){
+    let contractsChexbox = document.querySelectorAll("input[name='contract']");
+    if(contracts.length > 0){
+      contractsChexbox.forEach( contract => {
+        let value = contract.value;
+        if(value.includes("+")){
+          haveElement = false;
+          contracts.every( eachContract => {
+            if( eachContract >= value ){
+              haveElement = true;
+              return false;
+            }
+            return true;
+          })
+          !haveElement ? contract.closest(".checkbox-label").classList.add('label-disable') : contract.closest(".checkbox-label").classList.remove('label-disable'); 
+        } else {
+          !contracts.includes(value) ? contract.closest(".checkbox-label").classList.add('label-disable') : contract.closest(".checkbox-label").classList.remove('label-disable');
+        }
+
+      })
+    } 
+  }  
+
+function applyFilteredPackage(packages){
+  let packagesChexbox = document.querySelectorAll("input[data-name='package[]']");
+  if(packages.length > 0){
+      packagesChexbox.forEach( package => {
+        let value = package.value;
+        !packages.includes(parseInt(value)) ? package.closest(".checkbox-label").classList.add('label-disable') : package.closest(".checkbox-label").classList.remove('label-disable');
+      })
+   } 
+}
+
+function applyFilteredCost(costs){
+  let costsChexbox = document.querySelectorAll("input[data-name='monthlycost[]']");
+  if(costs.length > 0){
+    costsChexbox.forEach( cost => {
+        let value = cost.value;
+        if(value.includes("+")){
+          let haveElement = false;
+          costs.every( eachCost => {
+            if( eachCost >= value ){
+              haveElement = true;
+              return false;
+            }
+            return true;
+          })
+          !haveElement ? cost.closest(".checkbox-label").classList.add('label-disable') : cost.closest(".checkbox-label").classList.remove('label-disable'); 
+        } else {
+          [lowerCost , upperCost ] = value.split("-")
+          let haveElement = false;
+          costs.every( eachCost => {
+            if( eachCost >= lowerCost  && eachCost <= upperCost ){
+              haveElement = true;
+              return false;
+            }
+            return true;
+          })
+          !haveElement ? cost.closest(".checkbox-label").classList.add('label-disable') : cost.closest(".checkbox-label").classList.remove('label-disable');
+        }
+
+      })
+    } 
+}
+
+function applyFilteredProvider(providers){
+  let providersChexbox = document.querySelectorAll("input[data-name='provider[]']");
+  if(providers.length > 0){
+      providersChexbox.forEach( provider => {
+        let value = provider.value;
+        !providers.includes(parseInt(value)) ? provider.closest(".checkbox-label").classList.add('label-disable') : provider.closest(".checkbox-label").classList.remove('label-disable');
+      })
+   } 
+}
+
+function applyFilteredPhone(phones){
+  let phonesChexbox = document.querySelectorAll("input[name='phone']");
+  if(phones.length > 0){
+      phonesChexbox.forEach( phone => {
+        let value = phone.value;
+        !phones.includes(value) ? phone.closest(".checkbox-label").classList.add('label-disable') : phone.closest(".checkbox-label").classList.remove('label-disable');
+      })
+    } 
+}
+
+// function applyFilteredSpeed( speeds ){
+//   let speedChexbox = document.querySelectorAll("input[data-name='speed[]']");
+//   speeds.forEach( speed => {
+//      let unit = speed.download_speed_unit;
+//      let downloadSpeed = speed.download_speed;
+//      haveElement = false;
+//      Array.from(speedChexbox).every( chexbox => {
+//       let value = chexbox.value;
+//       speedList = value.split("-");
+      
+//         if(value.includes("+")){
+//           let lowerSpeed = parseInt(speedList[0].replace(/[a-zA-Z]/g, ""));
+//           if(downloadSpeed >= lowerSpeed && downloadSpeed <= upperSpeed){
+//                       haveElement = true;
+//                       return false;
+//           }
+//         } else {
+//             let speedList =  value.split("-");
+//             if(speedList.length == 2) {
+//                 let lowerSpeed = parseInt(speedList[0].replace(/[a-zA-Z]/g, ""));
+//                 let upperSpeed = parseInt(speedList[1].replace(/[a-zA-Z]/g, ""));
+//                 if(downloadSpeed >= lowerSpeed && downloadSpeed <= upperSpeed){
+//                       haveElement = true;
+//                       return false;
+//                 }
+//             } else {
+//                 let lowerSpeed = parseInt(speedList[0].replace(/[a-zA-Z]/g, ""));
+//                 let upperSpeed = parseInt(speedList[1].replace(/[a-zA-Z]/g, ""));
+//                 let extremeSpeed = parseInt(speedList[2].replace(/[a-zA-Z]/g, ""));
+//                 if(unit.toLowerCase() == 'mb'){
+//                     if(downloadSpeed >= lowerSpeed && downloadSpeed <= upperSpeed){
+//                       haveElement = true;
+//                       return false;
+//                     }
+//                 } else {
+//                   if(extremeSpeed == downloadSpeed){
+//                     haveElement = true;
+//                     return false;
+//                   }
+//                 }
+//             }
+//         }
+//         return true;
+//       });
+//       !haveElement ? chexbox.closest(".checkbox-label").classList.add('label-disable') : chexbox.closest(".checkbox-label").classList.remove('label-disable');
+
+
+//   })
+
+// }
+
+function applyFilteredSpeed( speeds ){
+  let speedChexbox = document.querySelectorAll("input[data-name='speed[]']");
+  Array.from(speedChexbox).forEach( chexbox => {
+      let value = chexbox.value;
+      speedList = value.split("-");
+      let lowerSpeed = parseInt(speedList[0].replace(/[a-zA-Z]/g, ""));
+      let upperSpeed = speedList[1] ? parseInt(speedList[1].replace(/[a-zA-Z]/g, "")) : null;
+      let extremeSpeed = speedList[2] ? parseInt(speedList[2].replace(/[a-zA-Z]/g, "")) : null;
+      haveElement = false;
+
+      speeds.forEach( speed => {
+        let unit = speed.download_speed_unit;
+        let downloadSpeed = speed.download_speed;
+      
+        if(value.includes("+")){
+          let lowerSpeed = parseInt(speedList[0].replace(/[a-zA-Z]/g, ""));
+          if(downloadSpeed >= lowerSpeed && unit.toLowerCase() == 'gb'){
+              haveElement = true;
+              return false;
+          }
+        } else {
+          if(speedList.length == 2) {
+            if(downloadSpeed >= lowerSpeed && downloadSpeed <= upperSpeed)
+            {
+              haveElement = true;
+              return false;
+            }
+          } else {
+            if(unit.toLowerCase() == 'mb'){
+                    if(downloadSpeed >= lowerSpeed && downloadSpeed <= upperSpeed){
+                      haveElement = true;
+                      return false;
+                    }
+              } else {
+                  if( extremeSpeed == downloadSpeed){
+                      haveElement = true;
+                      return false;
+                  }
+              }
+          }
+
+        }
+
+
+      })
+      
+      !haveElement ? chexbox.closest(".checkbox-label").classList.add('label-disable') : chexbox.closest(".checkbox-label").classList.remove('label-disable');
+      });
+}
+
+  document.querySelector("#load_more_button").addEventListener("click" , function(e){
+    applyFilter()
+  })
+
+  function applyFilter()
+  {
+      let provider = [];
+      let speed = [];
+      let package = [];
+      let cost = [];
+      let offers = [];
+      let contract = [];
+      let phone = [];
+      let sort = [];
+      //checkedFilters = document.querySelectorAll("input[type='checkbox']:checked")
+      let checkedCheckboxes = document.querySelectorAll("input[type='checkbox']:checked");
+      let selectedOption = document.querySelector("select option:checked");
+      let checkedFilters = [...checkedCheckboxes, selectedOption];
+
+      checkedFilters.forEach( item => {
+      switch( item.dataset.type){
+            case 'provider':
+            provider.push(item.value);
+            break;
+            case 'speed':
+            speed.push(item.value);
+            break;
+            case 'package':
+            package.push(item.value);
+            break;
+            case 'cost':
+            cost.push(item.value); 
+            break;
+            case 'offers':
+            offers.push(item.value); 
+            break;
+            case 'contract':
+            contract.push(item.value); 
+            break;
+            case 'phone':
+            phone.push(item.value);
+            break;
+            default:
+            sort.push(item.value); 
+          }
+
+      })
+
+    // filterApplied = document.querySelector("#items_container").dataset.appliedFilter;
+    
+    loadedTickets = document.querySelectorAll(".ticket").length; 
+    //console.log(loadedTickets);
+    $.ajax({
+          type : 'POST',
+          url : '{{route("apply.filter")}}',
+          data : { provider , speed , package , cost , offers , contract , phone ,sort, '_token' : '{{csrf_token()}}' , loadedTicket : loadedTickets},
+          success : function(res){
+            //console.log(res.html);
+              document.querySelector("#items_container").insertAdjacentHTML("beforeend" , res.html);
+              document.querySelector("#items_container").setAttribute('data-applied-filter' , 1);
+            
+              if (res.html=='') {
+              //console.log('test', res);
+              $('#load_more_button').html('No more deals');
+              $('#load_more_button').attr('disabled', true);
+            }
+            else{
+              $('#load_more_button').html('Show me more deals');
+              $('#load_more_button').attr('disabled', false);
+
+            }
+    
+          }
+         
+        })
+  }
   
+})
+ 
+
+
+$('#reset-button').on('click',function(){
+
+  
+  let provider = [];
+  let speed = [];
+  let package = [];
+  let cost = [];
+  let offers = [];
+  let contract = [];
+  let phone = [];
+  let sort = ['price_asc'];
+  filterApplied = document.querySelector("#items_container").dataset.appliedFilter;
+  //loadedTickets = parseInt(filterApplied) ? document.querySelectorAll(".ticket").length : 0 
+  loadedTickets =  0 
+    $.ajax({
+          type : 'POST',
+          url : '{{route("apply.filter")}}',
+          data : { provider , speed , package , cost , offers , contract , phone ,sort, '_token' : '{{csrf_token()}}' , loadedTicket : loadedTickets},
+          success : function(res){
+            document.querySelector("#tot_count").innerHTML =res.total_count;
+            document.querySelector("#tot_count").innerHTML =res.total_count;
+            document.querySelector("#items_container").innerHTML =res.html;
+            
+              
+           
+          }
+        })
+    
+
+        
+          $(".submitform").prop("checked", false);
+          document.querySelectorAll(".checkbox-label").forEach(el =>
+          { 
+            el.classList.remove("bg-primary"); 
+            el.classList.remove("text-white");
+            el.classList.remove("bg-lightGray");
+            el.classList.remove("border-primary");
+          })
+
+         
+  
+  });
+
+  // function handleIconClick(event) {
+  //   const recordId = event.target.getAttribute("data-record-id");
+  //   console.log("Record ID:", recordId); // For debugging
+  // }
+
+  function toggleModal() {
+    const modal = document.getElementById("default-modal1");
+    const overlay = document.getElementById("modal-overlay");
+    modal.classList.toggle("hidden");
+    modal.classList.toggle("flex");
+    overlay.classList.toggle("hidden");
+  }
+  
+
+$(document).on("click" , ".view-more-info" , function(){
+  const recordId = event.target.getAttribute("data-record-id");
+    //console.log("Record ID:", recordId); // For debugging
+    $.ajax({
+          type : 'POST',
+          url : '{{route("apply.moreinfo")}}',
+          data : { 
+            'id': recordId,
+            '_token' : '{{csrf_token()}}' 
+          },
+          success : function(res){
+            console.log(res.moreinfodata);
+            console.log(document.querySelector("#packagedetial"));
+            document.querySelector("#packagedetial").innerHTML = res.moreinfodata;
+         toggleModal()
+        }
+    })
+})
+
+$(document).on("click" , "#close-modal-btn" , function(){
+  toggleModal()
+})
+
 
 
 

@@ -350,7 +350,7 @@ class ProviderController extends Controller
 
                         })
                         ->when( isset($request->package) && count($request->package), function($query) use($request){
-                            $query->whereIn('category_id' , $request->provider);
+                            $query->whereIn('category_id' , $request->package);
                         })
                         ->when( isset($request->cost) && count($request->cost) , function($query) use ($request){
 
@@ -395,7 +395,7 @@ class ProviderController extends Controller
     
     public function filteredSpeed(Request $request)
     {
-      $speed = Product::select('download_speed')
+      $speed = Product::select('download_speed' , 'download_speed_unit')
                         ->when( isset($request->provider) && count($request->provider), function($query) use($request){
                             $query->whereIn('provider_id' , $request->provider);
                         })
@@ -426,17 +426,19 @@ class ProviderController extends Controller
                           $query->whereIn('contract_months' , $request->contract);
                         })
                         ->when( isset($request->phone) && count($request->phone) , function($query) use ($request) {
-                          foreach($request->phone as $phone)
-                          {
-                            $query->where('calls' , 'Like' , "%$phone%");
-                          }
+                          $query->where( function($query1) use ($request){
+                            foreach($request->phone as $phone)
+                            {
+                              $query1->where('calls' , 'Like' , "%$phone%");
+                            }
+                          });
                         })
                         ->distinct('download_speed')
                         ->orderBy('download_speed' , 'asc')
                         ->get()
-                        ->pluck('download_speed')
+                        // ->pluck('download_speed' , 'download_speed_unit')
                         ->toArray();
-
+        // dd($speed);
         return $speed;
     }
 
@@ -515,10 +517,12 @@ class ProviderController extends Controller
                           $query->whereIn('contract_months' , $request->contract);
                         })
                         ->when( isset($request->phone) && count($request->phone) , function($query) use ($request) {
-                          foreach($request->phone as $phone)
-                          {
-                            $query->where('calls' , 'Like' , "%$phone%");
-                          }
+                          $query->where( function($query1) use ($request){
+                            foreach($request->phone as $phone)
+                            {
+                              $query1->where('calls' , 'Like' , "%$phone%");
+                            }
+                          });
                         })
                         ->distinct('category_id')
                         ->orderBy('category_id' , 'asc')
@@ -586,10 +590,12 @@ class ProviderController extends Controller
                           $query->whereIn('contract_months' , $request->contract);
                         })
                         ->when( isset($request->phone) && count($request->phone) , function($query) use ($request) {
-                          foreach($request->phone as $phone)
-                          {
-                            $query->where('calls' , 'Like' , "%$phone%");
-                          }
+                          $query->where( function($query1) use ($request){
+                            foreach($request->phone as $phone)
+                            {
+                              $query1->where('calls' , 'Like' , "%$phone%");
+                            }
+                          });
                         })
                         ->distinct('promo_monthly')
                         ->orderBy('promo_monthly' , 'asc')
@@ -601,7 +607,7 @@ class ProviderController extends Controller
 
     public function filteredContract(Request $request)
     {
-      $package = Product::select('contract_months')
+      $contract = Product::select('contract_months')
                           ->when( isset($request->speed) && count($request->speed), function($query) use($request){
                             $query->where(function($query1) use($request){
 
@@ -674,17 +680,19 @@ class ProviderController extends Controller
                             $query->whereIn('provider_id' , $request->provider);
                           })
                           ->when( isset($request->phone) && count($request->phone) , function($query) use ($request) {
-                            foreach($request->phone as $phone)
-                            {
-                              $query->where('calls' , 'Like' , "%$phone%");
-                            }
+                            $query->where( function($query1) use ($request){
+                              foreach($request->phone as $phone)
+                              {
+                                $query1->where('calls' , 'Like' , "%$phone%");
+                              }
+                            });
                           })
                           ->distinct('contract_months')
                           ->orderBy('contract_months' , 'asc')
                           ->get()
                           ->pluck('contract_months')
                           ->toArray();
-                          return $package;
+      return $contract;
     }
 
     public function filteredPhone(Request $request)
