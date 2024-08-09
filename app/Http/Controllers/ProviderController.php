@@ -96,6 +96,7 @@ class ProviderController extends Controller
       $contract= $request->contract;
       $phone= $request->phone;
       $sortValue = $request->sort;
+      $offers = $request->offers;
       $query = Product::query();
       
     
@@ -235,6 +236,14 @@ class ProviderController extends Controller
           });
       });
 
+      $query->when(isset($offers) && count($offers), function ($query1) use ($offers) {
+          $query1->where(function($query2) use ($offers){
+              if(in_array('no_upfront_cost' , $offers)){
+                $query2->orWhere('set_up_cost' , 0);
+              }
+          });
+      });
+
       $query->when(isset($phone) && count($phone), function ($query1) use ($phone) {
         $query1->whereIn('calls' , $phone);
       });
@@ -276,6 +285,7 @@ class ProviderController extends Controller
     $filteredPhone = $this->filteredPhone($request);
     $filteredCost = $this->filteredCost($request);
     $filteredPackage = $this->filteredPackage($request);
+    $filteredOffer = $this->filteredOffer($request);
 
 
     return response()->json([ 
@@ -288,7 +298,7 @@ class ProviderController extends Controller
                               'filteredPhone' => $filteredPhone,
                               'filteredCost' => $filteredCost,
                               'filteredPackage' => $filteredPackage,
-
+                              'filteredOffer' => $filteredOffer,
                             ]);
 
      // dd($providerList);
@@ -453,6 +463,13 @@ class ProviderController extends Controller
                             }
                           });
                         })
+                        ->when(isset($request->offers) && count($request->offers), function ($query) use ($request) {
+                          $query->where(function($query1) use ($request){
+                                if(in_array('no_upfront_cost' , $request->offers)){
+                                  $query1->orWhere('set_up_cost' , 0);
+                                }
+                            });
+                        })
                         ->distinct('download_speed')
                         ->orderBy('download_speed' , 'asc')
                         ->get()
@@ -551,10 +568,117 @@ class ProviderController extends Controller
                             }
                           });
                         })
+                        ->when(isset($request->offers) && count($request->offers), function ($query) use ($request) {
+                          $query->where(function($query1) use ($request){
+                                if(in_array('no_upfront_cost' , $request->offers)){
+                                  $query1->orWhere('set_up_cost' , 0);
+                                }
+                            });
+                        })
                         ->distinct('category_id')
                         ->orderBy('category_id' , 'asc')
                         ->get()
                         ->pluck('category_id')
+                        ->toArray();
+      return $package;
+    }
+
+    public function filteredOffer(Request $request)
+    {
+      $package = Product::select('set_up_cost')
+                        ->when( isset($request->speed) && count($request->speed), function($query) use($request){
+                            $query->where(function($query1) use($request){
+
+                                foreach($request->speed as $speed)
+                                {
+                                  $speedList = explode("-" , $speed);
+                                  $speedListCount = count($speedList);
+                                  if($speedListCount == 1){
+                                    [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
+                                    $query1->orWhere( function($query2) use ($speedNum , $speedUnit) {
+                                      $query2->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                    });
+                                  } else if($speedListCount == 2){
+                                    $query1->orWhere( function($query2) use ($speedList) {
+                                      $query2->where( function($query3) use ($speedList){
+                                        [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
+                                        $query3->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                      });
+                                      $query2->where( function($query3) use ($speedList){
+                                        [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[1]);
+                                        $query3->where('download_speed' , '<=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                      });
+                                    });
+                                  } else {
+                                    $query1->orWhere( function($query2) use ($speedList) {
+                                      $query2->where( function($query3) use ($speedList){
+                                        [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
+                                        $query3->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                      });
+                                      $query2->where( function($query3) use ($speedList){
+                                        [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[1]);
+                                        $query3->where('download_speed' , '<=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                      });
+                                
+                                    });
+                                    $query1->orWhere(function($query2) use ($speedList){
+                                      [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[2]);
+                                      $query2->where('download_speed' , '=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                    });
+                                  }
+                                  
+                                }
+                              });
+
+                        })
+                        ->when( isset($request->cost) && count($request->cost) , function($query) use ($request){
+
+                          $query->where(function($query1) use($request){
+
+                            foreach($request->cost as $cost)
+                            {
+                              $costList = explode("-" , $cost);
+                              $lowerCost = $costList[0];
+                              $upperCost = $costList[1] ?? null;
+  
+                              if($upperCost){
+                                $query1->orWhere('promo_monthly' , '>=' , $lowerCost)->where('promo_monthly' , '<=' , $upperCost);
+                              }else{
+                                $query1->orWhere('promo_monthly' , '>=' , $lowerCost);
+                              }
+  
+                            }
+                          });
+
+                        })
+                        ->when( isset($request->provider) && count($request->provider), function($query) use($request){
+                          $query->whereIn('provider_id' , $request->provider);
+                        })
+                        ->when( isset($request->contract) && count($request->contract) , function($query) use ($request){
+                          $query->where(function($query1) use($request){
+                            foreach($request->contract as $ct)
+                            {
+                              $haveIncrement = str_contains( $ct , '+') ? 1 : 0;
+                              $ct = (int)str_replace("+" , "" , $ct);
+                              $haveIncrement ? $query1->orWhere('contract_months' , '>=' , $ct) : $query1->where('contract_months' , $ct); 
+                            }
+                          });
+                        })
+                        ->when( isset($request->phone) && count($request->phone) , function($query) use ($request) {
+                          $query->where( function($query1) use ($request){
+                            foreach($request->phone as $phone)
+                            {
+                              $query1->where('calls' , 'Like' , "%$phone%");
+                            }
+                          });
+                        })
+                        ->when( isset($request->package) && count($request->package), function($query) use($request){
+                            $query->whereIn('category_id' , $request->package);
+                        })
+                        ->distinct('set_up_cost')
+                        ->orderBy('set_up_cost' , 'asc')
+                        ->get()
+                        ->pluck('set_up_cost')
                         ->toArray();
       return $package;
     }
@@ -630,6 +754,13 @@ class ProviderController extends Controller
                               $query1->where('calls' , 'Like' , "%$phone%");
                             }
                           });
+                        })
+                        ->when(isset($request->offers) && count($request->offers), function ($query) use ($request) {
+                          $query->where(function($query1) use ($request){
+                                if(in_array('no_upfront_cost' , $request->offers)){
+                                  $query1->orWhere('set_up_cost' , 0);
+                                }
+                            });
                         })
                         ->distinct('promo_monthly')
                         ->orderBy('promo_monthly' , 'asc')
@@ -720,6 +851,13 @@ class ProviderController extends Controller
                                 $query1->where('calls' , 'Like' , "%$phone%");
                               }
                             });
+                          })
+                          ->when(isset($request->offers) && count($request->offers), function ($query) use ($request) {
+                            $query->where(function($query1) use ($request){
+                                  if(in_array('no_upfront_cost' , $request->offers)){
+                                    $query1->orWhere('set_up_cost' , 0);
+                                  }
+                              });
                           })
                           ->distinct('contract_months')
                           ->orderBy('contract_months' , 'asc')
@@ -812,6 +950,13 @@ class ProviderController extends Controller
                                 $haveIncrement ? $query1->orWhere('contract_months' , '>=' , $ct) : $query1->where('contract_months' , $ct); 
                               }
                             });
+                          })
+                          ->when(isset($request->offers) && count($request->offers), function ($query) use ($request) {
+                            $query->where(function($query1) use ($request){
+                                  if(in_array('no_upfront_cost' , $request->offers)){
+                                    $query1->orWhere('set_up_cost' , 0);
+                                  }
+                              });
                           })
                           ->distinct('calls')
                           ->orderBy('calls' , 'asc')

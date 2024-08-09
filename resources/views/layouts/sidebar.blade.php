@@ -187,15 +187,15 @@
     <h2 class="font-bold text-xl text-filter mb-3">Offers</h2>
     <div class="grid grid-cols-1 gap-2">
       <label
-        class="checkbox-label text-sm label-disable  pre-disabled  bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        class="checkbox-label text-sm bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" name="no_upfront_cost" id="no_upfront_cost" data-type="offers"   value="no_upfront_cost" class="hidden simple-checkbox submitform" />
+        <input type="checkbox" name="no_upfront_cost" id="no_upfront_cost" data-type="offers" name="offers[]"  value="no_upfront_cost" class="hidden simple-checkbox submitform" />
         Deals with no upfront cost
       </label>
       <label
         class="checkbox-label text-sm label-disable  pre-disabled  bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" name="off" id="off"  value="off" data-type="offers"  class="hidden simple-checkbox submitform" />
+        <input type="checkbox" name="off" id="off"  value="off" data-type="offers" name="offers[]"  class="hidden simple-checkbox submitform" />
         Deals with rewards and offers
       </label>
     </div>
@@ -385,7 +385,6 @@ $(document).ready(()=>{
       let selectedOption = document.querySelector("select option:checked");
       let checkedFilters = [...checkedCheckboxes, selectedOption];
 
-      // let type = item.dataset.type;
      
     checkedFilters.forEach( item => {
     switch(item.dataset.type){
@@ -433,7 +432,8 @@ $(document).ready(()=>{
             applyFilteredProvider(res.filteredProvider);
             applyFilteredPhone(res.filteredPhone);
             applyFilteredSpeed(res.filteredSpeed);
-           
+            applyFilteredOffers(res.filteredOffer);
+
             if (res.html=='') {
               $('#load_more_button').html('No more deals');
               $('#load_more_button').attr('disabled', true);
@@ -453,8 +453,6 @@ $(document).ready(()=>{
       contractsChexbox.forEach( contract => {
         let value = contract.value;
         haveElement = false;
-        console.log(value);
-        console.log(value.includes("+"))
         if(value.includes("+")){
           contracts.every( eachContract => {
             if( eachContract >= parseInt(value.replace("+" , "")) ){
@@ -592,6 +590,13 @@ function applyFilteredSpeed( speeds ){
       toggleChexbox( !haveElement , chexbox )
       // !haveElement ? chexbox.closest(".checkbox-label").classList.add('label-disable') : chexbox.closest(".checkbox-label").classList.remove('label-disable');
       });
+}
+
+
+function applyFilteredOffers(offers){
+  let label = document.querySelector("input[name='no_upfront_cost']").closest(".checkbox-label");
+  offers.includes(0) ? lable.classList.remove("label-disable") : lable.classList.add("label-disable")  
+
 }
 
 
