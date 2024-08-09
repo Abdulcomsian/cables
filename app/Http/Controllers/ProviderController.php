@@ -157,7 +157,7 @@ class ProviderController extends Controller
                         });
   
                         $query2->when($flag , function($query3) use ($minGb){
-                          $query3->where('download_speed' , '>=' , $minGb);
+                          $query3->where('download_speed' , '>' , $minGb);
                         });
   
                         $query2->where('download_speed_unit' , 'gb');
@@ -199,7 +199,7 @@ class ProviderController extends Controller
             {
               if($currentCost['haveIncrement']){
                 $query1->orWhere(function($query2) use ($currentCost){
-                  $query2->where('promo_monthly' , '>=' , $currentCost['minCost'] );
+                  $query2->where('promo_monthly' , '>' , $currentCost['minCost'] );
                 });
               } else {
                 $query1->orWhere(function($query2) use ($currentCost){
@@ -231,7 +231,7 @@ class ProviderController extends Controller
             {
               $haveIncrement = str_contains( $ct , '+') ? 1 : 0;
               $ct = (int)str_replace("+" , "" , $ct);
-              $haveIncrement ? $query2->orWhere('contract_months' , '>=' , $ct) : $query2->where('contract_months' , $ct); 
+              $haveIncrement ? $query2->orWhere('contract_months' , '>' , $ct) : $query2->where('contract_months' , $ct); 
             }
           });
       });
@@ -321,49 +321,49 @@ class ProviderController extends Controller
     public function filteredProvider($request)
     {
       $provider = Product::select('provider_id')
-                        ->when( isset($request->speed) && count($request->speed), function($query) use($request){
-                          $query->where(function($query1) use($request){
+                          ->when( isset($request->speed) && count($request->speed), function($query) use($request){
+                            $query->where(function($query1) use($request){
 
-                              foreach($request->speed as $speed)
-                              {
-                                $speedList = explode("-" , $speed);
-                                $speedListCount = count($speedList);
-                                if($speedListCount == 1){
-                                  [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
-                                  $query1->orWhere( function($query2) use ($speedNum , $speedUnit) {
-                                    $query2->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
-                                  });
-                                } else if($speedListCount == 2){
-                                  $query1->orWhere( function($query2) use ($speedList) {
-                                    $query2->where( function($query3) use ($speedList){
-                                      [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
-                                      $query3->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                foreach($request->speed as $speed)
+                                {
+                                  $speedList = explode("-" , $speed);
+                                  $speedListCount = count($speedList);
+                                  if($speedListCount == 1){
+                                    [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
+                                    $query1->orWhere( function($query2) use ($speedNum , $speedUnit) {
+                                      $query2->where('download_speed' , '>' , $speedNum )->where('download_speed_unit' , $speedUnit);
                                     });
-                                    $query2->where( function($query3) use ($speedList){
-                                      [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[1]);
-                                      $query3->where('download_speed' , '<=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                  } else if($speedListCount == 2){
+                                    $query1->orWhere( function($query2) use ($speedList) {
+                                      $query2->where( function($query3) use ($speedList){
+                                        [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
+                                        $query3->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                      });
+                                      $query2->where( function($query3) use ($speedList){
+                                        [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[1]);
+                                        $query3->where('download_speed' , '<=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                      });
                                     });
-                                  });
-                                } else {
-                                  $query1->orWhere( function($query2) use ($speedList) {
-                                    $query2->where( function($query3) use ($speedList){
-                                      [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
-                                      $query3->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
-                                    });
-                                    $query2->where( function($query3) use ($speedList){
-                                      [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[1]);
-                                      $query3->where('download_speed' , '<=' , $speedNum )->where('download_speed_unit' , $speedUnit);
-                                    });
-                              
-                                  });
-                                  $query1->orWhere(function($query2) use ($speedList){
-                                    [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[2]);
-                                    $query2->where('download_speed' , '=' , $speedNum )->where('download_speed_unit' , $speedUnit);
-                                  });
-                                }
+                                  } else {
+                                    $query1->orWhere( function($query2) use ($speedList) {
+                                      $query2->where( function($query3) use ($speedList){
+                                        [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
+                                        $query3->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                      });
+                                      $query2->where( function($query3) use ($speedList){
+                                        [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[1]);
+                                        $query3->where('download_speed' , '<=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                      });
                                 
-                              }
-                            });
+                                    });
+                                    $query1->orWhere(function($query2) use ($speedList){
+                                      [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[2]);
+                                      $query2->where('download_speed' , '=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                    });
+                                  }
+                                  
+                                }
+                              });
 
                         })
                         ->when( isset($request->package) && count($request->package), function($query) use($request){
@@ -382,7 +382,7 @@ class ProviderController extends Controller
                               if($upperCost){
                                 $query1->orWhere('promo_monthly' , '>=' , $lowerCost)->where('promo_monthly' , '<=' , $upperCost);
                               }else{
-                                $query1->orWhere('promo_monthly' , '>=' , $lowerCost);
+                                $query1->orWhere('promo_monthly' , '>' , $lowerCost);
                               }
   
                             }
@@ -395,7 +395,7 @@ class ProviderController extends Controller
                             {
                               $haveIncrement = str_contains( $ct , '+') ? 1 : 0;
                               $ct = (int)str_replace("+" , "" , $ct);
-                              $haveIncrement ? $query1->orWhere('contract_months' , '>=' , $ct) : $query1->where('contract_months' , $ct); 
+                              $haveIncrement ? $query1->orWhere('contract_months' , '>' , $ct) : $query1->where('contract_months' , $ct); 
                             }
                           });
                         })
@@ -438,7 +438,7 @@ class ProviderController extends Controller
                               if($upperCost){
                                 $query1->orWhere('promo_monthly' , '>=' , $lowerCost)->where('promo_monthly' , '<=' , $upperCost);
                               }else{
-                                $query1->orWhere('promo_monthly' , '>=' , $lowerCost);
+                                $query1->orWhere('promo_monthly' , '>' , $lowerCost);
                               }
   
                             }
@@ -451,7 +451,7 @@ class ProviderController extends Controller
                             {
                               $haveIncrement = str_contains( $ct , '+') ? 1 : 0;
                               $ct = (int)str_replace("+" , "" , $ct);
-                              $haveIncrement ? $query1->orWhere('contract_months' , '>=' , $ct) : $query1->where('contract_months' , $ct); 
+                              $haveIncrement ? $query1->orWhere('contract_months' , '>' , $ct) : $query1->where('contract_months' , $ct); 
                             }
                           });
                         })
@@ -492,7 +492,7 @@ class ProviderController extends Controller
                                   if($speedListCount == 1){
                                     [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
                                     $query1->orWhere( function($query2) use ($speedNum , $speedUnit) {
-                                      $query2->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                      $query2->where('download_speed' , '>' , $speedNum )->where('download_speed_unit' , $speedUnit);
                                     });
                                   } else if($speedListCount == 2){
                                     $query1->orWhere( function($query2) use ($speedList) {
@@ -540,7 +540,7 @@ class ProviderController extends Controller
                               if($upperCost){
                                 $query1->orWhere('promo_monthly' , '>=' , $lowerCost)->where('promo_monthly' , '<=' , $upperCost);
                               }else{
-                                $query1->orWhere('promo_monthly' , '>=' , $lowerCost);
+                                $query1->orWhere('promo_monthly' , '>' , $lowerCost);
                               }
   
                             }
@@ -556,7 +556,7 @@ class ProviderController extends Controller
                             {
                               $haveIncrement = str_contains( $ct , '+') ? 1 : 0;
                               $ct = (int)str_replace("+" , "" , $ct);
-                              $haveIncrement ? $query1->orWhere('contract_months' , '>=' , $ct) : $query1->where('contract_months' , $ct); 
+                              $haveIncrement ? $query1->orWhere('contract_months' , '>' , $ct) : $query1->where('contract_months' , $ct); 
                             }
                           });
                         })
@@ -596,7 +596,7 @@ class ProviderController extends Controller
                                   if($speedListCount == 1){
                                     [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
                                     $query1->orWhere( function($query2) use ($speedNum , $speedUnit) {
-                                      $query2->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                      $query2->where('download_speed' , '>' , $speedNum )->where('download_speed_unit' , $speedUnit);
                                     });
                                   } else if($speedListCount == 2){
                                     $query1->orWhere( function($query2) use ($speedList) {
@@ -644,7 +644,7 @@ class ProviderController extends Controller
                               if($upperCost){
                                 $query1->orWhere('promo_monthly' , '>=' , $lowerCost)->where('promo_monthly' , '<=' , $upperCost);
                               }else{
-                                $query1->orWhere('promo_monthly' , '>=' , $lowerCost);
+                                $query1->orWhere('promo_monthly' , '>' , $lowerCost);
                               }
   
                             }
@@ -660,7 +660,7 @@ class ProviderController extends Controller
                             {
                               $haveIncrement = str_contains( $ct , '+') ? 1 : 0;
                               $ct = (int)str_replace("+" , "" , $ct);
-                              $haveIncrement ? $query1->orWhere('contract_months' , '>=' , $ct) : $query1->where('contract_months' , $ct); 
+                              $haveIncrement ? $query1->orWhere('contract_months' , '>' , $ct) : $query1->where('contract_months' , $ct); 
                             }
                           });
                         })
@@ -696,7 +696,7 @@ class ProviderController extends Controller
                                   if($speedListCount == 1){
                                     [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
                                     $query1->orWhere( function($query2) use ($speedNum , $speedUnit) {
-                                      $query2->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                      $query2->where('download_speed' , '>' , $speedNum )->where('download_speed_unit' , $speedUnit);
                                     });
                                   } else if($speedListCount == 2){
                                     $query1->orWhere( function($query2) use ($speedList) {
@@ -743,7 +743,7 @@ class ProviderController extends Controller
                             {
                               $haveIncrement = str_contains( $ct , '+') ? 1 : 0;
                               $ct = (int)str_replace("+" , "" , $ct);
-                              $haveIncrement ? $query1->orWhere('contract_months' , '>=' , $ct) : $query1->where('contract_months' , $ct); 
+                              $haveIncrement ? $query1->orWhere('contract_months' , '>' , $ct) : $query1->where('contract_months' , $ct); 
                             }
                           });
                         })
@@ -774,48 +774,48 @@ class ProviderController extends Controller
     {
       $contract = Product::select('contract_months')
                           ->when( isset($request->speed) && count($request->speed), function($query) use($request){
-                            $query->where(function($query1) use($request){
+                              $query->where(function($query1) use($request){
 
-                                foreach($request->speed as $speed)
-                                {
-                                  $speedList = explode("-" , $speed);
-                                  $speedListCount = count($speedList);
-                                  if($speedListCount == 1){
-                                    [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
-                                    $query1->orWhere( function($query2) use ($speedNum , $speedUnit) {
-                                      $query2->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
-                                    });
-                                  } else if($speedListCount == 2){
-                                    $query1->orWhere( function($query2) use ($speedList) {
-                                      $query2->where( function($query3) use ($speedList){
-                                        [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
-                                        $query3->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                  foreach($request->speed as $speed)
+                                  {
+                                    $speedList = explode("-" , $speed);
+                                    $speedListCount = count($speedList);
+                                    if($speedListCount == 1){
+                                      [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
+                                      $query1->orWhere( function($query2) use ($speedNum , $speedUnit) {
+                                        $query2->where('download_speed' , '>' , $speedNum )->where('download_speed_unit' , $speedUnit);
                                       });
-                                      $query2->where( function($query3) use ($speedList){
-                                        [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[1]);
-                                        $query3->where('download_speed' , '<=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                    } else if($speedListCount == 2){
+                                      $query1->orWhere( function($query2) use ($speedList) {
+                                        $query2->where( function($query3) use ($speedList){
+                                          [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
+                                          $query3->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                        });
+                                        $query2->where( function($query3) use ($speedList){
+                                          [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[1]);
+                                          $query3->where('download_speed' , '<=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                        });
                                       });
-                                    });
-                                  } else {
-                                    $query1->orWhere( function($query2) use ($speedList) {
-                                      $query2->where( function($query3) use ($speedList){
-                                        [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
-                                        $query3->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
-                                      });
-                                      $query2->where( function($query3) use ($speedList){
-                                        [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[1]);
-                                        $query3->where('download_speed' , '<=' , $speedNum )->where('download_speed_unit' , $speedUnit);
-                                      });
-                                
-                                    });
-                                    $query1->orWhere(function($query2) use ($speedList){
-                                      [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[2]);
-                                      $query2->where('download_speed' , '=' , $speedNum )->where('download_speed_unit' , $speedUnit);
-                                    });
-                                  }
+                                    } else {
+                                      $query1->orWhere( function($query2) use ($speedList) {
+                                        $query2->where( function($query3) use ($speedList){
+                                          [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
+                                          $query3->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                        });
+                                        $query2->where( function($query3) use ($speedList){
+                                          [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[1]);
+                                          $query3->where('download_speed' , '<=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                        });
                                   
-                                }
-                              });
+                                      });
+                                      $query1->orWhere(function($query2) use ($speedList){
+                                        [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[2]);
+                                        $query2->where('download_speed' , '=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                      });
+                                    }
+                                    
+                                  }
+                                });
 
                           })
                           ->when( isset($request->cost) && count($request->cost) , function($query) use ($request){
@@ -831,7 +831,7 @@ class ProviderController extends Controller
                                 if($upperCost){
                                   $query1->orWhere('promo_monthly' , '>=' , $lowerCost)->where('promo_monthly' , '<=' , $upperCost);
                                 }else{
-                                  $query1->orWhere('promo_monthly' , '>=' , $lowerCost);
+                                  $query1->orWhere('promo_monthly' , '>' , $lowerCost);
                                 }
     
                               }
@@ -871,69 +871,69 @@ class ProviderController extends Controller
     {
       $package = Product::select('calls')
                           ->when( isset($request->speed) && count($request->speed), function($query) use($request){
-                            $query->where(function($query1) use($request){
+                              $query->where(function($query1) use($request){
 
-                                foreach($request->speed as $speed)
-                                {
-                                  $speedList = explode("-" , $speed);
-                                  $speedListCount = count($speedList);
-                                  if($speedListCount == 1){
-                                    [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
-                                    $query1->orWhere( function($query2) use ($speedNum , $speedUnit) {
-                                      $query2->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
-                                    });
-                                  } else if($speedListCount == 2){
-                                    $query1->orWhere( function($query2) use ($speedList) {
-                                      $query2->where( function($query3) use ($speedList){
-                                        [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
-                                        $query3->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                  foreach($request->speed as $speed)
+                                  {
+                                    $speedList = explode("-" , $speed);
+                                    $speedListCount = count($speedList);
+                                    if($speedListCount == 1){
+                                      [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
+                                      $query1->orWhere( function($query2) use ($speedNum , $speedUnit) {
+                                        $query2->where('download_speed' , '>' , $speedNum )->where('download_speed_unit' , $speedUnit);
                                       });
-                                      $query2->where( function($query3) use ($speedList){
-                                        [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[1]);
-                                        $query3->where('download_speed' , '<=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                    } else if($speedListCount == 2){
+                                      $query1->orWhere( function($query2) use ($speedList) {
+                                        $query2->where( function($query3) use ($speedList){
+                                          [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
+                                          $query3->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                        });
+                                        $query2->where( function($query3) use ($speedList){
+                                          [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[1]);
+                                          $query3->where('download_speed' , '<=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                        });
                                       });
-                                    });
-                                  } else {
-                                    $query1->orWhere( function($query2) use ($speedList) {
-                                      $query2->where( function($query3) use ($speedList){
-                                        [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
-                                        $query3->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
-                                      });
-                                      $query2->where( function($query3) use ($speedList){
-                                        [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[1]);
-                                        $query3->where('download_speed' , '<=' , $speedNum )->where('download_speed_unit' , $speedUnit);
-                                      });
-                                
-                                    });
-                                    $query1->orWhere(function($query2) use ($speedList){
-                                      [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[2]);
-                                      $query2->where('download_speed' , '=' , $speedNum )->where('download_speed_unit' , $speedUnit);
-                                    });
-                                  }
+                                    } else {
+                                      $query1->orWhere( function($query2) use ($speedList) {
+                                        $query2->where( function($query3) use ($speedList){
+                                          [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
+                                          $query3->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                        });
+                                        $query2->where( function($query3) use ($speedList){
+                                          [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[1]);
+                                          $query3->where('download_speed' , '<=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                        });
                                   
-                                }
-                              });
+                                      });
+                                      $query1->orWhere(function($query2) use ($speedList){
+                                        [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[2]);
+                                        $query2->where('download_speed' , '=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                      });
+                                    }
+                                    
+                                  }
+                                });
 
                           })
                           ->when( isset($request->cost) && count($request->cost) , function($query) use ($request){
 
                             $query->where(function($query1) use($request){
-
+  
                               foreach($request->cost as $cost)
                               {
                                 $costList = explode("-" , $cost);
                                 $lowerCost = $costList[0];
                                 $upperCost = $costList[1] ?? null;
-
+    
                                 if($upperCost){
                                   $query1->orWhere('promo_monthly' , '>=' , $lowerCost)->where('promo_monthly' , '<=' , $upperCost);
                                 }else{
-                                  $query1->orWhere('promo_monthly' , '>=' , $lowerCost);
+                                  $query1->orWhere('promo_monthly' , '>' , $lowerCost);
                                 }
-
+    
                               }
                             });
-
+  
                           })
                           ->when( isset($request->package) && count($request->package), function($query) use($request){
                               $query->whereIn('category_id' , $request->package);
@@ -947,7 +947,7 @@ class ProviderController extends Controller
                               {
                                 $haveIncrement = str_contains( $ct , '+') ? 1 : 0;
                                 $ct = (int)str_replace("+" , "" , $ct);
-                                $haveIncrement ? $query1->orWhere('contract_months' , '>=' , $ct) : $query1->where('contract_months' , $ct); 
+                                $haveIncrement ? $query1->orWhere('contract_months' , '>' , $ct) : $query1->where('contract_months' , $ct); 
                               }
                             });
                           })
