@@ -16,30 +16,30 @@
     <h2 class="font-bold text-xl text-filter mb-3">Speed</h2>
     <div class="grid grid-cols-2 gap-2">
       <label
-        class="checkbox-label text-sm bg-white border border-gray-400 w-full py-1 text-center rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer">
+        class="checkbox-label text-sm bg-white border border-gray-400 w-full py-1 text-center rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer center-center">
         <input type="checkbox" id="bb-mbps-1" data-type="speed" data-name="speed[]" value="1mb-60mb"  class="submitform hidden simple-checkbox" />
         1-60MB
       </label>
       <label
-        class="checkbox-label text-sm bg-white border border-gray-400 w-full py-1 text-center rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        class="checkbox-label text-sm bg-white border border-gray-400 w-full py-1 text-center rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer center-center"
       >
         <input type="checkbox"  name="bb-mbps-60" id="bb-mbps-60" data-type="speed" data-name="speed[]" value="60mb-100mb" class="hidden simple-checkbox submitform" />
         60-100MB
       </label>
       <label
-        class="checkbox-label text-sm bg-white border border-gray-400 w-full py-1 text-center rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        class="checkbox-label text-sm bg-white border border-gray-400 w-full py-1 text-center rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer center-center"
       >
         <input type="checkbox" name="bb-mbps-100" id="bb-mbps-100" data-type="speed" data-name="speed[]" value="100mb-500mb" class="hidden simple-checkbox submitform" />
         100-500MB
       </label>
       <label
-        class="checkbox-label text-sm bg-white border border-gray-400 w-full py-1 text-center rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        class="checkbox-label text-sm bg-white border border-gray-400 w-full py-1 text-center rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer center-center"
       >
         <input type="checkbox"  name="bb-mbps-500" id="bb-mbps-500" data-type="speed" data-name="speed[]" value="500mb-999mb-1gb" class="hidden simple-checkbox submitform"  />
         500-1GB
       </label>
       <label
-        class="checkbox-label text-sm bg-white border border-gray-400 w-full py-1 text-center rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        class="checkbox-label text-sm bg-white border border-gray-400 w-full py-1 text-center rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer center-center"
       >
         <input type="checkbox"  name="bb-mbps-1000" id="bb-mbps-1000" data-type="speed" data-name="speed[]" value="1gb+"  class="hidden simple-checkbox submitform" />
         1GB+
@@ -155,25 +155,25 @@
     <h2 class="font-bold text-xl text-filter mb-3">Monthly cost</h2>
     <div class="grid grid-cols-2 gap-2">
       <label
-        class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer center-center"
       >
         <input type="checkbox"  name="monthly-s" id="monthly-s" data-type="cost"   data-name="monthlycost[]" value="0-25" class="hidden simple-checkbox submitform" />
         £0-£25
       </label>
       <label
-        class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer center-center"
       >
         <input type="checkbox" name="monthly-m" id="monthly-m" data-type="cost"    data-name="monthlycost[]" value="25-50" class="hidden simple-checkbox submitform" />
         £25-£50
       </label>
       <label
-        class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer center-center"
       >
         <input type="checkbox" name="monthly-l" id="monthly-l" data-type="cost"   data-name="monthlycost[]" value="50-75" class="hidden simple-checkbox submitform" />
         £50-£75
       </label>
       <label
-        class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer center-center"
       >
         <input type="checkbox" name="monthly-xl" id="monthly-xl" data-type="cost"   data-name="monthlycost[]" value="75+"   class="hidden simple-checkbox submitform" />
         £75+
@@ -264,27 +264,27 @@
     <h2 class="font-bold text-xl text-filter mb-3">Contract length</h2>
     <div class="grid grid-cols-2 gap-2">
       <label
-        class="checkbox-label label-disable  pre-disabled  text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer center-center label-disable pre-disabled"
       >
-        <input type="checkbox" name="contract" class="hidden simple-checkbox submitform" value="1" data-type="contract"  data-name="contract[]"  />
+        <input type="checkbox" class="hidden simple-checkbox submitform" value="1" data-type="contract"  data-name="contract[]"  />
         1 month
       </label>
       <label
-        class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer center-center"
       >
         <input type="checkbox" name="contract"  class="hidden simple-checkbox submitform" value="12" data-type="contract" data-name="contract[]"  />
         12 month
       </label>
       <label
-        class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer center-center"
       >
         <input type="checkbox" name="contract"  class="hidden simple-checkbox submitform" value="18" data-type="contract"  data-name="contract[]" />
         18 month
       </label>
       <label
-        class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer center-center"
       >
-        <input type="checkbox" name="contract" class="hidden simple-checkbox submitform" value="24" data-type="contract" data-name="contract[]"  />
+        <input type="checkbox" name="contract" class="hidden simple-checkbox submitform" value="18+" data-type="contract" data-name="contract[]"  />
         18+ month
       </label>
     </div>
@@ -500,7 +500,9 @@ function applyFilteredCost(costs){
             }
             return true;
           })
-          !haveElement ? cost.closest(".checkbox-label").classList.add('label-disable') : cost.closest(".checkbox-label").classList.remove('label-disable'); 
+          
+          toggleChexbox( !haveElement , cost );
+          // !haveElement ? cost.closest(".checkbox-label").classList.add('label-disable') : cost.closest(".checkbox-label").classList.remove('label-disable'); 
         } else {
           [lowerCost , upperCost ] = value.split("-")
           let haveElement = false;
@@ -596,7 +598,8 @@ function applyFilteredSpeed( speeds ){
 function toggleChexbox( condition , chexbox ) {
     if( condition ) {
       let label = chexbox.closest(".checkbox-label");
-      label.setAttribute('class' , 'checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer label-disable');
+      $class = label.classList.contains('center-center') ? 'checkbox-label bg-white border  flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer label-disable center-center' : 'checkbox-label bg-white border px-4 border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer label-disable'
+      label.setAttribute('class' , $class);
       chexbox.checked = false;
     } else {
       chexbox.closest(".checkbox-label").classList.remove('label-disable');
@@ -761,17 +764,21 @@ $(document).on("click" , "#close-modal-btn" , function(){
 })
 
 function resetFilter(){
- let disableBtn =  document.querySelectorAll(".label-disable:not(.pre-disabled)");
- disableBtn.forEach( btn => {
-    btn.setAttribute("class","checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer")
-    btn.querySelector('input').checked = false;
-  })
-  
-let activeChecbox = document.querySelectorAll(".submitform:checked")
-activeChecbox.forEach( checkbox  => {
-  checkbox.closest(".checkbox-label").setAttribute("class","checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer")
-    checkbox.checked = false;
-  })
+  let disableBtn =  document.querySelectorAll(".label-disable:not(.pre-disabled)");
+  $centerAlign = 'checkbox-label text-sm bg-white border border-gray-400 w-full py-1 text-center rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer center-center';
+  $rightAlign = 'checkbox-label text-sm bg-white border text-left px-4 border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer';
+  disableBtn.forEach( btn => {
+      $class = btn.classList.contains('center-center') ? $centerAlign : $rightAlign;
+      btn.setAttribute( "class" , $class)
+      btn.querySelector('input').checked = false;
+    })
+    
+  let activeChecbox = document.querySelectorAll(".submitform:checked")
+  activeChecbox.forEach( checkbox  => {
+    $class = checkbox.classList.contains('center-center') ? $centerAlign : $rightAlign;
+    checkbox.closest(".checkbox-label").setAttribute( "class" , $class)
+      checkbox.checked = false;
+    })
 
 }
 
