@@ -436,7 +436,14 @@ class ProviderController extends Controller
 
                         })
                         ->when( isset($request->contract) && count($request->contract) , function($query) use ($request){
-                          $query->whereIn('contract_months' , $request->contract);
+                          $query->where(function($query1) use($request){
+                            foreach($request->contract as $ct)
+                            {
+                              $haveIncrement = str_contains( $ct , '+') ? 1 : 0;
+                              $ct = (int)str_replace("+" , "" , $ct);
+                              $haveIncrement ? $query1->orWhere('contract_months' , '>=' , $ct) : $query1->where('contract_months' , $ct); 
+                            }
+                          });
                         })
                         ->when( isset($request->phone) && count($request->phone) , function($query) use ($request) {
                           $query->where( function($query1) use ($request){
