@@ -595,7 +595,7 @@ function applyFilteredSpeed( speeds ){
 
 function applyFilteredOffers(offers){
   let label = document.querySelector("input[name='no_upfront_cost']").closest(".checkbox-label");
-  offers.includes(0) ? lable.classList.remove("label-disable") : lable.classList.add("label-disable")  
+  offers.includes(0) ? label.classList.remove("label-disable") : label.classList.add("label-disable")  
 
 }
 
