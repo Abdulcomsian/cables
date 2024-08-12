@@ -25,3 +25,4 @@ Route::post('/submit-provider', [ProviderController::class, 'AddProvider'])->nam
 Route::get('/load-more-data', [ProviderController::class,'loadMoreData'])->name('load.more');
 Route::post('/filter', [ProviderController::class,'getFIlteredProvider'])->name('apply.filter');
 Route::post('/moreinfo', [ProviderController::class,'getMoreInfo'])->name('apply.moreinfo');
+Route::get('/test' , [ProviderController::class , 'testApi']);
