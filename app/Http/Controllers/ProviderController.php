@@ -321,7 +321,7 @@ class ProviderController extends Controller
     public function filteredProvider($request)
     {
       $provider = Product::select('provider_id')
-                          ->when( isset($request->speed) && count($request->speed), function($query) use($request){
+                        ->when( isset($request->speed) && count($request->speed), function($query) use($request){
                             $query->where(function($query1) use($request){
 
                                 foreach($request->speed as $speed)
@@ -405,6 +405,13 @@ class ProviderController extends Controller
                             {
                               $query->where('calls' , 'Like' , "%$phone%");
                             }
+                        })
+                        ->when(isset($request->offers) && count($request->offers), function ($query) use ($request) {
+                          $query->where(function($query1) use ($request){
+                                if(in_array('no_upfront_cost' , $request->offers)){
+                                  $query1->orWhere('set_up_cost' , 0);
+                                }
+                            });
                         })
                         ->distinct('provider_id')
                         ->orderBy('provider_id' , 'asc')
