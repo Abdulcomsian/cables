@@ -126,7 +126,8 @@
               average speed
             </p>
           </div>
-  
+            
+          @if($product->channels != 'No')
           <div class="bg-lightBlue rounded">
             <div      class="flex flex-col sm:flex-row sm:gap-7 xl:gap-10 items-center min-w-0"
             >
@@ -144,6 +145,7 @@
               Tv channels
             </p>
           </div>
+          @endif
   
           <div class="bg-lightBlue rounded">
             <div
@@ -185,11 +187,11 @@
               month contract
             </p>
           </div>
-          <div
-            class="hidden sm:block sm:w-20 sm:mr-10 sm:mr-0 bg-lightBlue rounded w-full md:w-auto"
-          >
+          @if($product->calls != 'No')
+          <div class="hidden sm:block sm:w-20 sm:mr-10 sm:mr-0 bg-lightBlue rounded w-full md:w-auto">
             <p class="text-primary text-sm ml-2">{{$product->calls}}</p>
           </div>
+          @endif
         </div>
       </div>
       <!-- Second Div End -->

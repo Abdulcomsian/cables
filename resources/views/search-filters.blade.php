@@ -76,24 +76,17 @@
               </p>
             </div>
 
+            @if($product->channels != "No")
             <div class="bg-lightBlue rounded">
-              <div
-                class="flex flex-col sm:flex-row sm:gap-7 xl:gap-10 items-center min-w-0"
-              >
-                <span
-                class="text-primary font-bold text-[1.3125rem] min-w-0 order-2 sm:order-none"
-                  >{{$product->channels}}</span
-                >
-                <img
-                  src="./images/info-icon.svg"
-                  alt=""
-                  class="w-5 h-5 order-1 sm:order-none"
-                />
+              <div class="flex flex-col sm:flex-row sm:gap-7 xl:gap-10 items-center min-w-0">
+                <span class="text-primary font-bold text-[1.3125rem] min-w-0 order-2 sm:order-none">{{$product->channels}}</span>
+                <img src="./images/info-icon.svg" alt="" class="w-5 h-5 order-1 sm:order-none" />
               </div>
               <p class="text-primary text-sm ml-2 text-center sm:text-start">
                 Tv channels
               </p>
             </div>
+            @endif
 
             <div class="bg-lightBlue rounded">
               <div
@@ -135,11 +128,11 @@
                 month contract
               </p>
             </div>
-            <div
-              class="hidden sm:block sm:w-20 sm:mr-10 sm:mr-0 bg-lightBlue rounded w-full md:w-auto"
-            >
+            @if($product->calls != 'No')
+            <div class="hidden sm:block sm:w-20 sm:mr-10 sm:mr-0 bg-lightBlue rounded w-full md:w-auto">
               <p class="text-primary text-sm ml-2">{{$product->calls}}</p>
             </div>
+            @endif
           </div>
         </div>
         <!-- Second Div End -->
