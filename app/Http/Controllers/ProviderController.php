@@ -9,6 +9,7 @@ use App\Models\{
     Provider
 };
 use Illuminate\Support\Facades\DB;
+use GuzzleHttp\Client;
 class ProviderController extends Controller
 {
     public function index()
@@ -979,6 +980,23 @@ class ProviderController extends Controller
       $speedNum = preg_replace("/[^0-9 ]/", '', $speed);
       $speedUnit =  preg_replace("/[^a-z ]/", '', $speed);
       return [$speedNum , $speedUnit];
+    }
+
+    public function testApi()
+    {
+      $postcode = 'TS26 9LS';
+      $client = new Client();
+      $response = $client->get('https://api.thinkbroadband.com/inquiry.php', [
+          'query' => [
+              'postcode' => $postcode,
+              'version' => '2.20',
+              'guid' => '[site_unique_guid]'
+          ]
+      ]);
+
+      $html = $response->getBody()->getContents();
+      $data = json_decode($html);
+      dd($data);
     }
 
 
