@@ -193,9 +193,9 @@
         Deals with no upfront cost
       </label>
       <label
-        class="checkbox-label text-sm label-disable  pre-disabled  bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        class="checkbox-label text-sm bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" name="off" id="off"  value="off" data-type="offers" name="offers[]"  class="hidden simple-checkbox submitform" />
+        <input type="checkbox" name="off" id="off"  value="not required" data-type="offers" name="offers[]"  class="hidden simple-checkbox submitform" />
         Deals with rewards and offers
       </label>
     </div>

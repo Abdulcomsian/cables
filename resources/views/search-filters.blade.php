@@ -54,32 +54,23 @@
             </div> --}}
           </div>
 
-          <div
-            class="zsm:pl-8 sm:pl-14 md:pl-0 absolute md:static xsm:top-52 ysm:top-44 left-0 flex gap-2 sm:gap-4 xl:gap-6 mt-10 md:mt-0 md:py-3"
-          >
+          <div class="zsm:pl-8 sm:pl-14 md:pl-0 absolute md:static xsm:top-52 ysm:top-44 left-0 flex gap-2 sm:gap-4 xl:gap-6 mt-10 md:mt-0 md:py-3">
+            @if($product->download_speed)
             <div class="bg-lightBlue">
-              <div
-                class="flex flex-col sm:flex-row sm:gap-7 xl:gap-10 items-center min-w-0"
-              >
-                <span
-                  class="text-primary font-bold text-[1.3125rem] min-w-0 order-2 sm:order-none"
-                  >{{$product->download_speed}}{{$product->download_speed_unit}}</span
-                >
-                <img
-                  src="./images/info-icon.svg"
-                  alt=""
-                  class="w-5 h-5 order-1 sm:order-none"
-                />
+              <div  class="flex flex-col sm:flex-row sm:gap-7 xl:gap-10 items-center min-w-0">
+                <span class="text-primary font-bold text-[1.3125rem] min-w-0 order-2 sm:order-none" >{{$product->download_speed}}{{$product->download_speed_unit}}</span>
+                <img src="./images/info-icon.svg" alt="" class="w-5 h-5 order-1 sm:order-none"/>
               </div>
               <p class="text-primary text-sm ml-2 text-center sm:text-start">
                 average speed
               </p>
             </div>
+            @endif
 
-            @if($product->channels != "No")
+            @if($product->channels != "No" && !empty(trim($product->channel)) )
             <div class="bg-lightBlue rounded">
               <div class="flex flex-col sm:flex-row sm:gap-7 xl:gap-10 items-center min-w-0">
-                <span class="text-primary font-bold text-[1.3125rem] min-w-0 order-2 sm:order-none">{{$product->channels}}</span>
+                <span class="text-primary font-bold text-[1.3125rem] min-w-0 order-2 sm:order-none">{{$product->channels}} </span>
                 <img src="./images/info-icon.svg" alt="" class="w-5 h-5 order-1 sm:order-none" />
               </div>
               <p class="text-primary text-sm ml-2 text-center sm:text-start">
@@ -167,6 +158,7 @@
             >
               More Info
             </button>
+            <span><strong> Offer Ends: {{$product->offer_ends}}</strong></span>
             <!-- Third Div End -->
           </div>
         </div>

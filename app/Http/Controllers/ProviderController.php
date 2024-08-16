@@ -238,11 +238,14 @@ class ProviderController extends Controller
       });
 
       $query->when(isset($offers) && count($offers), function ($query1) use ($offers) {
-          $query1->where(function($query2) use ($offers){
-              if(in_array('no_upfront_cost' , $offers)){
-                $query2->orWhere('set_up_cost' , 0);
-              }
-          });
+        if(in_array('no_upfront_cost' , $offers)){
+          $query1->where('set_up_cost' , 0);
+        }
+
+        if(in_array('not required' , $offers)){
+          $query1->where('line_rental' , 'not required');
+        }
+
       });
 
       $query->when(isset($phone) && count($phone), function ($query1) use ($phone) {
@@ -274,6 +277,10 @@ class ProviderController extends Controller
         if($sorty == "price_desc"){
           $query1->orderBy("promo_monthly", "desc");
         }
+        if($sorty == "contract_plan"){
+          $query1->orderByRaw("CAST(contract_months as SIGNED) asc");
+        }
+
       }
      });
 
@@ -476,6 +483,9 @@ class ProviderController extends Controller
                                 if(in_array('no_upfront_cost' , $request->offers)){
                                   $query1->orWhere('set_up_cost' , 0);
                                 }
+                                if(in_array('not required' , $request->offers)){
+                                  $query1->where('line_rental' , 'not required');
+                                }
                             });
                         })
                         ->distinct('download_speed')
@@ -578,9 +588,12 @@ class ProviderController extends Controller
                         })
                         ->when(isset($request->offers) && count($request->offers), function ($query) use ($request) {
                           $query->where(function($query1) use ($request){
-                                if(in_array('no_upfront_cost' , $request->offers)){
-                                  $query1->orWhere('set_up_cost' , 0);
-                                }
+                              if(in_array('no_upfront_cost' , $request->offers)){
+                                $query1->orWhere('set_up_cost' , 0);
+                              }
+                              if(in_array('not required' , $request->offers)){
+                                $query1->where('line_rental' , 'not required');
+                              }
                             });
                         })
                         ->distinct('category_id')
@@ -765,9 +778,12 @@ class ProviderController extends Controller
                         })
                         ->when(isset($request->offers) && count($request->offers), function ($query) use ($request) {
                           $query->where(function($query1) use ($request){
-                                if(in_array('no_upfront_cost' , $request->offers)){
-                                  $query1->orWhere('set_up_cost' , 0);
-                                }
+                              if(in_array('no_upfront_cost' , $request->offers)){
+                                $query1->orWhere('set_up_cost' , 0);
+                              }
+                              if(in_array('not required' , $request->offers)){
+                                $query1->where('line_rental' , 'not required');
+                              }
                             });
                         })
                         ->distinct('promo_monthly')
@@ -862,9 +878,12 @@ class ProviderController extends Controller
                           })
                           ->when(isset($request->offers) && count($request->offers), function ($query) use ($request) {
                             $query->where(function($query1) use ($request){
-                                  if(in_array('no_upfront_cost' , $request->offers)){
-                                    $query1->orWhere('set_up_cost' , 0);
-                                  }
+                                if(in_array('no_upfront_cost' , $request->offers)){
+                                  $query1->orWhere('set_up_cost' , 0);
+                                }
+                                if(in_array('not required' , $request->offers)){
+                                  $query1->where('line_rental' , 'not required');
+                                }
                               });
                           })
                           ->distinct('contract_months')
@@ -961,9 +980,12 @@ class ProviderController extends Controller
                           })
                           ->when(isset($request->offers) && count($request->offers), function ($query) use ($request) {
                             $query->where(function($query1) use ($request){
-                                  if(in_array('no_upfront_cost' , $request->offers)){
-                                    $query1->orWhere('set_up_cost' , 0);
-                                  }
+                                if(in_array('no_upfront_cost' , $request->offers)){
+                                  $query1->orWhere('set_up_cost' , 0);
+                                }
+                                if(in_array('not required' , $request->offers)){
+                                  $query1->where('line_rental' , 'not required');
+                                }
                               });
                           })
                           ->distinct('calls')
