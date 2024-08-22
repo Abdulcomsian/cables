@@ -1006,19 +1006,49 @@ class ProviderController extends Controller
 
     public function testApi()
     {
-      $postcode = 'TS26 9LS';
-      $client = new Client();
-      $response = $client->get('https://api.thinkbroadband.com/inquiry.php', [
-          'query' => [
-              'postcode' => $postcode,
-              'version' => '2.20',
-              'guid' => '[site_unique_guid]'
-          ]
-      ]);
+      // $postcode = 'TS26 9LS';
+      // $client = new Client();
+      // $response = $client->get('https://api.thinkbroadband.com/inquiry.php', [
+      //     'query' => [
+      //         'postcode' => $postcode,
+      //         'version' => '2.20',
+      //         'guid' => '{B67673F3-9CE5-2C2B-0EF1-85170E3C2261}'
+      //     ]
+      // ]);
 
-      $html = $response->getBody()->getContents();
+      // $html = $response->getBody()->getContents();
+
+      $html = '{"api_version":2.2,"postcode":"TS26 9LS","exchange_name":"HARTLEPOOL","latlng":"54.681268000000000,-1.226190000000000","lat":"54.681268000000000","lng":"-1.226190000000000","exchange_code":"NEHAL","exchange_distance":1718,"exchange_code_near_1":"NEGM","exchange_name_near_1":"GREATHAM","exchange_distance_near_1":3919,"exchange_code_near_2":"NEWV","exchange_name_near_2":"WOLVISTON","exchange_distance_near_2":7745,"exchange_code_near_3":"NESSDS","exchange_name_near_3":"SEAL SANDS","exchange_distance_near_3":8702,"exchange_code_near_4":"NEHHL","exchange_name_near_4":"HAVERTON HILL","exchange_distance_near_4":9382,"avail_infra_virginmedia_cable":"AVAILABLE","avail_retail_virginmedia":"AVAILABLE","avail_infra_openreach_fttc":"AVAILABLE","avail_infra_openreach_fttp":"AVAILABLE","avail_infra_openreach_gfast":"NOT_AVAILABLE","avail_retail_bt_consumer":"AVAILABLE","avail_retail_ee":"AVAILABLE","avail_retail_plusnet":"AVAILABLE","avail_infra_btwholesale_ipstream_max":"AVAILABLE","avail_infra_btwholesale_adsl2plus_wbc":"AVAILABLE","avail_retail_sky":"AVAILABLE","avail_infra_sky_llu_adsl2plus":"AVAILABLE","avail_retail_talktalk":"AVAILABLE","avail_infra_talktalk_llu_adsl2plus":"AVAILABLE","avail_exchange_area_openreach_fttp":"LIMITED_AVAILABILITY","avail_exchange_area_openreach_fttc":"LIMITED_AVAILABILITY","avail_exchange_area_virginmedia_cable":"LIMITED_AVAILABILITY","exchange_market":"B","avail_infra_kc_adsl2plus":"NOT_AVAILABLE","avail_infra_kc_fttp":"NOT_AVAILABLE","avail_infra_hyperoptic_fttp":"NOT_AVAILABLE","avail_infra_gigaclear_fttp":"NOT_AVAILABLE","avail_infra_ifnl_fttp":"NOT_AVAILABLE","avail_infra_b4rn_fttp":"NOT_AVAILABLE","avail_infra_airband_wireless":"NOT_AVAILABLE","avail_infra_vodafone_gigafast":"AVAILABLE","avail_infra_community_fibre":"NOT_AVAILABLE","avail_infra_truespeed":"NOT_AVAILABLE","avail_infra_trooli":"NOT_AVAILABLE","best_download_sub_24":"NO","best_download_sub_10":"NO","best_download_sub_2":"NO","est_adsl2plus_download_postcode":"10 to 20 Mbps","est_fttcp_download_postcode":"over 40 Mbps","est_adsl2plus_download_within500m":"10 to 20 Mbps","est_fttcp_download_within500m":"over 40 Mbps","est_adsl2plus_download_within1000m":"10 to 20 Mbps","est_fttcp_download_within1000m":"over 40 Mbps","est_gfast_download_postcode":"UNKNOWN","est_fttp_download_postcode":"900 Mbps","openreach_postcode_split":"SINGLE","openreach_postcode_split_technology":"SAME","est_raw_adsl2plus_download_postcode":"17","est_raw_fttcp_download_postcode":"42","est_raw_gfast_download_postcode":-1}';
+
       $data = json_decode($html);
-      dd($data);
+      $providers = [];
+      $speeds = [];
+      $data  = get_object_vars($data);
+      foreach($data as $key => $value)
+      {
+          if(str_contains($key , 'avail_retail') && $value == 'AVAILABLE')
+          {
+            $providers[] =  [ $key => $value ];
+            continue;
+          }
+        
+          if(str_contains($key , 'download'))
+          {
+            $speeds[] = [ $key => $value ];
+            continue;
+          }
+          
+      }
+
+
+      dd($providers , $speeds);
+
+
+      $providers = array_filter( $data , function($item) use($data){
+        return str_contains($item , 'avail_retail') && $data[$item] == 'AVAILABLE';
+      } , ARRAY_FILTER_USE_KEY );
+      // $providers = array_filter
+      dd($providers);
     }
 
 
