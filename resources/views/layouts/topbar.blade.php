@@ -152,7 +152,7 @@
     <div
       class="flex flex-col items-center justify-center bg-white block md:hidden py-6 px-4"
     >
-      <h2 class="text-primary font-bold text-[22px] mb-1.5 font-sans">60 deals available</h2>
+      <!-- <h2 class="text-primary font-bold text-[22px] mb-1.5 font-sans">60 deals available</h2> -->
       <p class="text-primary text-base mb-4">Can't find what you're looking for?</p>
       <div>
         <button

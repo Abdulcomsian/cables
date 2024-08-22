@@ -4,7 +4,7 @@
 <div class="w-full lg:w-9/12">
     <div class="flex justify-between items-center mb-4 mx-4">
       @yield("h2-9")
-      <h2 class="w-full font-bold text-2xl text-primary hidden md:block">
+      <h2 class="w-full font-bold text-2xl text-primary ">
         <span id="tot_count">{{$productCount}}</span> Available deals  
       </h2>
     
@@ -189,8 +189,8 @@
       <!-- Second Div End -->
   
       <!-- Third Div Start -->
-      <div        class="relative md:w-1/6 flex flex-col justify-center items-center text-center"       >
-        <div              class="absolute md:static xsm:left-32 ysm:left-44 zsm:left-48 sm:left-44 xsm:top-20 ysm:top-14 w-20 sm:w-40 md:w-full flex flex-col items-center"         >
+      <div class="relative md:w-1/6 flex flex-col justify-center items-center text-center"       >
+        <div  class="absolute md:static xsm:left-32 ysm:left-44 zsm:left-48 sm:left-44 xsm:top-20 ysm:top-14 w-20 sm:w-40 md:w-full flex flex-col sm:items-center"         >
           <span class="text-primary font-bold text-3xl">£{{$product->promo_monthly}}</span>
           <span class="text-primary font-bold md:mr-2">per month</span>
           <span class="cursor-pointer">
@@ -206,20 +206,20 @@
         </div>
         
         <div
-          class="flex gap-4 sm:gap-0 md:block absolute md:static xsm:top-[20.2rem] ysm:top-[17rem] w-full"
+          class="flex flex-col sm:flex-row gap-4 sm:gap-2 sm:items-center md:block absolute md:static xsm:top-[20.2rem] ysm:top-[17rem] w-full"
         >
           <button
-            class="w-full bg-pink hover:bg-primary text-white rounded-full sm:mb-2 px-4 xl:px-6 py-2 font-bold text-lg"
+            class="w-full bg-pink hover:bg-primary text-white rounded-full sm:mb-2 px-4 sm:px-0 sm:grow xl:px-6 py-2 font-bold text-lg"
           >
             Get Deal
           </button>
           <button
-            class="w-full text-[#FF006D] hover:text-primary sm:underline font-normal py-2 sm:py-0 border sm:border-none border-pink rounded-full view-more-info" data-record-id="{{$product->id}}"
+            class="w-full text-[#FF006D] hover:text-primary sm:underline font-normal sm:mb-2 px-4 p-[10px] sm:grow border border-pink rounded-full view-more-info" data-record-id="{{$product->id}}"
           >
             More Info
           </button>
 
-          <span><strong> Offer Ends: {{$product->offer_ends}}</strong></span>
+          <span class="sm:w-full"><strong> Offer Ends: {{$product->offer_ends}}</strong></span>
           <!-- Third Div End -->
         </div>
       </div>

@@ -1,6 +1,6 @@
 
 <!--Filters Start-->
-<div id="filter-panel" class="fixed md:relative top-0 left-0 h-full md:h-auto w-full md:w-3/12 bg-white px-4 hidden md:block transition-transform transform -translate-x-full md:translate-x-0 z-50">
+<div id="filter-panel" class="fixed overflow-y-auto	h-dvh md:relative top-0 left-0 h-full md:h-auto w-full md:w-3/12 bg-white px-4 hidden md:block transition-transform transform -translate-x-full md:translate-x-0 z-50">
   <div class="flex justify-between">
     <h2 class="font-bold text-xl text-[#000038]">Filter results</h2>
     <button id="close-button" class="px-2 py-1 font-bold text-white bg-gray-400 text-base rounded md:hidden">
