@@ -119,7 +119,7 @@
           </div>
           @endif
             
-          @if($product->channels != 'No' && !empty(trim($product->channel)))
+          @if($product->channels != 'No' && !empty(trim($product->channels)))
           <div class="bg-lightBlue rounded">
             <div      class="flex flex-col sm:flex-row sm:gap-7 xl:gap-10 items-center min-w-0"
             >

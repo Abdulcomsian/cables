@@ -100,7 +100,6 @@ class ProviderController extends Controller
       $offers = $request->offers;
       $query = Product::query();
       
-    
 
       $query->when(isset($speed) && count($speed) , function($query) use ($speed) {
           $query->where( function($query1) use ($speed) {
@@ -307,6 +306,7 @@ class ProviderController extends Controller
                               'filteredCost' => $filteredCost,
                               'filteredPackage' => $filteredPackage,
                               'filteredOffer' => $filteredOffer,
+                              'apiProviders' => $request->apiProviders
                             ]);
 
      // dd($providerList);
@@ -1004,7 +1004,7 @@ class ProviderController extends Controller
       return [$speedNum , $speedUnit];
     }
 
-    public function testApi()
+    public function locateNetwork(Request $request)
     {
       // $postcode = 'TS26 9LS';
       // $client = new Client();
@@ -1028,7 +1028,7 @@ class ProviderController extends Controller
       {
           if(str_contains($key , 'avail_retail') && $value == 'AVAILABLE')
           {
-            $providers[] =  [ $key => $value ];
+            $providers[] =  str_replace("avail_retail_" , "" , $key);
             continue;
           }
         
@@ -1040,15 +1040,24 @@ class ProviderController extends Controller
           
       }
 
+     $query = Provider::query();
 
-      dd($providers , $speeds);
+     foreach($providers as $provider)
+     {
+      $query->orWhere('name', 'REGEXP', implode("|" ,explode("_", $provider) ) );
+     }
 
+     $providers = $query->get()->pluck('id')->toArray();
+     
 
-      $providers = array_filter( $data , function($item) use($data){
-        return str_contains($item , 'avail_retail') && $data[$item] == 'AVAILABLE';
-      } , ARRAY_FILTER_USE_KEY );
-      // $providers = array_filter
-      dd($providers);
+     $newRequest = new Request([
+      'provider' => $providers,
+      'apiProviders' => $providers
+     ]);
+     
+     
+     return $this->getFIlteredProvider($newRequest);
+
     }
 
 

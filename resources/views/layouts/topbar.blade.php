@@ -123,8 +123,8 @@
           find the best deals in your area.
         </p>
 
-        <form class="w-full md:max-w-lg">
-          <div class="flex w-full">
+        <form class="w-full md:max-w-lg postcode">
+          <div class="flex w-full relative">
             <span
               class="inline-flex items-center px-4 py-3 text-base text-white bg-[#FF006D]"
             >
@@ -138,9 +138,12 @@
             <input
               type="search"
               id="website-admin"
-              class="flex items-center text-primary block flex-1 w-full text-xl font-bold px-3 py-3s focus:outline-none placeholder:text-xl placeholder:font-bold placeholder:text-gray-500"
+              class="flex items-center text-primary block flex-1 w-full text-xl font-bold px-3 py-3s focus:outline-none placeholder:text-xl placeholder:font-bold placeholder:text-gray-500 postcode"
               placeholder="Enter your Postcode"
             />
+            <button type="button" class="search-api">
+              <img src="{{asset('images/search.svg')}}" alt="" class="w-[40px] absolute top-2 right-5">
+            </button>
           </div>
         </form>
       </div>

@@ -447,6 +447,35 @@ $(document).ready(()=>{
         })
   })
 
+  $(document).on("click" , ".search-api" , function(e){
+    let postcode = document.querySelector(".postcode").value;
+    $.ajax({
+          type : 'POST',
+          url : '{{route("locate.network")}}',
+          data : { '_token' : '{{csrf_token()}}' , postcode : postcode},
+          success : function(res){
+            document.querySelector("#tot_count").innerHTML =res.total_count;
+            document.querySelector("#items_container").innerHTML =res.html;
+            let apiProviders = res.apiProviders;
+            applyFilteredContract(res.filteredContract);
+            applyFilteredPackage(res.filteredPackage);
+            applyFilteredCost(res.filteredCost);
+            applyFilteredProvider(res.filteredProvider);
+            applyFilteredPhone(res.filteredPhone);
+            applyFilteredSpeed(res.filteredSpeed);
+            applyFilteredOffers(res.filteredOffer);
+          
+            apiProviders.forEach( provider => {
+              let checkbox = document.querySelector(`input[data-type="provider"][value="${provider}"]`)
+              let label = checkbox.closest(".checkbox-label")
+              label.setAttribute("class" , "checkbox-label bg-white border flex justify-center items-center w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer bg-lightGray border-primary");
+              checkbox.checked = true;
+            })
+
+          }
+    })
+  })
+
   function applyFilteredContract(contracts){
     let contractsChexbox = document.querySelectorAll("input[name='contract']");
     if(contracts.length > 0){
