@@ -61,7 +61,7 @@
                 <ul class="w-full py-4 border-b border-gray-300">
                   <li class="flex justify-between">
                 <span class="text-sm">Monthly cost</span>
-                <span class="text-sm text-[#333] font-bold">£{{$productdetail->stand_monthly}}</span>
+                <span class="text-sm text-[#333] font-bold">£{{$productdetail->promo_monthly}}</span>
               </li>
               <li class="flex justify-between">
                 <span  class="text-sm">Minimum contract length</span>
