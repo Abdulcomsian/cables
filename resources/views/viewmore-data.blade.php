@@ -87,9 +87,24 @@
                 <span class="text-sm">Monthly cost</span>
                 <span class="text-sm text-[#333] font-bold">£{{$productdetail->promo_monthly}}</span>
               </li>
+              @php
+              $fristyearcost=$productdetail->promo_monthly*12;
+             @endphp
+              <li class="flex justify-between">
+                <span class="text-sm">First year cost</span>
+                <span class="text-sm text-[#333] font-bold">£{{$fristyearcost}}</span>
+              </li>
+             
               <li class="flex justify-between">
                 <span  class="text-sm">Minimum contract length</span>
                 <span class="text-sm text-[#333] font-bold">{{$productdetail->contract_months}} months</span>
+              </li>
+              @php
+              $overallcost=$productdetail->promo_monthly*$productdetail->contract_months;
+             @endphp
+              <li class="flex justify-between">
+                <span class="text-sm">Overall cost</span>
+                <span class="text-sm text-[#333] font-bold">£{{$overallcost}}</span>
               </li>
             </ul>
               </div>
