@@ -1061,7 +1061,13 @@ class ProviderController extends Controller
     }
 
 
+    public function getDetail($id){
 
+      $product = Product::where('provider_id', $id)->first();
+      $provider = Provider::where('id', $id)->first();
+      return view('go', compact('product','provider'));
+
+    }
 
     
 }

@@ -39,6 +39,9 @@
           </ul>
           <div data-tab-content="" class="p-5">
             <div class="block opacity-100" id="app" role="tabpanel">
+              @if ($productdetail->download_speed!='0' && $productdetail->download_speed!='' && $productdetail->upload_speed!='0' && $productdetail->upload_speed!='None')
+                  
+            
                <div class="box">
                   <h2 class="font-bold text-lg text-[#000038]">Broadband</h2>
                 <ul class="w-full py-4 border-b border-gray-300">
@@ -55,6 +58,27 @@
               </li>
             </ul>
             </div>
+            @endif
+            @if ($productdetail->channels!='No')
+                  
+            
+            <div class="box">
+               <h2 class="font-bold text-lg text-[#000038]">TV package</h2>
+             <ul class="w-full py-4 border-b border-gray-300">
+              <li class="flex justify-between">
+               <span class="text-sm">TV channels</span>
+               <span class="text-sm text-[#333] font-bold"> {{$productdetail->channels}}</span>
+              </li>
+
+             {{-- <li class="flex justify-between">
+                 
+              
+             <span class="text-sm">HD channels/span>
+             <span class="text-sm text-[#333] font-bold"> {{$productdetail->upload_speed}}{{$productdetail->upload_speed_unit}}</span>
+           </li> --}}
+         </ul>
+         </div>
+         @endif
             <div class="py-4">
               <h2 class="font-bold text-lg text-[#000038]">Pricing and contract </h2>
                 <span class="text-sm">Please note: prices may change during contract</span>

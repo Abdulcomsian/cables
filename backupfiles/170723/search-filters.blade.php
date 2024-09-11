@@ -161,11 +161,12 @@
       <div
         class="flex gap-4 sm:gap-0 md:block absolute md:static top-80 w-full"
       >
-        <button
+       <a href="#"> <button
           class="w-full bg-pink hover:bg-primary text-white rounded-full sm:mb-2 px-4 xl:px-6 py-2 font-bold text-lg"
         >
           Get Deal
         </button>
+       </a>
         <button
           class="w-full text-[#FF006D] hover:text-primary sm:underline font-normal py-2 sm:py-0 border sm:border-none border-pink rounded-full"
         >

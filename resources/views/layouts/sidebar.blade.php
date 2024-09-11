@@ -793,6 +793,7 @@ $(document).on("click" , ".view-more-info" , function(){
     })
 })
 
+
 $(document).on("click" , "#close-modal-btn" , function(){
   toggleModal()
 })

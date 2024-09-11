@@ -147,13 +147,14 @@
           <div
             class="flex gap-4 sm:gap-0 md:block absolute md:static xsm:top-[20.2rem] ysm:top-[17rem] w-full"
           >
-            <button
-              class="w-full bg-pink hover:bg-primary text-white rounded-full sm:mb-2 px-4 xl:px-6 py-2 font-bold text-lg"
+        <a href="{{url('getdetail/'.$product->provider_id)}}" target="_blank">  
+         <button style="cursor: pointer" class="w-full bg-pink hover:bg-primary text-white rounded-full sm:mb-2 px-4 xl:px-6 py-2 font-bold text-lg get-detail"
             >
               Get Deal
             </button>
+        </a>
             <button
-              class="w-full text-[#FF006D] hover:text-primary sm:underline font-normal py-2 sm:py-0 border sm:border-none border-pink rounded-full view-more-info" data-record-id="{{$product->id}}"
+              class="w-full text-[#FF006D] hover:text-primary sm:underline font-normal py-2 sm:py-0 border sm:border-none border-pink rounded-full view-more-info " data-record-id="{{$product->id}}"
             >
               More Info
             </button>

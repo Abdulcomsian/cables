@@ -26,3 +26,4 @@ Route::get('/load-more-data', [ProviderController::class,'loadMoreData'])->name(
 Route::post('/filter', [ProviderController::class,'getFIlteredProvider'])->name('apply.filter');
 Route::post('/moreinfo', [ProviderController::class,'getMoreInfo'])->name('apply.moreinfo');
 Route::post('/locate-network' , [ProviderController::class , 'locateNetwork'])->name('locate.network');
+Route::get('getdetail/{id}', [ProviderController::class,'getDetail'])->name('getdetail');
