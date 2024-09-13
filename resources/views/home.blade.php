@@ -208,7 +208,7 @@
         <div
           class="flex flex-col sm:flex-row gap-4 sm:gap-2 sm:items-center md:block absolute md:static xsm:top-[20.2rem] ysm:top-[17rem] w-full"
         >
-        <a href="{{url('/getdetail/'.$product->provider_id)}}" target="_blank">  
+        <a href="{{url('/getdetail/'.$product->provider_id)}}" target="_blank" "rel=nofollow">  
         <button  style="cursor: pointer"  class="w-full bg-pink hover:bg-primary text-white rounded-full sm:mb-2 px-4 sm:px-0 sm:grow xl:px-6 py-2 font-bold text-lg get-detail"
           >
             Get Deal

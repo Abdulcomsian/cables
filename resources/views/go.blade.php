@@ -47,7 +47,7 @@ img.logo {
 window.onload = function() {
     setTimeout(function() {
         window.location.href = "{{$product->basket_url}}"; // Replace with your desired URL
-    }, 4000);
+    }, 2000);
 };
 
 </script>
