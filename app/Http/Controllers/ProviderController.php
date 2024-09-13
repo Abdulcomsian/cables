@@ -242,8 +242,11 @@ class ProviderController extends Controller
         }
 
         if(in_array('not required' , $offers)){
-          $query1->where('line_rental' , 'not required');
+          // $query1->where('line_rental' , 'not required');
+          $query1->whereNotNull('offer_ends')->where(DB::raw("TRIM(offer_ends)") , '!=' , '');
         }
+
+
 
       });
 
