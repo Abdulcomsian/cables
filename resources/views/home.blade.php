@@ -222,7 +222,11 @@
             More Info
           </button>
 
-          <span class="sm:w-full"><strong> Offer Ends: {{$product->offer_ends}}</strong></span>
+          <span class="sm:w-full" title="{{$product->promo_and_info}}" style="cursor: pointer"><strong><img
+            src="./images/info-icon.svg"
+            alt="" title="{{$product->promo_and_info}}" style="display: inline-block;"
+            class="w-5 h-5 order-1 view-more-info sm:order-none"  
+          /> Offer Ends: {{$product->offer_ends}}</strong></span>
           <!-- Third Div End -->
         </div>
       </div>
