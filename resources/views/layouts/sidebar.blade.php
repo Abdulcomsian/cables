@@ -319,11 +319,12 @@
         <input type="checkbox" name="phone" class="hidden simple-checkbox submitform" value='Pay as you go'   data-type="phone" data-name="phone[]" />
         Pay as you go calls
       </label>
-      <label
-        class="checkbox-label text-sm bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
-      >
-        <input type="checkbox" name="phone" class="hidden simple-checkbox submitform"  value='No' data-type="phone" data-name="phone[]" />
-        No phone line
+      <label class="checkbox-label text-sm bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer">
+        <input type="checkbox" name="phone" class="hidden simple-checkbox submitform"  value='No' data-type="phone" data-name="phone[]" />No phone line
+      </label>
+
+      <label class="checkbox-label text-sm bg-white border px-4 text-left border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer">
+        <input type="checkbox" name="phone" class="hidden simple-checkbox submitform"  value='international' data-type="phone" data-name="phone[]" />International Calls
       </label>
     </div>
    
