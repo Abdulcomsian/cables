@@ -242,8 +242,7 @@ class ProviderController extends Controller
         }
 
         if(in_array('not required' , $offers)){
-          // $query1->where('line_rental' , 'not required');
-          $query1->whereNotNull('offer_ends')->where(DB::raw("TRIM(offer_ends)") , '!=' , '');
+          $query1->whereNotNull('offer_ends')->where(DB::raw("TRIM(offer_ends)") , '!=' , '')->whereNotNull('promo_and_info')->where(DB::raw("TRIM(promo_and_info)") , '!=' , '');
         }
 
 
@@ -1064,13 +1063,7 @@ class ProviderController extends Controller
     }
 
 
-    public function getDetail($is_subcat, $title, Request $request){
-      // dd($is_subcat, $title, $request->id);
-      $product = Product::where('provider_id', $request->id)->first();
-      $provider = Provider::where('id', $request->id)->first();
-      return view('go', compact('product','provider'));
 
-    }
 
     
 }
