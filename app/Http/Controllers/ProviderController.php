@@ -1064,7 +1064,7 @@ class ProviderController extends Controller
 
     public function getDetail($is_subcat, $title, Request $request){
       // dd($is_subcat, $title, $request->id);
-      $product = Product::where('provider_id', $request->id)->first();
+      $product = Product::where('id', $request->product_id)->first();
       $provider = Provider::where('id', $request->id)->first();
       return view('go', compact('product','provider'));
 

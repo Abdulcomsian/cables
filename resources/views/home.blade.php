@@ -211,7 +211,7 @@
 
         {{-- @dd($product->isp_subcat, $product->title, $product->provider_id) --}}
         {{-- <a href="{{url('getdetail/'.$product->isp_subcat. $product->title.$product->provider_id)}}"  "rel=nofollow" target="_blank">   --}}
-        <a href="{{route('getdetail', ['is_subcat' => $product->isp_subcat, 'title' => $product->title])}}/?id={{$product->provider_id}}"  "rel=nofollow" target="_blank">  
+        <a href="{{route('getdetail', ['is_subcat' => $product->isp_subcat, 'title' => $product->title])}}/?id={{$product->provider_id}}&product_id={{$product->id}}"  "rel=nofollow" target="_blank">  
         <button  style="cursor: pointer"  class="w-full bg-pink hover:bg-primary text-white rounded-full sm:mb-2 px-4 sm:px-0 sm:grow xl:px-6 py-2 font-bold text-lg get-detail"
           >
             Get Deal
