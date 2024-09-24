@@ -33,6 +33,8 @@ img.logo {
     text-align: center;
     margin-top: 30px;
     margin-bottom: 30px;
+    width: 7rem;
+    height: auto;
 }
 </style>
 
