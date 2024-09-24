@@ -1,4 +1,7 @@
 
+<head>
+    <meta name="robots" content="noindex, nofollow" />
+</head>
 <style>
     div.container {
     margin: 0 auto;
@@ -32,6 +35,7 @@ img.logo {
     margin-bottom: 30px;
 }
 </style>
+
 <div style="display: flex; justify-content: center">
 <div class="container">
     <img class="loader" src="{{asset('assets/images/loader.gif')}}" alt="Loading...">
