@@ -208,18 +208,25 @@
         <div
           class="flex flex-col sm:flex-row gap-4 sm:gap-2 sm:items-center md:block absolute md:static xsm:top-[20.2rem] ysm:top-[17rem] w-full"
         >
-          <button
-            class="w-full bg-pink hover:bg-primary text-white rounded-full sm:mb-2 px-4 sm:px-0 sm:grow xl:px-6 py-2 font-bold text-lg"
+
+        {{-- @dd($product->isp_subcat, $product->title, $product->provider_id) --}}
+        {{-- <a href="{{url('getdetail/'.$product->isp_subcat. $product->title.$product->provider_id)}}"  "rel=nofollow" target="_blank">   --}}
+        <a href="{{route('getdetail', ['is_subcat' => $product->isp_subcat, 'title' => str_replace(" ", "-",$product->title)])}}/?id={{$product->provider_id}}&product_id={{$product->id}}"  "rel=nofollow" target="_blank">  
+        <button  style="cursor: pointer"  class="w-full bg-pink hover:bg-primary text-white rounded-full sm:mb-2 px-4 sm:px-0 sm:grow xl:px-6 py-2 font-bold text-lg get-detail"
           >
             Get Deal
-          </button>
+          </button></a>
           <button
             class="w-full text-[#FF006D] hover:text-primary sm:underline font-normal sm:mb-2 px-4 p-[10px] sm:grow border border-pink rounded-full view-more-info" data-record-id="{{$product->id}}"
           >
             More Info
           </button>
 
-          <span class="sm:w-full"><strong> Offer Ends: {{$product->offer_ends}}</strong></span>
+          <span class="sm:w-full" title="{{$product->promo_and_info}}" style="cursor: pointer"><strong><img
+            src="./images/info-icon.svg"
+            alt="" title="{{$product->promo_and_info}}" style="display: inline-block;"
+            class="w-5 h-5 order-1 view-more-info sm:order-none"  
+          /> Offer Ends: {{$product->offer_ends}}</strong></span>
           <!-- Third Div End -->
         </div>
       </div>

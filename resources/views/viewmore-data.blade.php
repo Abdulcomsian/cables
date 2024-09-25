@@ -39,6 +39,9 @@
           </ul>
           <div data-tab-content="" class="p-5">
             <div class="block opacity-100" id="app" role="tabpanel">
+              @if ($productdetail->download_speed!='0' && $productdetail->download_speed!='' && $productdetail->upload_speed!='0' && $productdetail->upload_speed!='None')
+                  
+            
                <div class="box">
                   <h2 class="font-bold text-lg text-[#000038]">Broadband</h2>
                 <ul class="w-full py-4 border-b border-gray-300">
@@ -55,17 +58,53 @@
               </li>
             </ul>
             </div>
+            @endif
+            @if ($productdetail->channels!='No')
+                  
+            
+            <div class="box">
+               <h2 class="font-bold text-lg text-[#000038]">TV package</h2>
+             <ul class="w-full py-4 border-b border-gray-300">
+              <li class="flex justify-between">
+               <span class="text-sm">TV channels</span>
+               <span class="text-sm text-[#333] font-bold"> {{$productdetail->channels}}</span>
+              </li>
+
+             {{-- <li class="flex justify-between">
+                 
+              
+             <span class="text-sm">HD channels/span>
+             <span class="text-sm text-[#333] font-bold"> {{$productdetail->upload_speed}}{{$productdetail->upload_speed_unit}}</span>
+           </li> --}}
+         </ul>
+         </div>
+         @endif
             <div class="py-4">
               <h2 class="font-bold text-lg text-[#000038]">Pricing and contract </h2>
                 <span class="text-sm">Please note: prices may change during contract</span>
                 <ul class="w-full py-4 border-b border-gray-300">
                   <li class="flex justify-between">
                 <span class="text-sm">Monthly cost</span>
-                <span class="text-sm text-[#333] font-bold">£{{$productdetail->stand_monthly}}</span>
+                <span class="text-sm text-[#333] font-bold">£{{$productdetail->promo_monthly}}</span>
               </li>
+              @php
+              $fristyearcost=$productdetail->promo_monthly*12;
+             @endphp
+              <li class="flex justify-between">
+                <span class="text-sm">First year cost</span>
+                <span class="text-sm text-[#333] font-bold">£{{$fristyearcost}}</span>
+              </li>
+             
               <li class="flex justify-between">
                 <span  class="text-sm">Minimum contract length</span>
                 <span class="text-sm text-[#333] font-bold">{{$productdetail->contract_months}} months</span>
+              </li>
+              @php
+              $overallcost=$productdetail->promo_monthly*$productdetail->contract_months;
+             @endphp
+              <li class="flex justify-between">
+                <span class="text-sm">Overall cost</span>
+                <span class="text-sm text-[#333] font-bold">£{{$overallcost}}</span>
               </li>
             </ul>
               </div>
