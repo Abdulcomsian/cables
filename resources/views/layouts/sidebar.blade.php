@@ -701,7 +701,7 @@ function applyFilteredPackage(packages){
   let packagesChexbox = document.querySelectorAll("input[data-name='package[]']");
   let channelSection = document.querySelector(".channel-section");
 
-  document.querySelector('input[name="pkg-bb"][value="1"]:checked') ? channelSection.classList.add('inactive') : channelSection.classList.remove('inactive');
+  document.querySelector('input[name="pkg-bb"][value="1"]:checked') || document.querySelector('input[name="pkg-bbcalls"][value="5"]:checked') ? channelSection.classList.add('inactive') : channelSection.classList.remove('inactive');
 
   if(packages.length > 0){
       packagesChexbox.forEach( package => {
