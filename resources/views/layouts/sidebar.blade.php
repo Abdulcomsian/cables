@@ -48,7 +48,7 @@
   </div>
   <!--Speed Filters End-->
 
-  <!--Tv Channels Filters Start-->
+  <!--Provider Filters Start-->
   <div class="mb-4">
     <h2 class="font-bold text-xl text-filter mb-3">Providers</h2>
 
@@ -111,7 +111,273 @@
       </label>
     </div>
   </div>
-  <!--Tv Channels Filters End-->
+  <!--Provider Filters End-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!--Tv Channel Filter starts-->
+  <div class="mb-4">
+    <h2 class="font-bold text-xl text-filter mb-3">Channels</h2>
+
+    <div class="grid grid-cols-3 gap-2">
+      <label      class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+      >
+        <input type="checkbox"  name="channel-cartoon-network" data-type="channel" id="channel-cartoon-network"  data-name="channel[]" value="cartoon network" class="hidden image-checkbox submitform" />
+        <div class="w-16">
+          <img src="{{asset('images/cartoon-network.png')}}" alt="" class="w-full" />
+        </div>
+      </label>
+      <label    class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+        <input type="checkbox" name="channel-comedy-centeral" data-type="channel"  id="channel-comedy-centeral"  data-name="channel[]" value="comedy central"  class="hidden image-checkbox submitform" />
+        <div class="w-16">
+          <img src="{{asset('images/comedy-central.png')}}" alt="" class="w-full" />
+        </div>
+      </label>
+      <label
+        class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+      >
+        <input type="checkbox" name="channel-discovery" data-type="channel"  id="channel-discovery"  data-name="channel[]" value="discovery" class="hidden image-checkbox submitform" />
+        <div class="w-16">
+          <img src="{{asset('images/discovery.png')}}" alt="" class="w-full" />
+        </div>
+      </label>
+      <label
+        class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+      >
+        <input type="checkbox" name="channel-discovery+" data-type="channel"  id="channel-discovery+"  data-name="channel[]" value="discovery+" class="hidden image-checkbox submitform" />
+        <div class="w-16">
+          <img src="{{asset('images/discovery-plus.png')}}" alt="" class="w-full" />
+        </div>
+      </label>
+      <label
+        class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+      >
+        <input type="checkbox" name="channel-eurosport" data-type="channel"  id="channel-eurosport"  data-name="channel[]" value="eurosport" class="hidden image-checkbox submitform" />
+        <div class="w-16">
+          <img src="{{asset('images/eurosport.png')}}" alt="" class="w-full" />
+        </div>
+      </label>
+      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+        <input type="checkbox"  name="channel-mtv" data-type="channel"  id="channel-mtv"  data-name="channel[]" value="Mtv" class="hidden image-checkbox submitform" />
+        <div class="w-16">
+          <img src="{{asset('images/mtv.png')}}" alt="" class="w-full" />
+        </div>
+      </label>
+
+      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+        <input type="checkbox"  name="channel-ee" data-type="channel"  id="channel-netflix"  data-name="channel[]" value="netflix" class="hidden image-checkbox submitform" />
+        <div class="w-16">
+          <img src="{{asset('images/netflix.png')}}" alt="" class="w-full" />
+        </div>
+      </label>
+      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+        <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="nickelodeon" class="hidden image-checkbox submitform" />
+        <div class="w-16">
+          <img src="{{asset('images/nickelodeon.png')}}" alt="" class="w-full" />
+        </div>
+      </label>
+
+      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+        <input type="checkbox"  name="channel-paramount+" data-type="channel"  id="channel-paramount+"  data-name="channel[]" value="paramount+" class="hidden image-checkbox submitform" />
+        <div class="w-16">
+          <img src="{{asset('images/paramount-plus.png')}}" alt="" class="w-full" />
+        </div>
+      </label>
+      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+        <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="sky atlantic" class="hidden image-checkbox submitform" />
+        <div class="w-16">
+          <img src="{{asset('images/sky-atlantic.png')}}" alt="" class="w-full" />
+        </div>
+      </label>
+      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+        <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="sky cinema" class="hidden image-checkbox submitform" />
+        <div class="w-16">
+          <img src="{{asset('images/sky-cinema.png')}}" alt="" class="w-full" />
+        </div>
+      </label>
+      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+        <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="sky kids" class="hidden image-checkbox submitform" />
+        <div class="w-16">
+          <img src="{{asset('images/sky-kids.png')}}" alt="" class="w-full" />
+        </div>
+      </label>
+      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+        <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="sky sci-fi" class="hidden image-checkbox submitform" />
+        <div class="w-16">
+          <img src="{{asset('images/sky-sci-fi.png')}}" alt="" class="w-full" />
+        </div>
+      </label>
+      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+        <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="sky sports" class="hidden image-checkbox submitform" />
+        <div class="w-16">
+          <img src="{{asset('images/sky-sports.png')}}" alt="" class="w-full" />
+        </div>
+      </label>
+      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+        <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="sky witness" class="hidden image-checkbox submitform" />
+        <div class="w-16">
+          <img src="{{asset('images/sky-witness.png')}}" alt="" class="w-full" />
+        </div>
+      </label>
+      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+        <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="tnt sport" class="hidden image-checkbox submitform" />
+        <div class="w-16">
+          <img src="{{asset('images/tnt-sports.png')}}" alt="" class="w-full" />
+        </div>
+      </label>
+
+
+    </div>
+  </div>
+  <!--Tv Channel Filter ends-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   <!--Package Filters Start-->
   <div class="mb-4">
@@ -372,7 +638,7 @@ $(document).ready(()=>{
 
   $(document).on("click" , ".submitform" , function(e){
     e.stopPropagation();
-        e.stopImmediatePropagation();
+    e.stopImmediatePropagation();
       let provider = [];
       let speed = [];
       let package = [];
@@ -381,6 +647,7 @@ $(document).ready(()=>{
       let contract = [];
       let phone = [];
       let sort = [];
+      let channel = [];
       // checkedFilters = document.querySelectorAll("input[type='checkbox']:checked")
       let checkedCheckboxes = document.querySelectorAll("input[type='checkbox']:checked");
       let selectedOption = document.querySelector("select option:checked");
@@ -410,6 +677,9 @@ $(document).ready(()=>{
           case 'phone':
           phone.push(item.value);
           break;
+          case 'channel':
+          channel.push(item.value);
+          break;
           default:
           sort.push(item.value); 
         }
@@ -422,7 +692,7 @@ $(document).ready(()=>{
     $.ajax({
           type : 'POST',
           url : '{{route("apply.filter")}}',
-          data : { provider , speed , package , cost , offers , contract , phone ,sort, '_token' : '{{csrf_token()}}' , loadedTicket : loadedTickets},
+          data : { provider , speed , package , cost , offers , contract , phone ,sort, channel ,'_token' : '{{csrf_token()}}' , loadedTicket : loadedTickets},
           success : function(res){
             document.querySelector("#tot_count").innerHTML =res.total_count;
             document.querySelector("#items_container").innerHTML =res.html;
@@ -434,6 +704,7 @@ $(document).ready(()=>{
             applyFilteredPhone(res.filteredPhone);
             applyFilteredSpeed(res.filteredSpeed);
             applyFilteredOffers(res.filteredOffer);
+            applyFilteredChannels(res.filteredChannel);
 
             if (res.html=='') {
               $('#load_more_button').html('No more deals');
@@ -626,7 +897,16 @@ function applyFilteredSpeed( speeds ){
 function applyFilteredOffers(offers){
   let label = document.querySelector("input[name='no_upfront_cost']").closest(".checkbox-label");
   offers.includes(0) ? label.classList.remove("label-disable") : label.classList.add("label-disable")  
+}
 
+function applyFilteredChannels(channels){
+  console.log(channels);
+  let channelCheckboxes = document.querySelectorAll("input[data-name='channel[]']");
+  Array.from(channelCheckboxes).forEach( checkbox => {
+    let channelName = checkbox.value;
+    let haveElement = channels.includes(channelName) ? true : false;
+    toggleChexbox(!haveElement , checkbox);
+  });
 }
 
 
@@ -655,6 +935,7 @@ function toggleChexbox( condition , chexbox ) {
       let contract = [];
       let phone = [];
       let sort = [];
+      let channel = [];
       //checkedFilters = document.querySelectorAll("input[type='checkbox']:checked")
       let checkedCheckboxes = document.querySelectorAll("input[type='checkbox']:checked");
       let selectedOption = document.querySelector("select option:checked");
@@ -683,6 +964,9 @@ function toggleChexbox( condition , chexbox ) {
             case 'phone':
             phone.push(item.value);
             break;
+            case 'channel':
+            channel.push(item.value)
+            break;
             default:
             sort.push(item.value); 
           }
@@ -696,7 +980,7 @@ function toggleChexbox( condition , chexbox ) {
     $.ajax({
           type : 'POST',
           url : '{{route("apply.filter")}}',
-          data : { provider , speed , package , cost , offers , contract , phone ,sort, '_token' : '{{csrf_token()}}' , loadedTicket : loadedTickets},
+          data : { provider , speed , package , cost , offers , contract , phone , sort , channel , '_token' : '{{csrf_token()}}' , loadedTicket : loadedTickets},
           success : function(res){
             //console.log(res.html);
               document.querySelector("#items_container").insertAdjacentHTML("beforeend" , res.html);

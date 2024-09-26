@@ -98,6 +98,7 @@ class ProviderController extends Controller
       $phone= $request->phone;
       $sortValue = $request->sort;
       $offers = $request->offers;
+      $channels = $request->channel;
       $query = Product::query();
       
 
@@ -175,6 +176,16 @@ class ProviderController extends Controller
 
 
 
+      });
+
+     
+      $query->when(isset($channels) && count($channels) > 0 , function($query1) use ($channels){
+          $query1->where(function($query2) use ($channels){
+            foreach($channels as $channel)
+            {
+              $query2->where('keywords' ,'Like' , "%$channel%");
+            }
+          });
       });
 
       $query->when(isset($provider) && count($provider), function ($query1) use ($provider) {
@@ -285,6 +296,10 @@ class ProviderController extends Controller
       }
      });
 
+    // $products = $query->toSql();
+    //  dd($query->toSql());
+    // dd($query->get());
+
     $products = $query->skip($request->loadedTicket)->take(5)->get();
     $productCount=$query->skip($request->loadedTicket)->count();
     $html = view('search-filters' , ['products' => $products])->render();
@@ -295,6 +310,7 @@ class ProviderController extends Controller
     $filteredCost = $this->filteredCost($request);
     $filteredPackage = $this->filteredPackage($request);
     $filteredOffer = $this->filteredOffer($request);
+    $filteredChannel = $this->filteredChannels($request);
 
 
     return response()->json([ 
@@ -308,7 +324,8 @@ class ProviderController extends Controller
                               'filteredCost' => $filteredCost,
                               'filteredPackage' => $filteredPackage,
                               'filteredOffer' => $filteredOffer,
-                              'apiProviders' => $request->apiProviders
+                              'filteredChannel' => $filteredChannel,
+                              'apiProviders' => $request->apiProviders,
                             ]);
 
      // dd($providerList);
@@ -423,6 +440,14 @@ class ProviderController extends Controller
                                 }
                             });
                         })
+                        ->when(isset($request->channel) && count($request->channel) > 0 , function($query) use ($request){
+                            $query->where(function($query1) use ($request){
+                              foreach($request->channel as $channel)
+                              {
+                                $query1->where('keywords' ,'Like' , "%$channel%");
+                              }
+                            });
+                        })
                         ->distinct('provider_id')
                         ->orderBy('provider_id' , 'asc')
                         ->get()
@@ -489,6 +514,14 @@ class ProviderController extends Controller
                                   $query1->where('line_rental' , 'not required');
                                 }
                             });
+                        })
+                        ->when(isset($request->channel) && count($request->channel) > 0 , function($query) use ($request){
+                          $query->where(function($query1) use ($request){
+                            foreach($request->channel as $channel)
+                            {
+                              $query1->where('keywords' ,'Like' , "%$channel%");
+                            }
+                          });
                         })
                         ->distinct('download_speed')
                         ->orderBy('download_speed' , 'asc')
@@ -598,12 +631,138 @@ class ProviderController extends Controller
                               }
                             });
                         })
+                        ->when(isset($request->channel) && count($request->channel) > 0 , function($query) use ($request){
+                            $query->where(function($query1) use ($request){
+                              foreach($request->channel as $channel)
+                              {
+                                $query1->where('keywords' ,'Like' , "%$channel%");
+                              }
+                            });
+                        })
                         ->distinct('category_id')
                         ->orderBy('category_id' , 'asc')
                         ->get()
                         ->pluck('category_id')
                         ->toArray();
       return $package;
+    }
+
+    public function filteredChannels(Request $request)
+    {
+      $channels = Product::select('keywords')
+                        ->when( isset($request->speed) && count($request->speed), function($query) use($request){
+                            $query->where(function($query1) use($request){
+
+                                foreach($request->speed as $speed)
+                                {
+                                  $speedList = explode("-" , $speed);
+                                  $speedListCount = count($speedList);
+                                  if($speedListCount == 1){
+                                    [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
+                                    $query1->orWhere( function($query2) use ($speedNum , $speedUnit) {
+                                      $query2->where('download_speed' , '>' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                    });
+                                  } else if($speedListCount == 2){
+                                    $query1->orWhere( function($query2) use ($speedList) {
+                                      $query2->where( function($query3) use ($speedList){
+                                        [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
+                                        $query3->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                      });
+                                      $query2->where( function($query3) use ($speedList){
+                                        [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[1]);
+                                        $query3->where('download_speed' , '<=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                      });
+                                    });
+                                  } else {
+                                    $query1->orWhere( function($query2) use ($speedList) {
+                                      $query2->where( function($query3) use ($speedList){
+                                        [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[0]);
+                                        $query3->where('download_speed' , '>=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                      });
+                                      $query2->where( function($query3) use ($speedList){
+                                        [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[1]);
+                                        $query3->where('download_speed' , '<=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                      });
+                                
+                                    });
+                                    $query1->orWhere(function($query2) use ($speedList){
+                                      [$speedNum , $speedUnit] = $this->mutateSpeed($speedList[2]);
+                                      $query2->where('download_speed' , '=' , $speedNum )->where('download_speed_unit' , $speedUnit);
+                                    });
+                                  }
+                                  
+                                }
+                              });
+
+                        })
+                        ->when( isset($request->cost) && count($request->cost) , function($query) use ($request){
+
+                          $query->where(function($query1) use($request){
+
+                            foreach($request->cost as $cost)
+                            {
+                              $costList = explode("-" , $cost);
+                              $lowerCost = $costList[0];
+                              $upperCost = $costList[1] ?? null;
+  
+                              if($upperCost){
+                                $query1->orWhere('promo_monthly' , '>=' , $lowerCost)->where('promo_monthly' , '<=' , $upperCost);
+                              }else{
+                                $query1->orWhere('promo_monthly' , '>' , $lowerCost);
+                              }
+  
+                            }
+                          });
+
+                        })
+                        ->when( isset($request->provider) && count($request->provider), function($query) use($request){
+                          $query->whereIn('provider_id' , $request->provider);
+                        })
+                        ->when( isset($request->contract) && count($request->contract) , function($query) use ($request){
+                          $query->where(function($query1) use($request){
+                            foreach($request->contract as $ct)
+                            {
+                              $haveIncrement = str_contains( $ct , '+') ? 1 : 0;
+                              $ct = (int)str_replace("+" , "" , $ct);
+                              $haveIncrement ? $query1->orWhere('contract_months' , '>' , $ct) : $query1->where('contract_months' , $ct); 
+                            }
+                          });
+                        })
+                        ->when( isset($request->phone) && count($request->phone) , function($query) use ($request) {
+                          $query->where( function($query1) use ($request){
+                            foreach($request->phone as $phone)
+                            {
+                              $query1->where('calls' , 'Like' , "%$phone%");
+                            }
+                          });
+                        })
+                        ->when(isset($request->offers) && count($request->offers), function ($query) use ($request) {
+                          $query->where(function($query1) use ($request){
+                              if(in_array('no_upfront_cost' , $request->offers)){
+                                $query1->orWhere('set_up_cost' , 0);
+                              }
+                              if(in_array('not required' , $request->offers)){
+                                $query1->where('line_rental' , 'not required');
+                              }
+                            });
+                        })
+                        ->get()
+                        ->pluck('keywords')
+                        ->toArray();
+
+      $keywords = [];
+      foreach($channels as $channel)
+      {
+        $channel = preg_replace('/[,\\n]+$/', '', $channel);
+        $keywords = [...$keywords , ...explode("," , $channel) ];
+      }
+      
+      $channels = array_unique($keywords);
+      $channels = array_map(function($channel) { return trim($channel); } , array_values(array_filter( $channels , function($channel) {
+                return !empty(trim($channel));
+            })));
+
+      return $channels;
     }
 
     public function filteredOffer(Request $request)
@@ -698,6 +857,14 @@ class ProviderController extends Controller
                         ->when( isset($request->package) && count($request->package), function($query) use($request){
                             $query->whereIn('category_id' , $request->package);
                         })
+                        ->when(isset($request->channel) && count($request->channel) > 0 , function($query) use ($request){
+                            $query->where(function($query1) use ($request){
+                              foreach($request->channel as $channel)
+                              {
+                                $query1->where('keywords' ,'Like' , "%$channel%");
+                              }
+                            });
+                        })
                         ->distinct('set_up_cost')
                         ->orderBy('set_up_cost' , 'asc')
                         ->get()
@@ -785,6 +952,14 @@ class ProviderController extends Controller
                               }
                               if(in_array('not required' , $request->offers)){
                                 $query1->where('line_rental' , 'not required');
+                              }
+                            });
+                        })
+                        ->when(isset($request->channel) && count($request->channel) > 0 , function($query) use ($request){
+                            $query->where(function($query1) use ($request){
+                              foreach($request->channel as $channel)
+                              {
+                                $query1->where('keywords' ,'Like' , "%$channel%");
                               }
                             });
                         })
@@ -888,6 +1063,14 @@ class ProviderController extends Controller
                                 }
                               });
                           })
+                          ->when(isset($request->channel) && count($request->channel) > 0 , function($query) use ($request){
+                              $query->where(function($query1) use ($request){
+                                foreach($request->channel as $channel)
+                                {
+                                  $query1->where('keywords' ,'Like' , "%$channel%");
+                                }
+                              });
+                          })
                           ->distinct('contract_months')
                           ->orderBy('contract_months' , 'asc')
                           ->get()
@@ -987,6 +1170,14 @@ class ProviderController extends Controller
                                 }
                                 if(in_array('not required' , $request->offers)){
                                   $query1->where('line_rental' , 'not required');
+                                }
+                              });
+                          })
+                          ->when(isset($request->channel) && count($request->channel) > 0 , function($query) use ($request){
+                              $query->where(function($query1) use ($request){
+                                foreach($request->channel as $channel)
+                                {
+                                  $query1->where('keywords' ,'Like' , "%$channel%");
                                 }
                               });
                           })
