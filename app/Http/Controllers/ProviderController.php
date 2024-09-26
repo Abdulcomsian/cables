@@ -746,6 +746,9 @@ class ProviderController extends Controller
                               }
                             });
                         })
+                        ->when( isset($request->package) && count($request->package), function($query) use($request){
+                            $query->whereIn('category_id' , $request->package);
+                        })
                         ->get()
                         ->pluck('keywords')
                         ->toArray();
