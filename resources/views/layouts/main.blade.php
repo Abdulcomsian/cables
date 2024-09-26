@@ -130,6 +130,17 @@
           width: auto;
       }
       
+  .channel-section {
+      overflow-y: hidden;
+      position: relative;
+      transition: height 0.4s ease-in-out;
+  }
+
+  .channel-section.inactive{
+    height: 0px;
+  }
+
+
       	
     </style>
   </head>

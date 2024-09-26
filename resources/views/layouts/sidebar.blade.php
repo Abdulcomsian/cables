@@ -61,7 +61,7 @@
         </div>
       </label>
       <label    class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
-        <input type="checkbox" name="provider-virgin" data-type="provider"  id="provider-virgin"  data-name="provider[]" value="1"  class="hidden image-checkbox submitform" />
+        <input type="checkbox" name="provider-virgin" data-type="provider"  id="provider-virgin" data-name="provider[]" value="1"  class="hidden image-checkbox submitform" />
         <div class="w-16">
           <img src="/assets//images/Virgin_Media_logo_thunbnail.png" alt="" class="w-full" />
         </div>
@@ -182,198 +182,122 @@
 
 
   <!--Tv Channel Filter starts-->
-  <div class="mb-4">
-    <h2 class="font-bold text-xl text-filter mb-3">Channels</h2>
-
-    <div class="grid grid-cols-3 gap-2">
-      <label      class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
-      >
-        <input type="checkbox"  name="channel-cartoon-network" data-type="channel" id="channel-cartoon-network"  data-name="channel[]" value="cartoon network" class="hidden image-checkbox submitform" />
-        <div class="w-16">
-          <img src="{{asset('images/cartoon-network.png')}}" alt="" class="w-full" />
-        </div>
-      </label>
-      <label    class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
-        <input type="checkbox" name="channel-comedy-centeral" data-type="channel"  id="channel-comedy-centeral"  data-name="channel[]" value="comedy central"  class="hidden image-checkbox submitform" />
-        <div class="w-16">
-          <img src="{{asset('images/comedy-central.png')}}" alt="" class="w-full" />
-        </div>
-      </label>
-      <label
-        class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
-      >
-        <input type="checkbox" name="channel-discovery" data-type="channel"  id="channel-discovery"  data-name="channel[]" value="discovery" class="hidden image-checkbox submitform" />
-        <div class="w-16">
-          <img src="{{asset('images/discovery.png')}}" alt="" class="w-full" />
-        </div>
-      </label>
-      <label
-        class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
-      >
-        <input type="checkbox" name="channel-discovery+" data-type="channel"  id="channel-discovery+"  data-name="channel[]" value="discovery+" class="hidden image-checkbox submitform" />
-        <div class="w-16">
-          <img src="{{asset('images/discovery-plus.png')}}" alt="" class="w-full" />
-        </div>
-      </label>
-      <label
-        class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
-      >
-        <input type="checkbox" name="channel-eurosport" data-type="channel"  id="channel-eurosport"  data-name="channel[]" value="eurosport" class="hidden image-checkbox submitform" />
-        <div class="w-16">
-          <img src="{{asset('images/eurosport.png')}}" alt="" class="w-full" />
-        </div>
-      </label>
-      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
-        <input type="checkbox"  name="channel-mtv" data-type="channel"  id="channel-mtv"  data-name="channel[]" value="Mtv" class="hidden image-checkbox submitform" />
-        <div class="w-16">
-          <img src="{{asset('images/mtv.png')}}" alt="" class="w-full" />
-        </div>
-      </label>
-
-      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
-        <input type="checkbox"  name="channel-ee" data-type="channel"  id="channel-netflix"  data-name="channel[]" value="netflix" class="hidden image-checkbox submitform" />
-        <div class="w-16">
-          <img src="{{asset('images/netflix.png')}}" alt="" class="w-full" />
-        </div>
-      </label>
-      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
-        <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="nickelodeon" class="hidden image-checkbox submitform" />
-        <div class="w-16">
-          <img src="{{asset('images/nickelodeon.png')}}" alt="" class="w-full" />
-        </div>
-      </label>
-
-      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
-        <input type="checkbox"  name="channel-paramount+" data-type="channel"  id="channel-paramount+"  data-name="channel[]" value="paramount+" class="hidden image-checkbox submitform" />
-        <div class="w-16">
-          <img src="{{asset('images/paramount-plus.png')}}" alt="" class="w-full" />
-        </div>
-      </label>
-      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
-        <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="sky atlantic" class="hidden image-checkbox submitform" />
-        <div class="w-16">
-          <img src="{{asset('images/sky-atlantic.png')}}" alt="" class="w-full" />
-        </div>
-      </label>
-      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
-        <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="sky cinema" class="hidden image-checkbox submitform" />
-        <div class="w-16">
-          <img src="{{asset('images/sky-cinema.png')}}" alt="" class="w-full" />
-        </div>
-      </label>
-      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
-        <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="sky kids" class="hidden image-checkbox submitform" />
-        <div class="w-16">
-          <img src="{{asset('images/sky-kids.png')}}" alt="" class="w-full" />
-        </div>
-      </label>
-      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
-        <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="sky sci-fi" class="hidden image-checkbox submitform" />
-        <div class="w-16">
-          <img src="{{asset('images/sky-sci-fi.png')}}" alt="" class="w-full" />
-        </div>
-      </label>
-      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
-        <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="sky sports" class="hidden image-checkbox submitform" />
-        <div class="w-16">
-          <img src="{{asset('images/sky-sports.png')}}" alt="" class="w-full" />
-        </div>
-      </label>
-      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
-        <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="sky witness" class="hidden image-checkbox submitform" />
-        <div class="w-16">
-          <img src="{{asset('images/sky-witness.png')}}" alt="" class="w-full" />
-        </div>
-      </label>
-      <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
-        <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="tnt sport" class="hidden image-checkbox submitform" />
-        <div class="w-16">
-          <img src="{{asset('images/tnt-sports.png')}}" alt="" class="w-full" />
-        </div>
-      </label>
-
-
+  <div class="mb-4 channel-section">
+    <div class="channel-content">
+      <h2 class="font-bold text-xl text-filter mb-3">Channels</h2>
+  
+      <div class="grid grid-cols-3 gap-2">
+        <label      class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        >
+          <input type="checkbox"  name="channel-cartoon-network" data-type="channel" id="channel-cartoon-network"  data-name="channel[]" value="cartoon network" class="hidden image-checkbox submitform" />
+          <div class="w-16">
+            <img src="{{asset('images/cartoon-network.png')}}" alt="" class="w-full" />
+          </div>
+        </label>
+        <label    class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+          <input type="checkbox" name="channel-comedy-centeral" data-type="channel"  id="channel-comedy-centeral"  data-name="channel[]" value="comedy central"  class="hidden image-checkbox submitform" />
+          <div class="w-16">
+            <img src="{{asset('images/comedy-central.png')}}" alt="" class="w-full" />
+          </div>
+        </label>
+        <label
+          class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        >
+          <input type="checkbox" name="channel-discovery" data-type="channel"  id="channel-discovery"  data-name="channel[]" value="discovery" class="hidden image-checkbox submitform" />
+          <div class="w-16">
+            <img src="{{asset('images/discovery.png')}}" alt="" class="w-full" />
+          </div>
+        </label>
+        <label
+          class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        >
+          <input type="checkbox" name="channel-discovery+" data-type="channel"  id="channel-discovery+"  data-name="channel[]" value="discovery+" class="hidden image-checkbox submitform" />
+          <div class="w-16">
+            <img src="{{asset('images/discovery-plus.png')}}" alt="" class="w-full" />
+          </div>
+        </label>
+        <label
+          class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
+        >
+          <input type="checkbox" name="channel-eurosport" data-type="channel"  id="channel-eurosport"  data-name="channel[]" value="eurosport" class="hidden image-checkbox submitform" />
+          <div class="w-16">
+            <img src="{{asset('images/eurosport.png')}}" alt="" class="w-full" />
+          </div>
+        </label>
+        <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+          <input type="checkbox"  name="channel-mtv" data-type="channel"  id="channel-mtv"  data-name="channel[]" value="Mtv" class="hidden image-checkbox submitform" />
+          <div class="w-16">
+            <img src="{{asset('images/mtv.png')}}" alt="" class="w-full" />
+          </div>
+        </label>
+  
+        <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+          <input type="checkbox"  name="channel-ee" data-type="channel"  id="channel-netflix"  data-name="channel[]" value="netflix" class="hidden image-checkbox submitform" />
+          <div class="w-16">
+            <img src="{{asset('images/netflix.png')}}" alt="" class="w-full" />
+          </div>
+        </label>
+        <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+          <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="nickelodeon" class="hidden image-checkbox submitform" />
+          <div class="w-16">
+            <img src="{{asset('images/nickelodeon.png')}}" alt="" class="w-full" />
+          </div>
+        </label>
+  
+        <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+          <input type="checkbox"  name="channel-paramount+" data-type="channel"  id="channel-paramount+"  data-name="channel[]" value="paramount+" class="hidden image-checkbox submitform" />
+          <div class="w-16">
+            <img src="{{asset('images/paramount-plus.png')}}" alt="" class="w-full" />
+          </div>
+        </label>
+        <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+          <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="sky atlantic" class="hidden image-checkbox submitform" />
+          <div class="w-16">
+            <img src="{{asset('images/sky-atlantic.png')}}" alt="" class="w-full" />
+          </div>
+        </label>
+        <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+          <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="sky cinema" class="hidden image-checkbox submitform" />
+          <div class="w-16">
+            <img src="{{asset('images/sky-cinema.png')}}" alt="" class="w-full" />
+          </div>
+        </label>
+        <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+          <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="sky kids" class="hidden image-checkbox submitform" />
+          <div class="w-16">
+            <img src="{{asset('images/sky-kids.png')}}" alt="" class="w-full" />
+          </div>
+        </label>
+        <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+          <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="sky sci-fi" class="hidden image-checkbox submitform" />
+          <div class="w-16">
+            <img src="{{asset('images/sky-sci-fi.png')}}" alt="" class="w-full" />
+          </div>
+        </label>
+        <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+          <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="sky sports" class="hidden image-checkbox submitform" />
+          <div class="w-16">
+            <img src="{{asset('images/sky-sports.png')}}" alt="" class="w-full" />
+          </div>
+        </label>
+        <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+          <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="sky witness" class="hidden image-checkbox submitform" />
+          <div class="w-16">
+            <img src="{{asset('images/sky-witness.png')}}" alt="" class="w-full" />
+          </div>
+        </label>
+        <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
+          <input type="checkbox"  name="channel-nikelodeon" data-type="channel"  id="channel-nikelodeon"  data-name="channel[]" value="tnt sport" class="hidden image-checkbox submitform" />
+          <div class="w-16">
+            <img src="{{asset('images/tnt-sports.png')}}" alt="" class="w-full" />
+          </div>
+        </label>
+  
+  
+      </div>
     </div>
   </div>
   <!--Tv Channel Filter ends-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -386,31 +310,31 @@
       <label
         class="checkbox-label text-sm bg-white border text-left px-4 border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" name="pkg-bbtv" id="pkg-bbtv" data-type="package"  data-name="package[]" value="2"  class="hidden simple-checkbox submitform " />
+        <input type="checkbox" name="pkg-bbtv" id="pkg-bbtv" data-type="package" data-package-name="broadband-tv"   data-name="package[]" value="2"  class="hidden simple-checkbox submitform " />
         Broadband + TV
       </label>
       <label
         class="checkbox-label text-sm bg-white border text-left px-4 border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox"   name="pkg-bbcalls" id="pkg-bbcalls" data-type="package"  data-name="package[]" value="5"  class="hidden simple-checkbox submitform" />
+        <input type="checkbox"   name="pkg-bbcalls" id="pkg-bbcalls" data-type="package" data-package-name="broadband-call"   data-name="package[]" value="5"  class="hidden simple-checkbox submitform" />
         Broadband + calls
       </label>
       <label
         class="checkbox-label text-sm bg-white border text-left px-4 border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" name="pkg-bb" id="pkg-bb" data-type="package"  data-name="package[]" value="1"  class="hidden simple-checkbox submitform" />
+        <input type="checkbox" name="pkg-bb" id="pkg-bb" data-type="package" data-package-name="broadband-only"   data-name="package[]" value="1"  class="hidden simple-checkbox submitform" />
         Broadband only
       </label>
       <label
         class="checkbox-label text-sm bg-white border text-left px-4 border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
       >
-        <input type="checkbox" name="pkg-bb" id="pkg-bb" data-type="package"  data-name="package[]" value="4"  class="hidden simple-checkbox submitform" />
+        <input type="checkbox" name="pkg-bb" id="pkg-bb" data-type="package" data-package-name="tv-only"   data-name="package[]" value="4"  class="hidden simple-checkbox submitform" />
         TV only
       </label>
       <label
       class="checkbox-label text-sm bg-white border text-left px-4 border-gray-400 w-full py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer"
     >
-      <input type="checkbox" name="pkg-bb" id="pkg-bb" data-type="package"  data-name="package[]" value="3"  class="hidden simple-checkbox submitform" />
+      <input type="checkbox" name="pkg-bb" id="pkg-bb" data-type="package" data-package-name="packages"   data-name="package[]" value="3"  class="hidden simple-checkbox submitform" />
       Packages
     </label>
     </div>
@@ -775,6 +699,10 @@ $(document).ready(()=>{
 
 function applyFilteredPackage(packages){
   let packagesChexbox = document.querySelectorAll("input[data-name='package[]']");
+  let channelSection = document.querySelector(".channel-section");
+
+  document.querySelector('input[name="pkg-bb"][value="1"]:checked') ? channelSection.classList.add('inactive') : channelSection.classList.remove('inactive');
+
   if(packages.length > 0){
       packagesChexbox.forEach( package => {
         let value = package.value;
