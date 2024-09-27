@@ -5,6 +5,7 @@
     <title>Cables</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -45,7 +46,7 @@
     </script>
 
     <style>
-      .loading-overlay {
+  .loading-overlay {
     display: none;
     position: fixed;
     top: 0;
@@ -140,7 +141,26 @@
     height: 0px;
   }
 
+  .address-list {
+      position: absolute;
+      top: 57px;
+      width: 100%;
+      background: white;
+      max-height: 300px !important;
+      overflow-y: scroll;
+  }
 
+  .address {
+    padding: 10px 10px;
+    z-index: 1;
+    position: relative;
+    background: white;
+    border-bottom: 1px solid;
+ }
+
+ .address:last-child {
+  border-bottom: 0px;
+ }
       	
     </style>
   </head>

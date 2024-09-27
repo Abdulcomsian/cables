@@ -137,13 +137,19 @@
 
             <input
               type="search"
-              id="website-admin"
+              id="postcode-input"
               class="flex items-center text-primary block flex-1 w-full text-xl font-bold px-3 py-3s focus:outline-none placeholder:text-xl placeholder:font-bold placeholder:text-gray-500 postcode"
               placeholder="Enter your Postcode"
             />
-            <button type="button" class="search-api">
+            <button type="button" class="search-address">
               <img src="{{asset('images/search.svg')}}" alt="" class="w-[40px] absolute top-2 right-5">
             </button>
+
+
+            <div class="address-list">
+            </div>
+
+
           </div>
         </form>
       </div>

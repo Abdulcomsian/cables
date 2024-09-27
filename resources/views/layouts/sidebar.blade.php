@@ -114,73 +114,6 @@
   <!--Provider Filters End-->
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   <!--Tv Channel Filter starts-->
   <div class="mb-4 channel-section">
     <div class="channel-content">
@@ -547,8 +480,8 @@
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"
 integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-
 $(document).ready(()=>{
 
   //   $(document).on("change", "#deals", function(e){
@@ -643,12 +576,31 @@ $(document).ready(()=>{
         })
   })
 
-  $(document).on("click" , ".search-api" , function(e){
-    let postcode = document.querySelector(".postcode").value;
+  $(document).on("click" , ".search-address" , function(e){
+    let postcode = document.querySelector("#postcode-input").value;
+    $.ajax({
+          type : 'POST',
+          url : '{{route("get.address")}}',
+          data : { '_token' : '{{csrf_token()}}' , postcode : postcode},
+          success : function(res){
+            if(res.status){
+              document.querySelector(".address-list").innerHTML = res.html;
+            } else {
+              toastr.error(res.error)
+            }
+          }
+    })
+  })
+
+
+  $(document).on("click" , ".address" , function(e){
+    let postcode = this.dataset.postcode;
+    let latitude = this.dataset.lat;
+    let longitude = this.dataset.lng;
     $.ajax({
           type : 'POST',
           url : '{{route("locate.network")}}',
-          data : { '_token' : '{{csrf_token()}}' , postcode : postcode},
+          data : { '_token' : '{{csrf_token()}}' , postcode , latitude , longitude},
           success : function(res){
             document.querySelector("#tot_count").innerHTML =res.total_count;
             document.querySelector("#items_container").innerHTML =res.html;

@@ -10,6 +10,8 @@ use App\Models\{
 };
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 class ProviderController extends Controller
 {
     public function index()
@@ -1200,22 +1202,37 @@ class ProviderController extends Controller
       return [$speedNum , $speedUnit];
     }
 
+    
+
+    public function getDetail($is_subcat, $title, Request $request){
+      // dd($is_subcat, $title, $request->id);
+      $product = Product::where('id', $request->product_id)->first();
+      $provider = Provider::where('id', $request->id)->first();
+      return view('go', compact('product','provider'));
+
+    }
+
+
+
     public function locateNetwork(Request $request)
     {
       // $postcode = 'TS26 9LS';
-      // $client = new Client();
-      // $response = $client->get('https://api.thinkbroadband.com/inquiry.php', [
-      //     'query' => [
-      //         'postcode' => $postcode,
-      //         'version' => '2.20',
-      //         'guid' => '{B67673F3-9CE5-2C2B-0EF1-85170E3C2261}'
-      //     ]
-      // ]);
+      $postcode = $request->postcode;
+      $latitude = $request->latitude;
+      $longitude = $request->longitude;
+      $client = new Client();
+      $response = $client->get('https://api.thinkbroadband.com/inquiry.php', [
+          'query' => [
+              'postcode' => $postcode,
+              // 'lat' => 50.8606212,
+              // 'lng' => -1.1782874,
+              'version' => '2.20',
+              'guid' => '{B67673F3-9CE5-2C2B-0EF1-85170E3C2261}'
+          ]
+      ]);
 
-      // $html = $response->getBody()->getContents();
-
-      $html = '{"api_version":2.2,"postcode":"TS26 9LS","exchange_name":"HARTLEPOOL","latlng":"54.681268000000000,-1.226190000000000","lat":"54.681268000000000","lng":"-1.226190000000000","exchange_code":"NEHAL","exchange_distance":1718,"exchange_code_near_1":"NEGM","exchange_name_near_1":"GREATHAM","exchange_distance_near_1":3919,"exchange_code_near_2":"NEWV","exchange_name_near_2":"WOLVISTON","exchange_distance_near_2":7745,"exchange_code_near_3":"NESSDS","exchange_name_near_3":"SEAL SANDS","exchange_distance_near_3":8702,"exchange_code_near_4":"NEHHL","exchange_name_near_4":"HAVERTON HILL","exchange_distance_near_4":9382,"avail_infra_virginmedia_cable":"AVAILABLE","avail_retail_virginmedia":"AVAILABLE","avail_infra_openreach_fttc":"AVAILABLE","avail_infra_openreach_fttp":"AVAILABLE","avail_infra_openreach_gfast":"NOT_AVAILABLE","avail_retail_bt_consumer":"AVAILABLE","avail_retail_ee":"AVAILABLE","avail_retail_plusnet":"AVAILABLE","avail_infra_btwholesale_ipstream_max":"AVAILABLE","avail_infra_btwholesale_adsl2plus_wbc":"AVAILABLE","avail_retail_sky":"AVAILABLE","avail_infra_sky_llu_adsl2plus":"AVAILABLE","avail_retail_talktalk":"AVAILABLE","avail_infra_talktalk_llu_adsl2plus":"AVAILABLE","avail_exchange_area_openreach_fttp":"LIMITED_AVAILABILITY","avail_exchange_area_openreach_fttc":"LIMITED_AVAILABILITY","avail_exchange_area_virginmedia_cable":"LIMITED_AVAILABILITY","exchange_market":"B","avail_infra_kc_adsl2plus":"NOT_AVAILABLE","avail_infra_kc_fttp":"NOT_AVAILABLE","avail_infra_hyperoptic_fttp":"NOT_AVAILABLE","avail_infra_gigaclear_fttp":"NOT_AVAILABLE","avail_infra_ifnl_fttp":"NOT_AVAILABLE","avail_infra_b4rn_fttp":"NOT_AVAILABLE","avail_infra_airband_wireless":"NOT_AVAILABLE","avail_infra_vodafone_gigafast":"AVAILABLE","avail_infra_community_fibre":"NOT_AVAILABLE","avail_infra_truespeed":"NOT_AVAILABLE","avail_infra_trooli":"NOT_AVAILABLE","best_download_sub_24":"NO","best_download_sub_10":"NO","best_download_sub_2":"NO","est_adsl2plus_download_postcode":"10 to 20 Mbps","est_fttcp_download_postcode":"over 40 Mbps","est_adsl2plus_download_within500m":"10 to 20 Mbps","est_fttcp_download_within500m":"over 40 Mbps","est_adsl2plus_download_within1000m":"10 to 20 Mbps","est_fttcp_download_within1000m":"over 40 Mbps","est_gfast_download_postcode":"UNKNOWN","est_fttp_download_postcode":"900 Mbps","openreach_postcode_split":"SINGLE","openreach_postcode_split_technology":"SAME","est_raw_adsl2plus_download_postcode":"17","est_raw_fttcp_download_postcode":"42","est_raw_gfast_download_postcode":-1}';
-
+      $html = $response->getBody()->getContents();
+   
       $data = json_decode($html);
       $providers = [];
       $speeds = [];
@@ -1240,28 +1257,59 @@ class ProviderController extends Controller
 
      foreach($providers as $provider)
      {
-      $query->orWhere('name', 'REGEXP', implode("|" ,explode("_", $provider) ) );
+        $query->orWhere('name', 'REGEXP', implode("|" ,explode("_", $provider) ) );
      }
 
      $providers = $query->get()->pluck('id')->toArray();
      
 
      $newRequest = new Request([
-      'provider' => $providers,
-      'apiProviders' => $providers
-     ]);
+                        'provider' => $providers,
+                        'apiProviders' => $providers
+                      ]);
      
      
      return $this->getFIlteredProvider($newRequest);
 
     }
 
-    public function getDetail($is_subcat, $title, Request $request){
-      // dd($is_subcat, $title, $request->id);
-      $product = Product::where('id', $request->product_id)->first();
-      $provider = Provider::where('id', $request->id)->first();
-      return view('go', compact('product','provider'));
 
+    public function getGeoAddress(Request $request)
+    {
+      $validator = Validator::make( $request->all() , [
+        'postcode' => 'required|string'
+      ]);
+
+      if($validator->fails())
+      {
+        return response()->json(['status' => false , 'error' => implode(", " , $validator->errors()->all())]);
+      }
+      
+      try{
+  
+        $key = env('IDEAL_POSTCODE');
+        $postcode = $request->postcode;
+        $api = "https://api.ideal-postcodes.co.uk/v1/postcodes/$postcode?api_key=$key";
+        $client = new Client();
+        $response = $client->request('GET', $api);
+        $body = $response->getBody();
+        $data = json_decode($body, true);
+        $results = $data['result']; 
+        $html = view('ajax.address' , ['locations' => $results])->render();
+        return response()->json(['status' => true , 'html' => $html]);
+      
+      } catch (\Exception $e){
+        dd($e->getMessage());
+         if($e->hasResponse())
+         {
+          $response = $e->getResponse();
+          $errorBody = $response->getBody();
+          $errorData = json_decode($errorBody, true);
+          return response()->json(['status' => false , 'error' => $errorData['message']]);
+         }else {
+          return response()->json(['status' => false , 'error' => 'something went wrong while getting data']);
+         }
+      }
     }
 
 

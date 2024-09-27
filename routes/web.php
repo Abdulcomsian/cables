@@ -25,5 +25,6 @@ Route::post('/submit-provider', [ProviderController::class, 'AddProvider'])->nam
 Route::get('/load-more-data', [ProviderController::class,'loadMoreData'])->name('load.more');
 Route::post('/filter', [ProviderController::class,'getFIlteredProvider'])->name('apply.filter');
 Route::post('/moreinfo', [ProviderController::class,'getMoreInfo'])->name('apply.moreinfo');
-Route::post('/locate-network' , [ProviderController::class , 'locateNetwork'])->name('locate.network');
 Route::get('getdetail/{is_subcat}/{title}', [ProviderController::class,'getDetail'])->name('getdetail');
+Route::post('get-geo-address' , [ProviderController::class , 'getGeoAddress'])->name('get.address');
+Route::post('locate-network' , [ProviderController::class , 'locateNetwork'])->name('locate.network');
