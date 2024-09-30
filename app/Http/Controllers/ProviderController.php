@@ -1234,7 +1234,6 @@ class ProviderController extends Controller
       
       $responseBody = $response->getBody()->getContents(); 
       $data = json_decode($responseBody);
-      dd($data);
       $providers = [];
       $speeds = [];
       $data  = get_object_vars($data);
