@@ -1236,7 +1236,75 @@ class ProviderController extends Controller
       $data = json_decode($responseBody);
       $providers = [];
       $speeds = [];
-      $data  = get_object_vars($data);
+    //   $data = [
+    //     "api_version" => 2.2,
+    //     "postcode" => "EH1 1YZ",
+    //     "exchange_name" => "ROSE ST",
+    //     "latlng" => "55.950332000000000,-3.193017000000000",
+    //     "lat" => "55.950332000000000",
+    //     "lng" => "-3.193017000000000",
+    //     "exchange_code" => "ESROS",
+    //     "exchange_distance" => 1319,
+    //     "exchange_code_near_1" => "ESWAV",
+    //     "exchange_name_near_1" => "WAVERLEY",
+    //     "exchange_distance_near_1" => 1125,
+    //     "exchange_code_near_2" => "ESFOU",
+    //     "exchange_name_near_2" => "FOUNTAINBRIDGE",
+    //     "exchange_distance_near_2" => 1271,
+    //     "exchange_code_near_3" => "ESNEW",
+    //     "exchange_name_near_3" => "NEWINGTON",
+    //     "exchange_distance_near_3" => 1896,
+    //     "exchange_code_near_4" => "ESABB",
+    //     "exchange_name_near_4" => "ABBEYHILL",
+    //     "exchange_distance_near_4" => 2124,
+    //     "avail_retail_virginmedia" => "NOT_AVAILABLE",
+    //     "avail_infra_virginmedia_cable" => "NOT_AVAILABLE",
+    //     "avail_infra_openreach_fttc" => "NOT_AVAILABLE",
+    //     "avail_infra_openreach_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_openreach_gfast" => "NOT_AVAILABLE",
+    //     "avail_retail_bt_consumer" => "AVAILABLE",
+    //     "avail_retail_ee" => "AVAILABLE",
+    //     "avail_retail_plusnet" => "AVAILABLE",
+    //     "avail_infra_btwholesale_ipstream_max" => "AVAILABLE",
+    //     "avail_infra_btwholesale_adsl2plus_wbc" => "AVAILABLE",
+    //     "avail_retail_sky" => "AVAILABLE",
+    //     "avail_infra_sky_llu_adsl2plus" => "AVAILABLE",
+    //     "avail_retail_talktalk" => "AVAILABLE",
+    //     "avail_infra_talktalk_llu_adsl2plus" => "AVAILABLE",
+    //     "avail_exchange_area_openreach_fttp" => "LIMITED_AVAILABILITY",
+    //     "avail_exchange_area_openreach_fttc" => "LIMITED_AVAILABILITY",
+    //     "avail_exchange_area_virginmedia_cable" => "LIMITED_AVAILABILITY",
+    //     "exchange_market" => "B",
+    //     "avail_infra_kc_adsl2plus" => "NOT_AVAILABLE",
+    //     "avail_infra_kc_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_hyperoptic_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_gigaclear_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_ifnl_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_b4rn_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_airband_wireless" => "NOT_AVAILABLE",
+    //     "avail_infra_vodafone_gigafast" => "NOT_AVAILABLE",
+    //     "avail_infra_community_fibre" => "NOT_AVAILABLE",
+    //     "avail_infra_truespeed" => "NOT_AVAILABLE",
+    //     "avail_infra_trooli" => "NOT_AVAILABLE",
+    //     "best_download_sub_24" => "YES",
+    //     "best_download_sub_10" => "NO",
+    //     "best_download_sub_2" => "NO",
+    //     "est_adsl2plus_download_postcode" => "15 to 24 Mbps",
+    //     "est_fttcp_download_postcode" => "over 40 Mbps",
+    //     "est_adsl2plus_download_within500m" => "10 to 20 Mbps",
+    //     "est_fttcp_download_within500m" => "over 40 Mbps",
+    //     "est_adsl2plus_download_within1000m" => "10 to 20 Mbps",
+    //     "est_fttcp_download_within1000m" => "over 40 Mbps",
+    //     "est_gfast_download_postcode" => "UNKNOWN",
+    //     "est_fttp_download_postcode" => "UNKNOWN",
+    //     "openreach_postcode_split" => "SINGLE",
+    //     "openreach_postcode_split_technology" => "SAME",
+    //     "est_raw_adsl2plus_download_postcode" => "20",
+    //     "est_raw_fttcp_download_postcode" => "80",
+    //     "est_raw_gfast_download_postcode" => -1,
+    // ];
+
+      // $data  = get_object_vars($data);
       foreach($data as $key => $value)
       {
           if(str_contains($key , 'avail_retail') && $value == 'AVAILABLE')
@@ -1262,7 +1330,6 @@ class ProviderController extends Controller
 
      $providers = $query->get()->pluck('id')->toArray();
      
-
      $newRequest = new Request([
                         'provider' => $providers,
                         'apiProviders' => $providers
@@ -1289,53 +1356,53 @@ class ProviderController extends Controller
   
         $key = env('IDEAL_POSTCODE');
         $postcode = $request->postcode;
-        // $api = "https://api.ideal-postcodes.co.uk/v1/postcodes/$postcode?api_key=$key";
-        // $client = new Client();
-        // $response = $client->request('GET', $api);
-        // $body = $response->getBody();
-        // $data = json_decode($body, true);
-        // $results = $data['result']; 
-        $results[] = [ 
-          "postcode" => "EH1 1YZ",
-          "postcode_inward" => "1YZ",
-          "postcode_outward" => "EH1",
-          "post_town" => "Edinburgh",
-          "dependant_locality" => "",
-          "double_dependant_locality" => "",
-          "thoroughfare" => "The Mound",
-          "dependant_thoroughfare" => "",
-          "building_number" => "",
-          "building_name" => "",
-          "sub_building_name" => "",
-          "po_box" => "",
-          "department_name" => "",
-          "organisation_name" => "Lloyds Banking Group",
-          "udprn" => 8196162,
-          "postcode_type" => "L",
-          "su_organisation_indicator" => "",
-          "delivery_point_suffix" => "1A",
-          "line_1" => "Lloyds Banking Group",
-          "line_2" => "The Mound",
-          "line_3" => "",
-          "premise" => "",
-          "longitude" => -3.1929496,
-          "latitude" => 55.9501846,
-          "eastings" => 325601,
-          "northings" => 673660,
-          "country" => "Scotland",
-          "traditional_county" => "Midlothian",
-          "administrative_county" => "",
-          "postal_county" => "Midlothian",
-          "county" => "Midlothian",
-          "district" => "City of Edinburgh",
-          "ward" => "City Centre",
-          "uprn" => "906468513",
-          "id" => "paf_8196162",
-          "country_iso" => "GBR",
-          "country_iso_2" => "GB",
-          "county_code" => "",
-          "language"
-        ];
+        $api = "https://api.ideal-postcodes.co.uk/v1/postcodes/$postcode?api_key=$key";
+        $client = new Client();
+        $response = $client->request('GET', $api);
+        $body = $response->getBody();
+        $data = json_decode($body, true);
+        $results = $data['result']; 
+        // $results[] = [ 
+        //   "postcode" => "EH1 1YZ",
+        //   "postcode_inward" => "1YZ",
+        //   "postcode_outward" => "EH1",
+        //   "post_town" => "Edinburgh",
+        //   "dependant_locality" => "",
+        //   "double_dependant_locality" => "",
+        //   "thoroughfare" => "The Mound",
+        //   "dependant_thoroughfare" => "",
+        //   "building_number" => "",
+        //   "building_name" => "",
+        //   "sub_building_name" => "",
+        //   "po_box" => "",
+        //   "department_name" => "",
+        //   "organisation_name" => "Lloyds Banking Group",
+        //   "udprn" => 8196162,
+        //   "postcode_type" => "L",
+        //   "su_organisation_indicator" => "",
+        //   "delivery_point_suffix" => "1A",
+        //   "line_1" => "Lloyds Banking Group",
+        //   "line_2" => "The Mound",
+        //   "line_3" => "",
+        //   "premise" => "",
+        //   "longitude" => -3.1929496,
+        //   "latitude" => 55.9501846,
+        //   "eastings" => 325601,
+        //   "northings" => 673660,
+        //   "country" => "Scotland",
+        //   "traditional_county" => "Midlothian",
+        //   "administrative_county" => "",
+        //   "postal_county" => "Midlothian",
+        //   "county" => "Midlothian",
+        //   "district" => "City of Edinburgh",
+        //   "ward" => "City Centre",
+        //   "uprn" => "906468513",
+        //   "id" => "paf_8196162",
+        //   "country_iso" => "GBR",
+        //   "country_iso_2" => "GB",
+        //   "county_code" => "",
+        //   "language"
+        // ];
         $html = view('ajax.address' , ['locations' => $results])->render();
         return response()->json(['status' => true , 'html' => $html]);
       
