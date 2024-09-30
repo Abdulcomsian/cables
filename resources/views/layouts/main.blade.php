@@ -156,8 +156,11 @@
     position: relative;
     background: white;
     border-bottom: 1px solid;
+    cursor: pointer;
  }
-
+ .address:hover {
+    background: #EFF6FF;
+}
  .address:last-child {
   border-bottom: 0px;
  }

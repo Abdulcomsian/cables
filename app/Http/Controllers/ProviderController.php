@@ -1231,9 +1231,10 @@ class ProviderController extends Controller
           ]
       ]);
 
-      $html = $response->getBody()->getContents();
-   
-      $data = json_decode($html);
+      
+      $responseBody = $response->getBody()->getContents(); 
+      $data = json_decode($responseBody);
+      dd($data);
       $providers = [];
       $speeds = [];
       $data  = get_object_vars($data);
@@ -1289,12 +1290,53 @@ class ProviderController extends Controller
   
         $key = env('IDEAL_POSTCODE');
         $postcode = $request->postcode;
-        $api = "https://api.ideal-postcodes.co.uk/v1/postcodes/$postcode?api_key=$key";
-        $client = new Client();
-        $response = $client->request('GET', $api);
-        $body = $response->getBody();
-        $data = json_decode($body, true);
-        $results = $data['result']; 
+        // $api = "https://api.ideal-postcodes.co.uk/v1/postcodes/$postcode?api_key=$key";
+        // $client = new Client();
+        // $response = $client->request('GET', $api);
+        // $body = $response->getBody();
+        // $data = json_decode($body, true);
+        // $results = $data['result']; 
+        $results[] = [ 
+          "postcode" => "EH1 1YZ",
+          "postcode_inward" => "1YZ",
+          "postcode_outward" => "EH1",
+          "post_town" => "Edinburgh",
+          "dependant_locality" => "",
+          "double_dependant_locality" => "",
+          "thoroughfare" => "The Mound",
+          "dependant_thoroughfare" => "",
+          "building_number" => "",
+          "building_name" => "",
+          "sub_building_name" => "",
+          "po_box" => "",
+          "department_name" => "",
+          "organisation_name" => "Lloyds Banking Group",
+          "udprn" => 8196162,
+          "postcode_type" => "L",
+          "su_organisation_indicator" => "",
+          "delivery_point_suffix" => "1A",
+          "line_1" => "Lloyds Banking Group",
+          "line_2" => "The Mound",
+          "line_3" => "",
+          "premise" => "",
+          "longitude" => -3.1929496,
+          "latitude" => 55.9501846,
+          "eastings" => 325601,
+          "northings" => 673660,
+          "country" => "Scotland",
+          "traditional_county" => "Midlothian",
+          "administrative_county" => "",
+          "postal_county" => "Midlothian",
+          "county" => "Midlothian",
+          "district" => "City of Edinburgh",
+          "ward" => "City Centre",
+          "uprn" => "906468513",
+          "id" => "paf_8196162",
+          "country_iso" => "GBR",
+          "country_iso_2" => "GB",
+          "county_code" => "",
+          "language"
+        ];
         $html = view('ajax.address' , ['locations' => $results])->render();
         return response()->json(['status' => true , 'html' => $html]);
       

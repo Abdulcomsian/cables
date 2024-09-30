@@ -594,9 +594,9 @@ $(document).ready(()=>{
 
 
   $(document).on("click" , ".address" , function(e){
-    let postcode = this.dataset.postcode;
-    let latitude = this.dataset.lat;
-    let longitude = this.dataset.lng;
+    let postcode = this.dataset.addressPostcode;
+    let latitude = this.dataset.addressLat;
+    let longitude = this.dataset.addressLng;
     $.ajax({
           type : 'POST',
           url : '{{route("locate.network")}}',
