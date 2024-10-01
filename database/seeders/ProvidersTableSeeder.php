@@ -61,5 +61,42 @@ class ProvidersTableSeeder extends Seeder
             'image' => 'TalkTalk_logo_thumbnail.png'
 
         ]);
+        $user9 =  Provider::create([
+            'name' => 'Befibre',
+            'uuid' => (string) Str::uuid(),
+            'image' => 'befibre_logo_thumbnail.png'
+
+        ]);
+        $user10 =  Provider::create([
+            'name' => 'Brsk',
+            'uuid' => (string) Str::uuid(),
+            'image' => 'brsk_logo_thumbnail.png'
+
+        ]);
+        $user11 =  Provider::create([
+            'name' => 'Community_Fibre',
+            'uuid' => (string) Str::uuid(),
+            'image' => 'community_fibre_logo_thumbnail.png'
+
+        ]);
+        $user12 =  Provider::create([
+            'name' => 'Fibrus',
+            'uuid' => (string) Str::uuid(),
+            'image' => 'fibrus_logo_thumbnal.png'
+
+        ]);
+        $user13 =  Provider::create([
+            'name' => 'Rebel',
+            'uuid' => (string) Str::uuid(),
+            'image' => 'rebel_internet_logo_thumbnail.png'
+
+        ]);
+        $user14 =  Provider::create([
+            'name' => 'Vodafone',
+            'uuid' => (string) Str::uuid(),
+            'image' => 'vodafone_logo_thumbnail.png'
+
+        ]);
+        
     }
 }
