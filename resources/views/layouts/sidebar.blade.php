@@ -119,31 +119,31 @@
       <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
         <input type="checkbox"  name="provider-brsk" data-type="provider"  id="provider-brsk"  data-name="provider[]" value="10" class="hidden image-checkbox submitform" />
         <div class="w-16">
-          <img src="/assets//images/brsk_logo_thumbnail.png" alt="" class="w-full" />
+          <img src="/assets/images/brsk_logo_thumbnail.png" alt="" class="w-full" />
         </div>
       </label>
       <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
         <input type="checkbox"  name="provider-communityfibre" data-type="provider"  id="provider-communityfibre"  data-name="provider[]" value="11" class="hidden image-checkbox submitform" />
         <div class="w-16">
-          <img src="/assets//images/community_fibre_logo_thumbnail.png" alt="" class="w-full" />
+          <img src="/assets/images/community_fibre_logo_thumbnail.png" alt="" class="w-full" />
         </div>
       </label>
       <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
         <input type="checkbox"  name="provider-fibrus" data-type="provider"  id="provider-fibrus"  data-name="provider[]" value="12" class="hidden image-checkbox submitform" />
         <div class="w-16">
-          <img src="/assets//images/fibrus_logo_thumbnal.png" alt="" class="w-full" />
+          <img src="/assets/images/fibrus_logo_thumbnal.png" alt="" class="w-full" />
         </div>
       </label>
       <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
         <input type="checkbox"  name="provider-rebel" data-type="provider"  id="provider-rebel"  data-name="provider[]" value="13" class="hidden image-checkbox submitform" />
         <div class="w-16">
-          <img src="/assets//images/rebel_internet_logo_thumbnail.png" alt="" class="w-full" />
+          <img src="/assets/images/rebel_internet_logo_thumbnail.png" alt="" class="w-full" />
         </div>
       </label>
       <label class="checkbox-label bg-white border flex justify-center items-center border-gray-400 w-full py-2 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer" >
         <input type="checkbox"  name="provider-vodafone" data-type="provider"  id="provider-vodafone"  data-name="provider[]" value="14" class="hidden image-checkbox submitform" />
         <div class="w-16">
-          <img src="/assets//images/vodafone_logo_thumbnail.png" alt="" class="w-full" />
+          <img src="/assets/images/vodafone_logo_thumbnail.png" alt="" class="w-full" />
         </div>
       </label>
 
@@ -426,7 +426,7 @@
     <h2 class="font-bold text-xl text-filter mb-3">Contract length</h2>
     <div class="grid grid-cols-2 gap-2">
       <label
-        class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer center-center label-disable pre-disabled"
+        class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer center-center"
       >
         <input type="checkbox" class="hidden simple-checkbox submitform" value="1" data-type="contract"  data-name="contract[]"  />
         1 month
