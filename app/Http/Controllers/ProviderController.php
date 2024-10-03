@@ -239,12 +239,12 @@ class ProviderController extends Controller
       });
 
       $query->when(isset($contract) && count($contract), function ($query1) use ($contract) {
-        $query1->where(function($query2) use($contract){
+        $query1->where(function($query2) use ($contract){
             foreach($contract as $ct)
             {
               $haveIncrement = str_contains( $ct , '+') ? 1 : 0;
               $ct = (int)str_replace("+" , "" , $ct);
-              $haveIncrement ? $query2->orWhere('contract_months' , '>' , $ct) : $query2->where('contract_months' , $ct); 
+              $haveIncrement ? $query2->orWhere('contract_months' , '>=' , $ct) : $query2->orWhere('contract_months' , $ct); 
             }
           });
       });
@@ -1163,8 +1163,8 @@ class ProviderController extends Controller
                               foreach($request->contract as $ct)
                               {
                                 $haveIncrement = str_contains( $ct , '+') ? 1 : 0;
-                                $ct = (int)str_replace("+" , "" , $ct);
-                                $haveIncrement ? $query1->orWhere('contract_months' , '>' , $ct) : $query1->where('contract_months' , $ct); 
+                                $ct = (int)str_replace("+" , "" , $ct); 
+                                $haveIncrement ? $query1->orWhere('contract_months' , '>' , $ct) : $query1->where('contract_months', '>' , $ct); 
                               }
                             });
                           })
