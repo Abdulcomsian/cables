@@ -143,14 +143,13 @@
             <div
               class="flex flex-col sm:flex-row sm:gap-7 xl:gap-10 items-center min-w-0"
             >
-              <span
-                class="text-primary font-bold text-[1.3125rem] min-w-0 order-2 sm:order-none"
-                >@if ($product->set_up_cost=='0')
+              <span class="text-primary font-bold text-[1.3125rem] min-w-0 order-2 sm:order-none">
+                @if ($product->set_up_cost=='0')
                 {{'Zero'}}
-            @else 
-            {{$product->set_up_cost}}   
-            @endif</span
-              >
+                @else 
+                £{{$product->set_up_cost}}   
+                @endif
+              </span>
               <img
                 src="./images/info-icon.svg"
                 alt=""

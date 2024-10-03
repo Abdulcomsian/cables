@@ -12,7 +12,7 @@
   </div>
  <form action="" id="">
   <!--Speed Filters Start-->
-  <div class="mb-4">
+  <div class="mb-4 speed-section">
     <h2 class="font-bold text-xl text-filter mb-3">Speed</h2>
     <div class="grid grid-cols-2 gap-2">
       <label
@@ -691,8 +691,13 @@ $(document).ready(()=>{
 function applyFilteredPackage(packages){
   let packagesChexbox = document.querySelectorAll("input[data-name='package[]']");
   let channelSection = document.querySelector(".channel-section");
+  let speedSection  = document.querySelector(".speed-section");
 
+  // for hiding  channels
   document.querySelector('input[name="pkg-bb"][value="1"]:checked') || document.querySelector('input[name="pkg-bbcalls"][value="5"]:checked') ? channelSection.classList.add('inactive') : channelSection.classList.remove('inactive');
+
+  // for hiding speed
+  document.querySelector('input[name="pkg-bb"][value="4"]:checked') ? speedSection.classList.add('inactive') : speedSection.classList.remove('inactive');
 
   if(packages.length > 0){
       packagesChexbox.forEach( package => {

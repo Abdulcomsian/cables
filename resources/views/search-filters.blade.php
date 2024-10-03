@@ -87,7 +87,7 @@
                   >@if ($product->set_up_cost=='0')
                   {{'Zero'}}
               @else 
-              {{$product->set_up_cost}}   
+              £{{$product->set_up_cost}}   
               @endif</span
                 >
                 <img

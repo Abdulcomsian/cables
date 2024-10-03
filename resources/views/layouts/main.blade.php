@@ -141,6 +141,10 @@
     height: 0px;
   }
 
+  .speed-section.inactive{
+    display: none;
+  }
+
   .address-list {
       position: absolute;
       top: 57px;
