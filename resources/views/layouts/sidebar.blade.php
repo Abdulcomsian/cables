@@ -428,7 +428,7 @@
       <label
         class="checkbox-label text-sm bg-white border border-gray-400 w-full text-center py-1 rounded transition-shadow duration-500 hover:inner-shadow cursor-pointer center-center"
       >
-        <input type="checkbox" class="hidden simple-checkbox submitform" value="1" data-type="contract"  data-name="contract[]"  />
+        <input type="checkbox" class="hidden simple-checkbox submitform" name="contract" value="1" data-type="contract"  data-name="contract[]"  />
         1 month
       </label>
       <label
@@ -747,7 +747,7 @@ function applyFilteredProvider(providers){
         toggleChexbox( !providers.includes(parseInt(value)) , provider )
         // !providers.includes(parseInt(value)) ? provider.closest(".checkbox-label").classList.add('label-disable') : provider.closest(".checkbox-label").classList.remove('label-disable');
       })
-   } 
+   }
 }
 
 function applyFilteredPhone(phones){
@@ -819,7 +819,6 @@ function applyFilteredOffers(offers){
 }
 
 function applyFilteredChannels(channels){
-  console.log(channels);
   let channelCheckboxes = document.querySelectorAll("input[data-name='channel[]']");
   Array.from(channelCheckboxes).forEach( checkbox => {
     let channelName = checkbox.value;
