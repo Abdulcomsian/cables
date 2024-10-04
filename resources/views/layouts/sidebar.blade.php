@@ -615,8 +615,9 @@ $(document).ready(()=>{
         })
   })
 
-  $(document).on("click" , ".search-address" , function(e){
-    let postcode = document.querySelector("#postcode-input").value;
+  let searchBox = document.querySelector("#postcode-input");
+  searchBox.addEventListener("keyup", function(){
+    let postcode = this.value;
     $.ajax({
           type : 'POST',
           url : '{{route("get.address")}}',
@@ -625,7 +626,7 @@ $(document).ready(()=>{
             if(res.status){
               document.querySelector(".address-list").innerHTML = res.html;
             } else {
-              toastr.error(res.error)
+              document.querySelector(".address-list").innerHTML = '';
             }
           }
     })
