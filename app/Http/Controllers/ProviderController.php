@@ -91,7 +91,6 @@ class ProviderController extends Controller
 
     public function getFIlteredProvider(Request $request)
     { 
-      
       $provider = $request->provider;
       $speed = $request->speed;
       $cost = $request->cost;
@@ -329,10 +328,6 @@ class ProviderController extends Controller
                               'filteredChannel' => $filteredChannel,
                               'apiProviders' => $request->apiProviders,
                             ]);
-
-     // dd($providerList);
-            
-
     }
 
     public function getMoreInfo(Request $request){
@@ -350,6 +345,12 @@ class ProviderController extends Controller
     public function filteredProvider($request)
     {
       $provider = Product::select('provider_id')
+                        ->when(isset($request->type) && $request->type == "api", function($query) use ($request) {
+                            $query->when(isset($request->provider), function($query) use ($request) {
+                                $provider = $request->provider;
+                                $query->whereIn('provider_id', $provider);
+                            });
+                        })
                         ->when( isset($request->speed) && count($request->speed), function($query) use($request){
                             $query->where(function($query1) use($request){
 
@@ -456,7 +457,6 @@ class ProviderController extends Controller
                         ->pluck('provider_id')
                         ->toArray();
       return $provider;
-
     }
 
     
@@ -1216,7 +1216,7 @@ class ProviderController extends Controller
 
     public function locateNetwork(Request $request)
     {
-      // $postcode = 'TS26 9LS';
+      $postcode = 'TS26 9LS';
       $postcode = $request->postcode;
       $latitude = $request->latitude;
       $longitude = $request->longitude;
@@ -1226,7 +1226,7 @@ class ProviderController extends Controller
               'postcode' => $postcode,
               // 'lat' => 50.8606212,
               // 'lng' => -1.1782874,
-              'version' => '2.20',
+              'version' => '2.73',
               'guid' => '{B67673F3-9CE5-2C2B-0EF1-85170E3C2261}'
           ]
       ]);
@@ -1302,37 +1302,125 @@ class ProviderController extends Controller
     //     "est_raw_adsl2plus_download_postcode" => "20",
     //     "est_raw_fttcp_download_postcode" => "80",
     //     "est_raw_gfast_download_postcode" => -1,
+    //     "avail_infra_virginmedia_gig1" => 'AVAILABLE',
+    //     "avail_infra_nexfibre" => 'NOT AVAILABLE',
+    //     "avail_retail_sky_fttc" => 'NOT AVAILABLE',
+    //     "avail_retail_sky_gea_fttp" => 'AVAILABLE',
+    //     "avail_infra_openreach_fttc" => 'AVAILABLE',
+    //     "avail_infra_openreach_fttc" => 'AVAILABLE',
+    //     "avail_retail_bt_consumer_gea_fttp" => 'NOT AVAILABLE',
+    //     "avail_retail_talktalk_fttc" => 'AVAILABLE',
+    //     "avail_retail_talktalk_gea_fttp" => 'AVAILABLE',
+    //     "avail_infra_cityfibre_talktalk" => 'AVAILABLE',
+    //     "avail_infra_hyperoptic_fttp" => 'AVAILABLE',
+    //     "avail_retail_plusnet_fttc" => 'AVAILABLE',
+    //     "avail_infra_openreach_fttc_hide_fast" => 'NO',
+    //     "avail_infra_openreach_fttc_hide_all" => 'NO',
+    //     "avail_infra_fullfibreltd_fttp" => 'AVAILABLE',
+    //     "avail_infra_brsk" => 'AVAILABLE',
+    //     "avail_infra_community_fibre" => 'AVAILABLE',
+    //     "avail_infra_fibrus" => 'AVAILABLE',
+    //     "avail_retail_vodafone_fttc" => 'NOT AVAILABLE',
+    //     "avail_infra_cityfibre_vodafone" => 'NOT AVAILABLE',
+    //     "avail_retail_vodafone_gea_fttp" => 'NOT AVAILABLE',
     // ];
 
+    \Log::info("API Data is: ", $data);
+
+    // New code for Providers
+    if($data['avail_infra_virginmedia_gig1'] == "AVAILABLE" || $data['avail_infra_nexfibre'] == "AVAILABLE")
+    {
+      $providers[] = "Virgin";
+    }
+
+    if($data['avail_retail_sky_fttc'] == "AVAILABLE" || $data['avail_retail_sky_gea_fttp'] == "AVAILABLE")
+    {
+      $providers[] = "Sky";
+      $providers[] = "NOW";
+    }
+
+    if($data['avail_infra_openreach_fttc'] == "AVAILABLE" || $data['avail_retail_bt_consumer_gea_fttp'] == "AVAILABLE")
+    {
+      $providers[] = "BT";
+      $providers[] = "EE";
+      $providers[] = "Rebel";
+    }
+
+    if($data['avail_retail_talktalk_fttc'] == "AVAILABLE" || $data['avail_retail_talktalk_gea_fttp'] == "AVAILABLE" || $data['avail_infra_cityfibre_talktalk'] == 'AVAILABLE')
+    {
+      $providers[] = "TalkTalk";
+    }
+
+    if($data['avail_infra_hyperoptic_fttp'] == "AVAILABLE")
+    {
+      $providers[] = "Hyperoptic";
+    }
+
+    if($data['avail_retail_plusnet_fttc'] == "AVAILABLE" || $data['avail_infra_openreach_fttc_hide_fast'] == 'NO' || $data['avail_infra_openreach_fttc_hide_all'] == 'NO')
+    {
+      $providers[] = "Plusnet";
+    }
+
+    if($data['avail_infra_fullfibreltd_fttp'] == "AVAILABLE")
+    {
+      $providers[] = "Befibre";
+    }
+
+    if($data['avail_infra_brsk'] == "AVAILABLE")
+    {
+      $providers[] = "Brsk";
+    }
+    
+    if($data['avail_infra_community_fibre'] == "AVAILABLE")
+    {
+      $providers[] = "Community_Fibre";
+    }
+
+    if($data['avail_infra_fibrus'] == "AVAILABLE"){
+      $providers[] = "Fibrus";
+    }
+
+    if($data['avail_retail_vodafone_fttc'] == "AVAILABLE" || $data['avail_infra_cityfibre_vodafone'] == 'AVAILABLE' || $data['avail_retail_vodafone_gea_fttp'] == 'AVAILABLE')
+    {
+      $providers[] = "Vodafone";
+    }
+
+    // if($data['avail_infra_openreach_fttc'] == "AVAILABLE" || $data['avail_retail_bt_consumer_gea_fttp'] == "AVAILABLE")
+    // {
+    //   $providers[] = "BT";
+    // }
+
       // $data  = get_object_vars($data);
-      foreach($data as $key => $value)
-      {
-          if(str_contains($key , 'avail_retail') && $value == 'AVAILABLE')
-          {
-            $providers[] =  str_replace("avail_retail_" , "" , $key);
-            continue;
-          }
+    //   foreach($data as $key => $value)
+    //   {
+    //       if(str_contains($key , 'avail_retail') && $value == 'AVAILABLE')
+    //       {
+    //         $providers[] =  str_replace("avail_retail_" , "" , $key);
+    //         continue;
+    //       }
         
-          if(str_contains($key , 'download'))
-          {
-            $speeds[] = [ $key => $value ];
-            continue;
-          }
+    //       if(str_contains($key , 'download'))
+    //       {
+    //         $speeds[] = [ $key => $value ];
+    //         continue;
+    //       }
           
-      }
+    //   }
 
      $query = Provider::query();
 
      foreach($providers as $provider)
      {
-        $query->orWhere('name', 'REGEXP', implode("|" ,explode("_", $provider) ) );
+        // $query->orWhere('name', 'REGEXP', implode("|" ,explode("_", $provider) ) );
+        $query->orWhere('name', $provider);
      }
 
      $providers = $query->get()->pluck('id')->toArray();
      
      $newRequest = new Request([
                         'provider' => $providers,
-                        'apiProviders' => $providers
+                        'apiProviders' => $providers,
+                        'type' => "api",
                       ]);
      
      

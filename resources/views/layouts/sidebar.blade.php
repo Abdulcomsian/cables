@@ -642,6 +642,7 @@ $(document).ready(()=>{
           url : '{{route("locate.network")}}',
           data : { '_token' : '{{csrf_token()}}' , postcode , latitude , longitude},
           success : function(res){
+            console.log(res);
             document.querySelector("#tot_count").innerHTML =res.total_count;
             document.querySelector("#items_container").innerHTML =res.html;
             let apiProviders = res.apiProviders;
@@ -750,6 +751,7 @@ function applyFilteredProvider(providers){
   if(providers.length > 0){
       providersChexbox.forEach( provider => {
         let value = provider.value;
+        console.log(providers, value);
         toggleChexbox( !providers.includes(parseInt(value)) , provider )
         // !providers.includes(parseInt(value)) ? provider.closest(".checkbox-label").classList.add('label-disable') : provider.closest(".checkbox-label").classList.remove('label-disable');
       })
@@ -1025,7 +1027,6 @@ function resetFilter(){
     })
 
 }
-
 
 
 
