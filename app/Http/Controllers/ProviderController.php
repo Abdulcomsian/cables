@@ -1241,7 +1241,7 @@ class ProviderController extends Controller
       $speeds = [];
       $broadband_type = [];
 
-      // $data = (array)$data;
+      $data = (array)$data;
       // $data = [ 
       //   "api_version" => 2.73,
       //   "postcode" => "SM2 6BU",
