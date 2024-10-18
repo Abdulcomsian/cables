@@ -1399,100 +1399,100 @@ class ProviderController extends Controller
     // \Log::info("API Data is: ", $data);
 
     // New code for Providers
-    if($data['avail_infra_virginmedia_gig1'] == "AVAILABLE")
+    if(isset($data['avail_infra_virginmedia_gig1']) && $data['avail_infra_virginmedia_gig1'] == "AVAILABLE")
     {
       $providers[] = "Virgin";
       $broadband_type[] = "avail_infra_virginmedia_gig1";
-      if($data['avail_infra_nexfibre'] == "AVAILABLE"){
+      if(isset($data['avail_infra_nexfibre']) && $data['avail_infra_nexfibre'] == "AVAILABLE"){
         $broadband_type[] = "avail_infra_nexfibre"; 	
       }
     }
 
-    if($data['avail_retail_sky_fttc'] == "AVAILABLE")
+    if(isset($data['avail_retail_sky_fttc']) && $data['avail_retail_sky_fttc'] == "AVAILABLE")
     {
       $providers[] = "Sky";
       $providers[] = "NOW";
       $broadband_type[] = "avail_retail_sky_fttc";
-      if($data['avail_retail_sky_gea_fttp'] == "AVAILABLE"){
+      if(isset($data['avail_retail_sky_gea_fttp']) && $data['avail_retail_sky_gea_fttp'] == "AVAILABLE"){
         $broadband_type[] = "avail_retail_sky_gea_fttp";
       }
     }
 
-    if($data['avail_infra_openreach_fttc'] == "AVAILABLE")
+    if(isset($data['avail_infra_openreach_fttc']) && $data['avail_infra_openreach_fttc'] == "AVAILABLE")
     {
       $providers[] = "BT";
       $providers[] = "EE";
       $providers[] = "Rebel";
       $broadband_type[] = "avail_infra_openreach_fttc";
-      if($data['avail_retail_bt_consumer_gea_fttp'] == "AVAILABLE"){
+      if(isset($data['avail_retail_bt_consumer_gea_fttp']) && $data['avail_retail_bt_consumer_gea_fttp'] == "AVAILABLE"){
         $broadband_type[] = "avail_retail_bt_consumer_gea_fttp";
       }
     }
 
-    if($data['avail_retail_talktalk_fttc'] == "AVAILABLE")
+    if(isset($data['avail_retail_talktalk_fttc']) && $data['avail_retail_talktalk_fttc'] == "AVAILABLE")
     {
       $providers[] = "TalkTalk";
       $broadband_type[] = "avail_retail_talktalk_fttc";
-      if($data['avail_retail_talktalk_gea_fttp'] == "AVAILABLE"){
+      if(isset($data['avail_retail_talktalk_gea_fttp']) && $data['avail_retail_talktalk_gea_fttp'] == "AVAILABLE"){
         $broadband_type[] = "avail_retail_talktalk_gea_fttp";
       }
 
-      if($data['avail_infra_cityfibre_talktalk'] == 'AVAILABLE'){
+      if(isset($data['avail_infra_cityfibre_talktalk']) && $data['avail_infra_cityfibre_talktalk'] == 'AVAILABLE'){
         $broadband_type[] = "avail_infra_cityfibre_talktalk";
       }
     }
 
-    if($data['avail_infra_hyperoptic_fttp'] == "AVAILABLE")
+    if(isset($data['avail_infra_hyperoptic_fttp']) && $data['avail_infra_hyperoptic_fttp'] == "AVAILABLE")
     {
       $providers[] = "Hyperoptic";
       $broadband_type[] = "avail_infra_hyperoptic_fttp";
     }
 
-    if($data['avail_retail_plusnet_fttc'] == "AVAILABLE")
+    if(isset($data['avail_retail_plusnet_fttc']) && $data['avail_retail_plusnet_fttc'] == "AVAILABLE")
     {
       $providers[] = "Plusnet";
       $broadband_type[] = "avail_retail_plusnet_fttc";
-      if($data['avail_infra_openreach_fttc_hide_fast'] == 'NO'){
+      if(isset($data['avail_infra_openreach_fttc_hide_fast']) && $data['avail_infra_openreach_fttc_hide_fast'] == 'NO'){
         $broadband_type[] = "avail_infra_openreach_fttc_hide_fast";
       }
 
-      if($data['avail_infra_openreach_fttc_hide_all'] == 'NO'){
+      if(isset($data['avail_infra_openreach_fttc_hide_all']) && $data['avail_infra_openreach_fttc_hide_all'] == 'NO'){
         $broadband_type[] = "avail_infra_openreach_fttc_hide_all";
       }
     }
 
-    if($data['avail_infra_fullfibreltd_fttp'] == "AVAILABLE")
+    if(isset($data['avail_infra_fullfibreltd_fttp']) && $data['avail_infra_fullfibreltd_fttp'] == "AVAILABLE")
     {
       $providers[] = "Befibre";
       $broadband_type[] = "avail_infra_fullfibreltd_fttp";
     }
 
-    if($data['avail_infra_brsk'] == "AVAILABLE")
+    if(isset($data['avail_infra_brsk']) && $data['avail_infra_brsk'] == "AVAILABLE")
     {
       $providers[] = "Brsk";
       $broadband_type[] = "avail_infra_brsk";
     }
     
-    if($data['avail_infra_community_fibre'] == "AVAILABLE")
+    if(isset($data['avail_infra_community_fibre']) && $data['avail_infra_community_fibre'] == "AVAILABLE")
     {
       $providers[] = "Community_Fibre";
       $broadband_type[] = "avail_infra_community_fibre";
     }
 
-    if($data['avail_infra_fibrus'] == "AVAILABLE"){
+    if(isset($data['avail_infra_fibrus']) && $data['avail_infra_fibrus'] == "AVAILABLE"){
       $providers[] = "Fibrus";
       $broadband_type[] = "avail_infra_fibrus";
     }
 
-    if($data['avail_retail_vodafone_fttc'] == "AVAILABLE")
+    if(isset($data['avail_retail_vodafone_fttc']) && $data['avail_retail_vodafone_fttc'] == "AVAILABLE")
     {
       $providers[] = "Vodafone";
       $broadband_type[] = "avail_retail_vodafone_fttc";
-      if($data['avail_infra_cityfibre_vodafone'] == 'AVAILABLE'){
+      if(isset($data['avail_infra_cityfibre_vodafone']) && $data['avail_infra_cityfibre_vodafone'] == 'AVAILABLE'){
         $broadband_type[] = "avail_infra_cityfibre_vodafone";
       }
 
-      if($data['avail_retail_vodafone_gea_fttp'] == 'AVAILABLE'){
+      if(isset($data['avail_retail_vodafone_gea_fttp']) && $data['avail_retail_vodafone_gea_fttp'] == 'AVAILABLE'){
         $broadband_type[] = "avail_retail_vodafone_gea_fttp";
       }
     }

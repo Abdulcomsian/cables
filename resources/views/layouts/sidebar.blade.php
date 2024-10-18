@@ -634,6 +634,7 @@ $(document).ready(()=>{
 
 
   $(document).on("click" , ".address" , function(e){
+    let textContent = this.textContent;
     let postcode = this.dataset.addressPostcode;
     let latitude = this.dataset.addressLat;
     let longitude = this.dataset.addressLng;
@@ -642,9 +643,10 @@ $(document).ready(()=>{
           url : '{{route("locate.network")}}',
           data : { '_token' : '{{csrf_token()}}' , postcode , latitude , longitude},
           success : function(res){
-            console.log(res);
             document.querySelector("#tot_count").innerHTML =res.total_count;
             document.querySelector("#items_container").innerHTML =res.html;
+            document.querySelector(".address-list").innerHTML = '';
+            document.querySelector("#postcode-input").value = textContent;
             let apiProviders = res.apiProviders;
             applyFilteredContract(res.filteredContract);
             applyFilteredPackage(res.filteredPackage);
