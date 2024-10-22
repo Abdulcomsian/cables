@@ -102,7 +102,7 @@ class ProviderController extends Controller
       $channels = $request->channel;
       $query = Product::query();
       
-      $query->when(isset($request->broadband_type) && count($request->broadband_type) > 0, function($query1) use ($request){
+      $query->when(isset($request->broadband_type) && count($request->broadband_type), function($query1) use ($request){
         $query1->whereIn('broadband_type', $request->broadband_type);
       });
 
@@ -192,7 +192,7 @@ class ProviderController extends Controller
           });
       });
 
-      $query->when(isset($provider) && count($provider), function ($query1) use ($provider) {
+      $query->when(isset($provider), function ($query1) use ($provider) {
         $query1->whereIn('provider_id' , $provider);
       });
 
@@ -303,7 +303,6 @@ class ProviderController extends Controller
     // $products = $query->toSql();
     //  dd($query->toSql());
     // dd($query->get());
-
     $products = $query->skip($request->loadedTicket)->take(5)->get();
     $productCount=$query->skip($request->loadedTicket)->count();
     $html = view('search-filters' , ['products' => $products])->render();
@@ -330,6 +329,7 @@ class ProviderController extends Controller
                               'filteredOffer' => $filteredOffer,
                               'filteredChannel' => $filteredChannel,
                               'apiProviders' => $request->apiProviders,
+                              'type' => $request->type,
                             ]);
     }
 
@@ -459,6 +459,8 @@ class ProviderController extends Controller
                         ->get()
                         ->pluck('provider_id')
                         ->toArray();
+
+                        // dd($provider);
       return $provider;
     }
 
@@ -1217,7 +1219,7 @@ class ProviderController extends Controller
 
 
 
-    public function locateNetwork(Request $request)
+    public function   locateNetwork(Request $request)
     {
       // $postcode = 'TS26 9LS';
       $postcode = $request->postcode;
@@ -1242,17 +1244,16 @@ class ProviderController extends Controller
       $broadband_type = [];
 
       $data = (array)$data;
-    //   $data = [ 
-    //     "api_version" => 2.73,
-    //     "postcode" => "TS26 9LS",
-    //     "exchange_name" => "HARTLEPOOL",
+
+    //   $data = [
+    //     "exchange_name" => "",
     //     "avail_retail_zone_broadband_gea_fttp" => "NOT_AVAILABLE",
     //     "avail_retail_zone_broadband_gea_fttc" => "NOT_AVAILABLE",
     //     "avail_infra_voneus_fttp" => "NOT_AVAILABLE",
     //     "avail_infra_upp_fttp" => "NOT_AVAILABLE",
     //     "avail_infra_factco_fttp" => "NOT_AVAILABLE",
-    //     "avail_retail_zen_gea_fttp" => "AVAILABLE",
-    //     "avail_retail_zen_gea_fttc" => "AVAILABLE",
+    //     "avail_retail_zen_gea_fttp" => "NOT_AVAILABLE",
+    //     "avail_retail_zen_gea_fttc" => "NOT_AVAILABLE",
     //     "avail_uprn_networks" => [],
     //     "avail_infra_4thutility_fttp" => "NOT_AVAILABLE",
     //     "avail_infra_gofibre_fttp" => "NOT_AVAILABLE",
@@ -1266,79 +1267,78 @@ class ProviderController extends Controller
     //     "avail_infra_connexin_fttp" => "NOT_AVAILABLE",
     //     "avail_infra_fullfibreltd_fttp" => "NOT_AVAILABLE",
     //     "openreach_fttp_priority_active" => "NO",
-    //     "openreach_fttp_priority_predicted" => "06-11-2025",
+    //     "openreach_fttp_priority_predicted" => "",
     //     "avail_retail_plusnet_adsl" => "NOT_AVAILABLE",
-    //     "avail_retail_plusnet_fttc" => "AVAILABLE",
-    //     "avail_infra_cityfibre_cuckoo" => "AVAILABLE",
-    //     "avail_infra_cityfibre_beebu" => "AVAILABLE",
+    //     "avail_retail_plusnet_fttc" => "NOT_AVAILABLE",
+    //     "avail_infra_cityfibre_cuckoo" => "NOT_AVAILABLE",
+    //     "avail_infra_cityfibre_beebu" => "NOT_AVAILABLE",
     //     "avail_infra_freedomfibre_fttp" => "NOT_AVAILABLE",
     //     "avail_infra_quickline_wireless" => "NOT_AVAILABLE",
     //     "avail_retail_talktalk_fttc" => "NOT_AVAILABLE",
-    //     "avail_retail_sky_fttc" => "AVAILABLE",
-    //     "avail_retail_vodafone_fttc" => "AVAILABLE",
-    //     "openreach_fttp_speed" => 900,
+    //     "avail_retail_sky_fttc" => "NOT_AVAILABLE",
+    //     "avail_retail_vodafone_fttc" => "NOT_AVAILABLE",
+    //     "openreach_fttp_speed" => 0,
     //     "avail_retail_cuckoo_gea_fttp" => "NOT_AVAILABLE",
-    //     "avail_infra_cityfibre_4thutility" => "AVAILABLE",
-    //     "latlng" => "54.681268000000000,-1.226190000000000",
-    //     "lat" => "54.681268000000000",
-    //     "lng" => "-1.226190000000000",
-    //     "exchange_code" => "NEHAL",
-    //     "exchange_distance" => 1718,
-    //     "exchange_code_near_1" => "NEGM",
-    //     "exchange_name_near_1" => "GREATHAM",
-    //     "exchange_distance_near_1" => 3919,
-    //     "exchange_code_near_2" => "NEWV",
-    //     "exchange_name_near_2" => "WOLVISTON",
-    //     "exchange_distance_near_2" => 7745,
-    //     "exchange_code_near_3" => "NESSDS",
-    //     "exchange_name_near_3" => "SEAL SANDS",
-    //     "exchange_distance_near_3" => 8702,
-    //     "exchange_code_near_4" => "NEHHL",
-    //     "exchange_name_near_4" => "HAVERTON HILL",
-    //     "exchange_distance_near_4" => 9382,
-    //     "avail_infra_virginmedia_cable" => "AVAILABLE",
-    //     "avail_retail_virginmedia" => "AVAILABLE",
-    //     "avail_infra_virginmedia_gig1" => "AVAILABLE",
+    //     "avail_infra_cityfibre_4thutility" => "NOT_AVAILABLE",
+    //     "latlng" => "52.048506000000000,-0.680275000000000",
+    //     "lat" => "52.048506000000000",
+    //     "lng" => "-0.680275000000000",
+    //     "exchange_code" => "",
+    //     "exchange_distance" => -1,
+    //     "exchange_code_near_1" => "SMWS",
+    //     "exchange_name_near_1" => "WOBURN SANDS",
+    //     "exchange_distance_near_1" => 4938,
+    //     "exchange_code_near_2" => "SMNP",
+    //     "exchange_name_near_2" => "NEWPORT PAGNELL",
+    //     "exchange_distance_near_2" => 5088,
+    //     "exchange_code_near_3" => "SMNCY",
+    //     "exchange_name_near_3" => "NORTH CRAWLEY",
+    //     "exchange_distance_near_3" => 5334,
+    //     "exchange_code_near_4" => "SMBT",
+    //     "exchange_name_near_4" => "MILTON KEYNES (NEW)",
+    //     "exchange_distance_near_4" => 6152,
+    //     "avail_retail_virginmedia" => "NOT_AVAILABLE",
+    //     "avail_infra_virginmedia_cable" => "NOT_AVAILABLE",
     //     "avail_infra_nexfibre" => "NOT_AVAILABLE",
-    //     "avail_infra_openreach_fttc" => "AVAILABLE",
-    //     "avail_retail_bt_consumer_gea_fttp" => "AVAILABLE",
-    //     "avail_retail_sky_gea_fttp" => "AVAILABLE",
+    //     "avail_infra_openreach_fttc" => "NOT_AVAILABLE",
+    //     "avail_retail_bt_consumer_gea_fttp" => "NOT_AVAILABLE",
+    //     "avail_retail_sky_gea_fttp" => "NOT_AVAILABLE",
     //     "avail_retail_talktalk_gea_fttp" => "NOT_AVAILABLE",
     //     "avail_retail_vodafone_gea_fttp" => "NOT_AVAILABLE",
     //     "avail_retail_pine_media_gea_fttp" => "NOT_AVAILABLE",
     //     "avail_retail_1310io_gea_fttp" => "NOT_AVAILABLE",
-    //     "avail_infra_openreach_fttp" => "AVAILABLE",
+    //     "avail_infra_openreach_fttp" => "NOT_AVAILABLE",
     //     "avail_infra_openreach_gfast" => "NOT_AVAILABLE",
     //     "avail_retail_bt_consumer" => "AVAILABLE",
     //     "avail_retail_ee" => "AVAILABLE",
     //     "avail_retail_plusnet" => "AVAILABLE",
-    //     "avail_infra_btwholesale_ipstream_max" => "AVAILABLE",
-    //     "avail_infra_btwholesale_adsl2plus_wbc" => "AVAILABLE",
-    //     "avail_retail_sky" => "AVAILABLE",
-    //     "avail_infra_sky_llu_adsl2plus" => "AVAILABLE",
-    //     "avail_retail_talktalk" => "AVAILABLE",
+    //     "avail_infra_btwholesale_ipstream_max" => "NOT_AVAILABLE",
+    //     "avail_infra_btwholesale_adsl2plus_wbc" => "NOT_AVAILABLE",
+    //     "avail_retail_sky" => "NOT_AVAILABLE",
+    //     "avail_infra_sky_llu_adsl2plus" => "NOT_AVAILABLE",
+    //     "avail_retail_talktalk" => "NOT_AVAILABLE",
     //     "avail_infra_talktalk_llu_adsl2plus" => "NOT_AVAILABLE",
-    //     "avail_exchange_area_openreach_fttp" => "LIMITED_AVAILABILITY",
-    //     "avail_exchange_area_openreach_fttc" => "LIMITED_AVAILABILITY",
-    //     "avail_exchange_area_virginmedia_cable" => "LIMITED_AVAILABILITY",
+    //     "avail_exchange_area_openreach_fttp" => "NOT_AVAILABLE",
+    //     "avail_exchange_area_openreach_fttc" => "NOT_AVAILABLE",
+    //     "avail_exchange_area_virginmedia_cable" => "NOT_AVAILABLE",
     //     "exchange_market" => "B",
     //     "avail_infra_kc_adsl2plus" => "NOT_AVAILABLE",
     //     "avail_infra_kc_fttp" => "NOT_AVAILABLE",
     //     "avail_infra_hyperoptic_fttp" => "NOT_AVAILABLE",
     //     "avail_infra_gigaclear_fttp" => "NOT_AVAILABLE",
-    //     "avail_infra_ifnl_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_ifnl_fttp" => "AVAILABLE",
     //     "avail_infra_b4rn_fttp" => "NOT_AVAILABLE",
     //     "avail_infra_airband_wireless" => "NOT_AVAILABLE",
-    //     "avail_infra_vodafone_gigafast" => "AVAILABLE",
+    //     "avail_infra_vodafone_gigafast" => "NOT_AVAILABLE",
     //     "avail_infra_community_fibre" => "NOT_AVAILABLE",
     //     "avail_infra_truespeed" => "NOT_AVAILABLE",
     //     "avail_infra_trooli" => "NOT_AVAILABLE",
     //     "avail_infra_zzoomm" => "NOT_AVAILABLE",
     //     "avail_infra_gnetwork" => "NOT_AVAILABLE",
-    //     "avail_infra_cityfibre_talktalk" => "AVAILABLE",
-    //     "avail_infra_cityfibre_zen" => "AVAILABLE",
+    //     "avail_infra_cityfibre_talktalk" => "NOT_AVAILABLE",
+    //     "avail_infra_cityfibre_zen" => "NOT_AVAILABLE",
     //     "avail_infra_cityfibre_brawband" => "NOT_AVAILABLE",
-    //     "avail_infra_cityfibre_vodafone" => "AVAILABLE",
+    //     "avail_infra_cityfibre_vodafone" => "NOT_AVAILABLE",
     //     "avail_infra_fwnetworks_heybroadband" => "NOT_AVAILABLE",
     //     "avail_infra_youfibre" => "NOT_AVAILABLE",
     //     "avail_infra_cityfibre_giganet" => "NOT_AVAILABLE",
@@ -1349,7 +1349,7 @@ class ProviderController extends Controller
     //     "avail_infra_lila_connect" => "NOT_AVAILABLE",
     //     "avail_infra_fibrus" => "NOT_AVAILABLE",
     //     "avail_infra_pine_media" => "NOT_AVAILABLE",
-    //     "avail_infra_cityfibre_airbroadband" => "AVAILABLE",
+    //     "avail_infra_cityfibre_airbroadband" => "NOT_AVAILABLE",
     //     "avail_infra_cityfibre_legendfibre" => "NOT_AVAILABLE",
     //     "avail_infra_brsk" => "NOT_AVAILABLE",
     //     "avail_infra_swish_fibre" => "NOT_AVAILABLE",
@@ -1372,13 +1372,28 @@ class ProviderController extends Controller
     //     "avail_infra_jurassic_fibre" => "NOT_AVAILABLE",
     //     "avail_infra_lightning_fibre" => "NOT_AVAILABLE",
     //     "avail_infra_country_connect_fttp" => "NOT_AVAILABLE",
-    //     "avail_infra_alncom_fttp" => "NOT_AVAILABLE",
-    //     "avail_infra_box_broadband_fttp" => "NOT_AVAILABLE",
-    //     "avail_infra_borderlink" => "NOT_AVAILABLE",
-    //     "avail_infra_nycomm_fttp" => "NOT_AVAILABLE"
+    //     "avail_infra_county_broadband_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_wildanet_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_openreach_fttc_hide_fast" => "YES",
+    //     "avail_infra_openreach_fttc_hide_all" => "YES",
+    //     "avail_infra_brdy_satellite" => "NOT_AVAILABLE",
+    //     "best_download_sub_24" => "NO",
+    //     "best_download_sub_10" => "NO",
+    //     "best_download_sub_2" => "NO",
+    //     "est_adsl2plus_download_postcode" => "0 Mbps",
+    //     "est_fttcp_download_postcode" => "0 Mbps",
+    //     "est_adsl2plus_download_within500m" => "less than 2 Mbps",
+    //     "est_fttcp_download_within500m" => "20 to 40 Mbps",
+    //     "est_adsl2plus_download_within1000m" => "less than 2 Mbps",
+    //     "est_fttcp_download_within1000m" => "over 40 Mbps",
+    //     "est_gfast_download_postcode" => "UNKNOWN",
+    //     "est_fttp_download_postcode" => "UNKNOWN",
+    //     "openreach_postcode_split" => "SINGLE",
+    //     "openreach_postcode_split_technology" => "SAME",
+    //     "est_raw_adsl2plus_download_postcode" => -1,
+    //     "est_raw_fttcp_download_postcode" => -1,
+    //     "est_raw_gfast_download_postcode" => -1
     // ];
-    
-
 
     \Log::info($postcode, $data);
 
@@ -1545,16 +1560,19 @@ class ProviderController extends Controller
           
     //   }
 
-     $query = Provider::query();
-
-     foreach($providers as $provider)
-     {
-        // $query->orWhere('name', 'REGEXP', implode("|" ,explode("_", $provider) ) );
-        $query->orWhere('name', $provider);
+    if(count($providers) > 0){
+      $query = Provider::query();
+      foreach($providers as $provider)
+      {
+         // $query->orWhere('name', 'REGEXP', implode("|" ,explode("_", $provider) ) );
+         $query->orWhere('name', $provider);
+      }
+ 
+      $providers = $query->get()->pluck('id')->toArray();
+     }else{
+      $providers = [];
      }
-
-     $providers = $query->get()->pluck('id')->toArray();
-
+     
      $newRequest = new Request([
                         'provider' => $providers,
                         'apiProviders' => $providers,

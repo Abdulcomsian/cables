@@ -651,7 +651,7 @@ $(document).ready(()=>{
             applyFilteredContract(res.filteredContract);
             applyFilteredPackage(res.filteredPackage);
             applyFilteredCost(res.filteredCost);
-            applyFilteredProvider(res.filteredProvider);
+            applyFilteredProvider(res.filteredProvider, res.type);
             applyFilteredPhone(res.filteredPhone);
             applyFilteredSpeed(res.filteredSpeed);
             applyFilteredOffers(res.filteredOffer);
@@ -748,9 +748,17 @@ function applyFilteredCost(costs){
     } 
 }
 
-function applyFilteredProvider(providers){
+function applyFilteredProvider(providers, type){
   let providersChexbox = document.querySelectorAll("input[data-name='provider[]']");
-  if(providers.length > 0){
+  if(type == "api"){
+    providersChexbox.forEach( provider => {
+      let value = provider.value;
+      console.log(providers, value);
+      toggleChexbox( !providers.includes(parseInt(value)) , provider )
+      // !providers.includes(parseInt(value)) ? provider.closest(".checkbox-label").classList.add('label-disable') : provider.closest(".checkbox-label").classList.remove('label-disable');
+    })
+  }else{
+    if(providers.length > 0){
       providersChexbox.forEach( provider => {
         let value = provider.value;
         console.log(providers, value);
@@ -758,6 +766,8 @@ function applyFilteredProvider(providers){
         // !providers.includes(parseInt(value)) ? provider.closest(".checkbox-label").classList.add('label-disable') : provider.closest(".checkbox-label").classList.remove('label-disable');
       })
    }
+  }
+  
 }
 
 function applyFilteredPhone(phones){
