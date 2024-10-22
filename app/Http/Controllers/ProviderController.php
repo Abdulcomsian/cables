@@ -1233,7 +1233,7 @@ class ProviderController extends Controller
               'guid' => '{B67673F3-9CE5-2C2B-0EF1-85170E3C2261}'
           ]
       ]);
-
+      
       
       $responseBody = $response->getBody()->getContents(); 
       $data = json_decode($responseBody);
@@ -1242,260 +1242,285 @@ class ProviderController extends Controller
       $broadband_type = [];
 
       $data = (array)$data;
-      // $data = [ 
-      //   "api_version" => 2.73,
-      //   "postcode" => "SM2 6BU",
-      //   "exchange_name" => "SUTTON CHEAM",
-      //   "avail_retail_zone_broadband_gea_fttp" => "NOT_AVAILABLE",
-      //   "avail_retail_zone_broadband_gea_fttc" => "NOT_AVAILABLE",
-      //   "avail_infra_voneus_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_upp_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_factco_fttp" => "NOT_AVAILABLE",
-      //   "avail_retail_zen_gea_fttp" => "NOT_AVAILABLE",
-      //   "avail_retail_zen_gea_fttc" => "AVAILABLE",
-      //   "avail_uprn_networks" => [],
-      //   "avail_infra_4thutility_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_gofibre_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_swsbroadband_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_ogi_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_cityfibre_toob" => "NOT_AVAILABLE",
-      //   "avail_infra_airband_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_grayshottgigabit_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_connect_fibre_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_any_alt_net_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_connexin_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_fullfibreltd_fttp" => "NOT_AVAILABLE",
-      //   "openreach_fttp_priority_active" => "NO",
-      //   "openreach_fttp_priority_predicted" => "",
-      //   "avail_retail_plusnet_adsl" => "NOT_AVAILABLE",
-      //   "avail_retail_plusnet_fttc" => "AVAILABLE",
-      //   "avail_infra_cityfibre_cuckoo" => "NOT_AVAILABLE",
-      //   "avail_infra_cityfibre_beebu" => "NOT_AVAILABLE",
-      //   "avail_infra_freedomfibre_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_quickline_wireless" => "NOT_AVAILABLE",
-      //   "avail_retail_talktalk_fttc" => "AVAILABLE",
-      //   "avail_retail_sky_fttc" => "AVAILABLE",
-      //   "avail_retail_vodafone_fttc" => "AVAILABLE",
-      //   "openreach_fttp_speed" => 0,
-      //   "avail_retail_cuckoo_gea_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_cityfibre_4thutility" => "NOT_AVAILABLE",
-      //   "latlng" => "51.344070000000000,-0.199190000000000",
-      //   "lat" => "51.344070000000000",
-      //   "lng" => "-0.199190000000000",
-      //   "exchange_code" => "LSSUT",
-      //   "exchange_distance" => 2536,
-      //   "exchange_code_near_1" => "LSBURH",
-      //   "exchange_name_near_1" => "BURGH HEATH",
-      //   "exchange_distance_near_1" => 2873,
-      //   "exchange_code_near_2" => "LSNCHM",
-      //   "exchange_name_near_2" => "NORTH CHEAM",
-      //   "exchange_distance_near_2" => 3058,
-      //   "exchange_code_near_3" => "LSEWE",
-      //   "exchange_name_near_3" => "EWELL",
-      //   "exchange_distance_near_3" => 3631,
-      //   "exchange_code_near_4" => "LSWAL",
-      //   "exchange_name_near_4" => "WALLINGTON",
-      //   "exchange_distance_near_4" => 4000,
-      //   "avail_infra_virginmedia_cable" => "AVAILABLE",
-      //   "avail_retail_virginmedia" => "AVAILABLE",
-      //   "avail_infra_virginmedia_gig1" => "AVAILABLE",
-      //   "avail_infra_nexfibre" => "NOT_AVAILABLE",
-      //   "avail_infra_openreach_fttc" => "AVAILABLE",
-      //   "avail_retail_bt_consumer_gea_fttp" => "NOT_AVAILABLE",
-      //   "avail_retail_sky_gea_fttp" => "NOT_AVAILABLE",
-      //   "avail_retail_talktalk_gea_fttp" => "NOT_AVAILABLE",
-      //   "avail_retail_vodafone_gea_fttp" => "NOT_AVAILABLE",
-      //   "avail_retail_pine_media_gea_fttp" => "NOT_AVAILABLE",
-      //   "avail_retail_1310io_gea_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_openreach_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_openreach_gfast" => "AVAILABLE",
-      //   "avail_retail_bt_consumer" => "AVAILABLE",
-      //   "avail_retail_ee" => "AVAILABLE",
-      //   "avail_retail_plusnet" => "AVAILABLE",
-      //   "avail_infra_btwholesale_ipstream_max" => "AVAILABLE",
-      //   "avail_infra_btwholesale_adsl2plus_wbc" => "AVAILABLE",
-      //   "avail_retail_sky" => "AVAILABLE",
-      //   "avail_infra_sky_llu_adsl2plus" => "AVAILABLE",
-      //   "avail_retail_talktalk" => "AVAILABLE",
-      //   "avail_infra_talktalk_llu_adsl2plus" => "NOT_AVAILABLE",
-      //   "avail_exchange_area_openreach_fttp" => "LIMITED_AVAILABILITY",
-      //   "avail_exchange_area_openreach_fttc" => "LIMITED_AVAILABILITY",
-      //   "avail_exchange_area_virginmedia_cable" => "LIMITED_AVAILABILITY",
-      //   "exchange_market" => "B",
-      //   "avail_infra_kc_adsl2plus" => "NOT_AVAILABLE",
-      //   "avail_infra_kc_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_hyperoptic_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_gigaclear_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_ifnl_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_b4rn_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_airband_wireless" => "NOT_AVAILABLE",
-      //   "avail_infra_vodafone_gigafast" => "NOT_AVAILABLE",
-      //   "avail_infra_community_fibre" => "NOT_AVAILABLE",
-      //   "avail_infra_truespeed" => "NOT_AVAILABLE",
-      //   "avail_infra_trooli" => "NOT_AVAILABLE",
-      //   "avail_infra_zzoomm" => "NOT_AVAILABLE",
-      //   "avail_infra_gnetwork" => "NOT_AVAILABLE",
-      //   "avail_infra_cityfibre_talktalk" => "NOT_AVAILABLE",
-      //   "avail_infra_cityfibre_zen" => "NOT_AVAILABLE",
-      //   "avail_infra_cityfibre_brawband" => "NOT_AVAILABLE",
-      //   "avail_infra_cityfibre_vodafone" => "NOT_AVAILABLE",
-      //   "avail_infra_fwnetworks_heybroadband" => "NOT_AVAILABLE",
-      //   "avail_infra_youfibre" => "NOT_AVAILABLE",
-      //   "avail_infra_cityfibre_giganet" => "NOT_AVAILABLE",
-      //   "avail_infra_cityfibre_quickline" => "NOT_AVAILABLE",
-      //   "avail_infra_toob" => "NOT_AVAILABLE",
-      //   "avail_infra_wightfibre_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_wessexinternet_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_lila_connect" => "NOT_AVAILABLE",
-      //   "avail_infra_fibrus" => "NOT_AVAILABLE",
-      //   "avail_infra_pine_media" => "NOT_AVAILABLE",
-      //   "avail_infra_cityfibre_airbroadband" => "NOT_AVAILABLE",
-      //   "avail_infra_cityfibre_legendfibre" => "NOT_AVAILABLE",
-      //   "avail_infra_brsk" => "NOT_AVAILABLE",
-      //   "avail_infra_swish_fibre" => "NOT_AVAILABLE",
-      //   "avail_infra_lit_fibre" => "NOT_AVAILABLE",
-      //   "avail_infra_cityfibre_fibrehop" => "NOT_AVAILABLE",
-      //   "avail_infra_cityfibre_idnet" => "NOT_AVAILABLE",
-      //   "avail_infra_lothianbroadband_fibre" => "NOT_AVAILABLE",
-      //   "avail_infra_runfibre" => "NOT_AVAILABLE",
-      //   "avail_infra_6ginternet_wireless" => "NOT_AVAILABLE",
-      //   "avail_infra_box_broadband" => "NOT_AVAILABLE",
-      //   "avail_infra_cityfibre_digitalhome" => "NOT_AVAILABLE",
-      //   "avail_infra_exascale" => "NOT_AVAILABLE",
-      //   "avail_infra_cambridgefibre" => "NOT_AVAILABLE",
-      //   "avail_infra_cityfibre_pure_broadband" => "NOT_AVAILABLE",
-      //   "avail_infra_ms3_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_1310io_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_lightspeed_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_quickline_rural_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_digital_infrastructure_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_jurassic_fibre" => "NOT_AVAILABLE",
-      //   "avail_infra_lightning_fibre" => "NOT_AVAILABLE",
-      //   "avail_infra_country_connect_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_county_broadband_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_wildanet_fttp" => "NOT_AVAILABLE",
-      //   "avail_infra_openreach_fttc_hide_fast" => "NO",
-      //   "avail_infra_openreach_fttc_hide_all" => "NO",
-      //   "avail_infra_brdy_satellite" => "NOT_AVAILABLE",
-      //   "best_download_sub_24" => "NO",
-      //   "best_download_sub_10" => "NO",
-      //   "best_download_sub_2" => "NO",
-      //   "est_adsl2plus_download_postcode" => "10 to 20 Mbps",
-      //   "est_fttcp_download_postcode" => "45 to 76 Mbps",
-      //   "est_adsl2plus_download_within500m" => "10 to 20 Mbps",
-      //   "est_fttcp_download_within500m" => "over 40 Mbps",
-      //   "est_adsl2plus_download_within1000m" => "10 to 20 Mbps",
-      //   "est_fttcp_download_within1000m" => "over 40 Mbps",
-      //   "est_gfast_download_postcode" => "over 200 Mbps",
-      //   "est_fttp_download_postcode" => "UNKNOWN",
-      //   "openreach_postcode_split" => "SINGLE",
-      //   "openreach_postcode_split_technology" => "SAME",
-      //   "est_raw_adsl2plus_download_postcode" => "11",
-      //   "est_raw_fttcp_download_postcode" => 55,
-      //   "est_raw_gfast_download_postcode" => "300",
-      // ];
-
+    //   $data = [ 
+    //     "api_version" => 2.73,
+    //     "postcode" => "TS26 9LS",
+    //     "exchange_name" => "HARTLEPOOL",
+    //     "avail_retail_zone_broadband_gea_fttp" => "NOT_AVAILABLE",
+    //     "avail_retail_zone_broadband_gea_fttc" => "NOT_AVAILABLE",
+    //     "avail_infra_voneus_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_upp_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_factco_fttp" => "NOT_AVAILABLE",
+    //     "avail_retail_zen_gea_fttp" => "AVAILABLE",
+    //     "avail_retail_zen_gea_fttc" => "AVAILABLE",
+    //     "avail_uprn_networks" => [],
+    //     "avail_infra_4thutility_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_gofibre_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_swsbroadband_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_ogi_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_cityfibre_toob" => "NOT_AVAILABLE",
+    //     "avail_infra_airband_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_grayshottgigabit_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_connect_fibre_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_any_alt_net_fttp" => "AVAILABLE",
+    //     "avail_infra_connexin_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_fullfibreltd_fttp" => "NOT_AVAILABLE",
+    //     "openreach_fttp_priority_active" => "NO",
+    //     "openreach_fttp_priority_predicted" => "06-11-2025",
+    //     "avail_retail_plusnet_adsl" => "NOT_AVAILABLE",
+    //     "avail_retail_plusnet_fttc" => "AVAILABLE",
+    //     "avail_infra_cityfibre_cuckoo" => "AVAILABLE",
+    //     "avail_infra_cityfibre_beebu" => "AVAILABLE",
+    //     "avail_infra_freedomfibre_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_quickline_wireless" => "NOT_AVAILABLE",
+    //     "avail_retail_talktalk_fttc" => "NOT_AVAILABLE",
+    //     "avail_retail_sky_fttc" => "AVAILABLE",
+    //     "avail_retail_vodafone_fttc" => "AVAILABLE",
+    //     "openreach_fttp_speed" => 900,
+    //     "avail_retail_cuckoo_gea_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_cityfibre_4thutility" => "AVAILABLE",
+    //     "latlng" => "54.681268000000000,-1.226190000000000",
+    //     "lat" => "54.681268000000000",
+    //     "lng" => "-1.226190000000000",
+    //     "exchange_code" => "NEHAL",
+    //     "exchange_distance" => 1718,
+    //     "exchange_code_near_1" => "NEGM",
+    //     "exchange_name_near_1" => "GREATHAM",
+    //     "exchange_distance_near_1" => 3919,
+    //     "exchange_code_near_2" => "NEWV",
+    //     "exchange_name_near_2" => "WOLVISTON",
+    //     "exchange_distance_near_2" => 7745,
+    //     "exchange_code_near_3" => "NESSDS",
+    //     "exchange_name_near_3" => "SEAL SANDS",
+    //     "exchange_distance_near_3" => 8702,
+    //     "exchange_code_near_4" => "NEHHL",
+    //     "exchange_name_near_4" => "HAVERTON HILL",
+    //     "exchange_distance_near_4" => 9382,
+    //     "avail_infra_virginmedia_cable" => "AVAILABLE",
+    //     "avail_retail_virginmedia" => "AVAILABLE",
+    //     "avail_infra_virginmedia_gig1" => "AVAILABLE",
+    //     "avail_infra_nexfibre" => "NOT_AVAILABLE",
+    //     "avail_infra_openreach_fttc" => "AVAILABLE",
+    //     "avail_retail_bt_consumer_gea_fttp" => "AVAILABLE",
+    //     "avail_retail_sky_gea_fttp" => "AVAILABLE",
+    //     "avail_retail_talktalk_gea_fttp" => "NOT_AVAILABLE",
+    //     "avail_retail_vodafone_gea_fttp" => "NOT_AVAILABLE",
+    //     "avail_retail_pine_media_gea_fttp" => "NOT_AVAILABLE",
+    //     "avail_retail_1310io_gea_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_openreach_fttp" => "AVAILABLE",
+    //     "avail_infra_openreach_gfast" => "NOT_AVAILABLE",
+    //     "avail_retail_bt_consumer" => "AVAILABLE",
+    //     "avail_retail_ee" => "AVAILABLE",
+    //     "avail_retail_plusnet" => "AVAILABLE",
+    //     "avail_infra_btwholesale_ipstream_max" => "AVAILABLE",
+    //     "avail_infra_btwholesale_adsl2plus_wbc" => "AVAILABLE",
+    //     "avail_retail_sky" => "AVAILABLE",
+    //     "avail_infra_sky_llu_adsl2plus" => "AVAILABLE",
+    //     "avail_retail_talktalk" => "AVAILABLE",
+    //     "avail_infra_talktalk_llu_adsl2plus" => "NOT_AVAILABLE",
+    //     "avail_exchange_area_openreach_fttp" => "LIMITED_AVAILABILITY",
+    //     "avail_exchange_area_openreach_fttc" => "LIMITED_AVAILABILITY",
+    //     "avail_exchange_area_virginmedia_cable" => "LIMITED_AVAILABILITY",
+    //     "exchange_market" => "B",
+    //     "avail_infra_kc_adsl2plus" => "NOT_AVAILABLE",
+    //     "avail_infra_kc_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_hyperoptic_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_gigaclear_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_ifnl_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_b4rn_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_airband_wireless" => "NOT_AVAILABLE",
+    //     "avail_infra_vodafone_gigafast" => "AVAILABLE",
+    //     "avail_infra_community_fibre" => "NOT_AVAILABLE",
+    //     "avail_infra_truespeed" => "NOT_AVAILABLE",
+    //     "avail_infra_trooli" => "NOT_AVAILABLE",
+    //     "avail_infra_zzoomm" => "NOT_AVAILABLE",
+    //     "avail_infra_gnetwork" => "NOT_AVAILABLE",
+    //     "avail_infra_cityfibre_talktalk" => "AVAILABLE",
+    //     "avail_infra_cityfibre_zen" => "AVAILABLE",
+    //     "avail_infra_cityfibre_brawband" => "NOT_AVAILABLE",
+    //     "avail_infra_cityfibre_vodafone" => "AVAILABLE",
+    //     "avail_infra_fwnetworks_heybroadband" => "NOT_AVAILABLE",
+    //     "avail_infra_youfibre" => "NOT_AVAILABLE",
+    //     "avail_infra_cityfibre_giganet" => "NOT_AVAILABLE",
+    //     "avail_infra_cityfibre_quickline" => "NOT_AVAILABLE",
+    //     "avail_infra_toob" => "NOT_AVAILABLE",
+    //     "avail_infra_wightfibre_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_wessexinternet_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_lila_connect" => "NOT_AVAILABLE",
+    //     "avail_infra_fibrus" => "NOT_AVAILABLE",
+    //     "avail_infra_pine_media" => "NOT_AVAILABLE",
+    //     "avail_infra_cityfibre_airbroadband" => "AVAILABLE",
+    //     "avail_infra_cityfibre_legendfibre" => "NOT_AVAILABLE",
+    //     "avail_infra_brsk" => "NOT_AVAILABLE",
+    //     "avail_infra_swish_fibre" => "NOT_AVAILABLE",
+    //     "avail_infra_lit_fibre" => "NOT_AVAILABLE",
+    //     "avail_infra_cityfibre_fibrehop" => "NOT_AVAILABLE",
+    //     "avail_infra_cityfibre_idnet" => "NOT_AVAILABLE",
+    //     "avail_infra_lothianbroadband_fibre" => "NOT_AVAILABLE",
+    //     "avail_infra_runfibre" => "NOT_AVAILABLE",
+    //     "avail_infra_6ginternet_wireless" => "NOT_AVAILABLE",
+    //     "avail_infra_box_broadband" => "NOT_AVAILABLE",
+    //     "avail_infra_cityfibre_digitalhome" => "NOT_AVAILABLE",
+    //     "avail_infra_exascale" => "NOT_AVAILABLE",
+    //     "avail_infra_cambridgefibre" => "NOT_AVAILABLE",
+    //     "avail_infra_cityfibre_pure_broadband" => "NOT_AVAILABLE",
+    //     "avail_infra_ms3_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_1310io_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_lightspeed_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_quickline_rural_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_digital_infrastructure_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_jurassic_fibre" => "NOT_AVAILABLE",
+    //     "avail_infra_lightning_fibre" => "NOT_AVAILABLE",
+    //     "avail_infra_country_connect_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_alncom_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_box_broadband_fttp" => "NOT_AVAILABLE",
+    //     "avail_infra_borderlink" => "NOT_AVAILABLE",
+    //     "avail_infra_nycomm_fttp" => "NOT_AVAILABLE"
+    // ];
     
-    // \Log::info("API Data is: ", $data);
+
+
+    \Log::info($postcode, $data);
 
     // New code for Providers
+
+    // for virgin - start
     if(isset($data['avail_infra_virginmedia_gig1']) && $data['avail_infra_virginmedia_gig1'] == "AVAILABLE")
     {
       $providers[] = "Virgin";
       $broadband_type[] = "avail_infra_virginmedia_gig1";
-      if(isset($data['avail_infra_nexfibre']) && $data['avail_infra_nexfibre'] == "AVAILABLE"){
-        $broadband_type[] = "avail_infra_nexfibre"; 	
-      }
     }
 
+    if(isset($data['avail_infra_nexfibre']) && $data['avail_infra_nexfibre'] == "AVAILABLE"){
+      $providers[] = "Virgin";
+      $broadband_type[] = "avail_infra_nexfibre"; 	
+    }
+    // for virgin - end
+
+    // for Sky and Now - start
     if(isset($data['avail_retail_sky_fttc']) && $data['avail_retail_sky_fttc'] == "AVAILABLE")
     {
       $providers[] = "Sky";
       $providers[] = "NOW";
       $broadband_type[] = "avail_retail_sky_fttc";
-      if(isset($data['avail_retail_sky_gea_fttp']) && $data['avail_retail_sky_gea_fttp'] == "AVAILABLE"){
-        $broadband_type[] = "avail_retail_sky_gea_fttp";
-      }
     }
 
+    if(isset($data['avail_retail_sky_gea_fttp']) && $data['avail_retail_sky_gea_fttp'] == "AVAILABLE"){
+      $providers[] = "Sky";
+      $providers[] = "NOW";
+      $broadband_type[] = "avail_retail_sky_gea_fttp";
+    }
+    // for sky and now - end
+
+    // for bt, ee, Rebel -start 
     if(isset($data['avail_infra_openreach_fttc']) && $data['avail_infra_openreach_fttc'] == "AVAILABLE")
     {
       $providers[] = "BT";
       $providers[] = "EE";
       $providers[] = "Rebel";
       $broadband_type[] = "avail_infra_openreach_fttc";
-      if(isset($data['avail_retail_bt_consumer_gea_fttp']) && $data['avail_retail_bt_consumer_gea_fttp'] == "AVAILABLE"){
-        $broadband_type[] = "avail_retail_bt_consumer_gea_fttp";
-      }
     }
+    
+
+    if(isset($data['avail_retail_bt_consumer_gea_fttp']) && $data['avail_retail_bt_consumer_gea_fttp'] == "AVAILABLE"){
+      $providers[] = "BT";
+      $providers[] = "EE";
+      $providers[] = "Rebel";
+      $broadband_type[] = "avail_retail_bt_consumer_gea_fttp";
+    }
+
+    // for bt, ee, Rebel - end
+
+    // for talk talk - start
 
     if(isset($data['avail_retail_talktalk_fttc']) && $data['avail_retail_talktalk_fttc'] == "AVAILABLE")
     {
       $providers[] = "TalkTalk";
       $broadband_type[] = "avail_retail_talktalk_fttc";
-      if(isset($data['avail_retail_talktalk_gea_fttp']) && $data['avail_retail_talktalk_gea_fttp'] == "AVAILABLE"){
-        $broadband_type[] = "avail_retail_talktalk_gea_fttp";
-      }
-
-      if(isset($data['avail_infra_cityfibre_talktalk']) && $data['avail_infra_cityfibre_talktalk'] == 'AVAILABLE'){
-        $broadband_type[] = "avail_infra_cityfibre_talktalk";
-      }
     }
 
+    if(isset($data['avail_retail_talktalk_gea_fttp']) && $data['avail_retail_talktalk_gea_fttp'] == "AVAILABLE"){
+      $providers[] = "TalkTalk";
+      $broadband_type[] = "avail_retail_talktalk_gea_fttp";
+    }
+
+    if(isset($data['avail_infra_cityfibre_talktalk']) && $data['avail_infra_cityfibre_talktalk'] == 'AVAILABLE'){
+      $providers[] = "TalkTalk";
+      $broadband_type[] = "avail_infra_cityfibre_talktalk";
+    }
+
+    // for talk talk - end
+
     if(isset($data['avail_infra_hyperoptic_fttp']) && $data['avail_infra_hyperoptic_fttp'] == "AVAILABLE")
-    {
+    { // not available
       $providers[] = "Hyperoptic";
       $broadband_type[] = "avail_infra_hyperoptic_fttp";
     }
 
+
+    // plusnet start
     if(isset($data['avail_retail_plusnet_fttc']) && $data['avail_retail_plusnet_fttc'] == "AVAILABLE")
     {
       $providers[] = "Plusnet";
       $broadband_type[] = "avail_retail_plusnet_fttc";
-      if(isset($data['avail_infra_openreach_fttc_hide_fast']) && $data['avail_infra_openreach_fttc_hide_fast'] == 'NO'){
-        $broadband_type[] = "avail_infra_openreach_fttc_hide_fast";
-      }
-
-      if(isset($data['avail_infra_openreach_fttc_hide_all']) && $data['avail_infra_openreach_fttc_hide_all'] == 'NO'){
-        $broadband_type[] = "avail_infra_openreach_fttc_hide_all";
-      }
+     
     }
 
+    if(isset($data['avail_infra_openreach_fttc_hide_fast']) && $data['avail_infra_openreach_fttc_hide_fast'] == 'NO'){
+      $providers[] = "Plusnet";
+      $broadband_type[] = "avail_infra_openreach_fttc_hide_fast";
+    }
+
+    if(isset($data['avail_infra_openreach_fttc_hide_all']) && $data['avail_infra_openreach_fttc_hide_all'] == 'NO'){
+      $providers[] = "Plusnet";
+      $broadband_type[] = "avail_infra_openreach_fttc_hide_all";
+    }
+
+    // plusnet -end
+
     if(isset($data['avail_infra_fullfibreltd_fttp']) && $data['avail_infra_fullfibreltd_fttp'] == "AVAILABLE")
-    {
+    { // not
       $providers[] = "Befibre";
       $broadband_type[] = "avail_infra_fullfibreltd_fttp";
     }
 
     if(isset($data['avail_infra_brsk']) && $data['avail_infra_brsk'] == "AVAILABLE")
-    {
+    { // not
       $providers[] = "Brsk";
       $broadband_type[] = "avail_infra_brsk";
     }
     
     if(isset($data['avail_infra_community_fibre']) && $data['avail_infra_community_fibre'] == "AVAILABLE")
-    {
+    { // not
       $providers[] = "Community_Fibre";
       $broadband_type[] = "avail_infra_community_fibre";
     }
 
-    if(isset($data['avail_infra_fibrus']) && $data['avail_infra_fibrus'] == "AVAILABLE"){
+    if(isset($data['avail_infra_fibrus']) && $data['avail_infra_fibrus'] == "AVAILABLE"){ // not
       $providers[] = "Fibrus";
       $broadband_type[] = "avail_infra_fibrus";
     }
+
+    // vodafone -start
 
     if(isset($data['avail_retail_vodafone_fttc']) && $data['avail_retail_vodafone_fttc'] == "AVAILABLE")
     {
       $providers[] = "Vodafone";
       $broadband_type[] = "avail_retail_vodafone_fttc";
-      if(isset($data['avail_infra_cityfibre_vodafone']) && $data['avail_infra_cityfibre_vodafone'] == 'AVAILABLE'){
-        $broadband_type[] = "avail_infra_cityfibre_vodafone";
-      }
-
-      if(isset($data['avail_retail_vodafone_gea_fttp']) && $data['avail_retail_vodafone_gea_fttp'] == 'AVAILABLE'){
-        $broadband_type[] = "avail_retail_vodafone_gea_fttp";
-      }
+      
     }
+
+    if(isset($data['avail_infra_cityfibre_vodafone']) && $data['avail_infra_cityfibre_vodafone'] == 'AVAILABLE'){
+      $providers[] = "Vodafone";
+      $broadband_type[] = "avail_infra_cityfibre_vodafone";
+    }
+
+    if(isset($data['avail_retail_vodafone_gea_fttp']) && $data['avail_retail_vodafone_gea_fttp'] == 'AVAILABLE'){
+      $providers[] = "Vodafone";
+      $broadband_type[] = "avail_retail_vodafone_gea_fttp";
+    }
+
+    // vodafone - end
 
     // if($data['avail_infra_openreach_fttc'] == "AVAILABLE" || $data['avail_retail_bt_consumer_gea_fttp'] == "AVAILABLE")
     // {

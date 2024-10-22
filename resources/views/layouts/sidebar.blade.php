@@ -646,7 +646,7 @@ $(document).ready(()=>{
             document.querySelector("#tot_count").innerHTML =res.total_count;
             document.querySelector("#items_container").innerHTML =res.html;
             document.querySelector(".address-list").innerHTML = '';
-            document.querySelector("#postcode-input").value = textContent;
+            document.querySelector("#postcode-input").value = textContent.trim();
             let apiProviders = res.apiProviders;
             applyFilteredContract(res.filteredContract);
             applyFilteredPackage(res.filteredPackage);
