@@ -1426,6 +1426,7 @@ class ProviderController extends Controller
       $providers[] = "BT";
       $providers[] = "EE";
       $providers[] = "Rebel";
+      $providers[] = "Plusnet";
       $broadband_type[] = "avail_retail_bt_consumer_gea_fttp";
     }
 
